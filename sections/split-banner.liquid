@@ -1,0 +1,489 @@
+{% schema %}
+{
+  "name": "Split Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "select",
+      "id": "height_mode",
+      "label": "Height mode",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to content"
+        },
+        {
+          "value": "custom",
+          "label": "Custom height"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "range",
+      "id": "custom_height",
+      "min": 300,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "label": "Custom height",
+      "default": 500,
+      "info": "Only applies when height mode is set to 'Custom height'"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Desktop column order",
+      "options": [
+        {
+          "value": "content_first",
+          "label": "Content - Image"
+        },
+        {
+          "value": "image_first",
+          "label": "Image - Content"
+        }
+      ],
+      "default": "content_first"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between columns",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "First Column Content"
+    },
+    {
+      "type": "color",
+      "id": "first_bg_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "first_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Title",
+      "default": "Plug & Play high-converting"
+    },
+    {
+      "type": "richtext",
+      "id": "first_text",
+      "label": "Text content",
+      "default": "<p>Transform your Shopify store with visual appealing sections and components</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_horizontal_position",
+      "label": "Horizontal alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_vertical_position",
+      "label": "Vertical alignment",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Second Column Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "second_image",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "second_image_mobile",
+      "label": "Mobile image"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Layout"
+    },
+    {
+      "type": "select",
+      "id": "mobile_stack",
+      "label": "Stack order",
+      "options": [
+        {
+          "value": "text_first",
+          "label": "Text above image"
+        },
+        {
+          "value": "image_first",
+          "label": "Image above text"
+        }
+      ],
+      "default": "text_first"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between columns",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile heading size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile text size",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Button border radius",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Split Banner",
+      "category": "Banner"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  #shopify-section-{{ section.id }} .split-banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: {{ section.settings.gap }}px;
+    padding: {{ section.settings.gap }}px;
+    {% if section.settings.height_mode == 'custom' %}
+      min-height: {{ section.settings.custom_height }}px;
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .split-banner__column {
+    border-radius: {{ section.settings.border_radius }}px;
+    overflow: hidden;
+    {% if section.settings.height_mode == 'custom' %}
+      min-height: {{ section.settings.custom_height }}px;
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .split-banner__first {
+    background-color: {{ section.settings.first_bg_color }};
+    color: {{ section.settings.first_text_color }};
+    text-align: {{ section.settings.text_horizontal_position }};
+    padding: 40px;
+    {% if section.settings.desktop_layout == 'image_first' %}
+      order: 2;
+    {% endif %}
+    display: flex;
+    flex-direction: column;
+    {% case section.settings.text_vertical_position %}
+      {% when 'top' %}
+        justify-content: flex-start;
+      {% when 'center' %}
+        justify-content: center;
+      {% when 'bottom' %}
+        justify-content: flex-end;
+    {% endcase %}
+  }
+  
+  #shopify-section-{{ section.id }} .split-banner__first * {
+    color: {{ section.settings.first_text_color }};
+    text-align: {{ section.settings.text_horizontal_position }};
+  }
+
+  #shopify-section-{{ section.id }} .split-banner__first h2 {
+    font-size: {{ section.settings.heading_size }}px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    margin-top: 0;
+  }
+
+  #shopify-section-{{ section.id }} .split-banner__first p {
+    font-size: {{ section.settings.text_size }}px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 0;
+    margin-top: 0;
+    {% if section.settings.text_horizontal_position == 'center' %}
+      margin-left: auto;
+      margin-right: auto;
+    {% elsif section.settings.text_horizontal_position == 'right' %}
+      margin-left: auto;
+    {% endif %}
+    max-width: 400px;
+  }
+
+  #shopify-section-{{ section.id }} .split-banner__second {
+    position: relative;
+    {% if section.settings.desktop_layout == 'image_first' %}
+      order: 1;
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .split-banner__image {
+    width: 100%;
+    display: flex;
+    height: fit-content;
+    min-height: 100%;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .split-banner__image.desktop-only {
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .split-banner__image.mobile-only {
+    display: none;
+  }
+
+  @media (max-width: 990px) {
+    #shopify-section-{{ section.id }} .split-banner__image.desktop-only {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .split-banner__image.mobile-only {
+      display: block;
+    }
+
+    #shopify-section-{{ section.id }} .split-banner {
+      grid-template-columns: 1fr;
+      gap: {{ section.settings.mobile_padding }}px;
+      padding: {{ section.settings.mobile_padding }}px;
+      {% if section.settings.height_mode == 'custom' %}
+        min-height: auto;
+      {% endif %}
+    }
+
+    #shopify-section-{{ section.id }} .split-banner__first {
+      border-radius: {{ section.settings.mobile_border_radius }}px;
+      padding: 40px 20px;
+        min-height: unset;
+    }
+
+    #shopify-section-{{ section.id }} .split-banner__second {
+      border-radius: {{ section.settings.mobile_border_radius }}px;
+      {% if section.settings.height_mode == 'custom' %}
+        min-height: {{ section.settings.custom_height | divided_by: 2 }}px;
+      {% endif %}
+    }
+    
+    #shopify-section-{{ section.id }} .split-banner__column {
+      {% if section.settings.mobile_stack == 'image_first' %}
+        &.split-banner__first {
+          order: 2;
+        }
+        &.split-banner__second {
+          order: 1;
+        }
+      {% else %}
+        &.split-banner__first {
+          order: 1;
+        }
+        &.split-banner__second {
+          order: 2;
+        }
+      {% endif %}
+    }
+
+    #shopify-section-{{ section.id }} .split-banner__first h2 {
+      font-size: {{ section.settings.mobile_heading_size }}px;
+    }
+
+    #shopify-section-{{ section.id }} .split-banner__first p {
+      font-size: {{ section.settings.mobile_text_size }}px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .split-banner__button {
+    display: inline-block;
+    padding: 12px 24px;
+    margin-top: 20px;
+    background-color: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ section.settings.button_border_radius }}px;
+    transition: opacity 0.3s ease;
+    {% if section.settings.text_horizontal_position == 'center' %}
+      margin-left: auto;
+      margin-right: auto;
+    {% elsif section.settings.text_horizontal_position == 'right' %}
+      margin-left: auto;
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .split-banner__button:hover {
+    opacity: 0.9;
+  }
+</style>
+
+<div class="split-banner">
+  <div class="split-banner__column split-banner__first">
+    <h2>{{ section.settings.title | newline_to_br }}</h2>
+    {{ section.settings.first_text }}
+    {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+      <a href="{{ section.settings.button_link }}" class="split-banner__button">
+        {{ section.settings.button_text }}
+      </a>
+    {% endif %}
+  </div>
+  <div class="split-banner__column split-banner__second">
+    {% if section.settings.second_image != blank %}
+      <img
+        srcset="{{ section.settings.second_image | img_url: '1920x' }} 1x, {{ section.settings.second_image | img_url: '1920x' }} 2x"
+        src="{{ section.settings.second_image | img_url: '1920x' }}"
+        alt="{{ section.settings.second_image.alt }}"
+        class="split-banner__image desktop-only"
+        loading="lazy"
+        width="{{ section.settings.second_image.width }}"
+        height="{{ section.settings.second_image.height }}"
+      >
+      {% if section.settings.second_image_mobile != blank %}
+        <img
+          srcset="{{ section.settings.second_image_mobile | img_url: '1200x' }} 1x, {{ section.settings.second_image_mobile | img_url: '1200x' }} 2x"
+          src="{{ section.settings.second_image_mobile | img_url: '1200x' }}"
+          alt="{{ section.settings.second_image_mobile.alt }}"
+          class="split-banner__image mobile-only"
+          loading="lazy"
+          width="{{ section.settings.second_image_mobile.width }}"
+          height="{{ section.settings.second_image_mobile.height }}"
+        >
+      {% endif %}
+    {% endif %}
+  </div>
+</div>

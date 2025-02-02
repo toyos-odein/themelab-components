@@ -1,0 +1,46 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "split_banner_rMRyYP": {
+      "type": "split-banner",
+      "settings": {
+        "height_mode": "custom",
+        "custom_height": 800,
+        "desktop_layout": "content_first",
+        "gap": 12,
+        "border_radius": 8,
+        "first_bg_color": "#121212",
+        "first_text_color": "#ffffff",
+        "title": "Plug & Play high-converting",
+        "first_text": "<p>Transform your Shopify store with visual appealing sections and components</p>",
+        "text_horizontal_position": "left",
+        "text_vertical_position": "bottom",
+        "second_image": "shopify://shop_images/Test.jpg",
+        "second_image_mobile": "shopify://shop_images/Test_6db37b17-fa59-4b28-8298-6600303c3652.jpg",
+        "mobile_stack": "image_first",
+        "mobile_padding": 0,
+        "mobile_border_radius": 0,
+        "heading_size": 40,
+        "text_size": 16,
+        "mobile_heading_size": 32,
+        "mobile_text_size": 14,
+        "button_text": "Shop Now",
+        "button_link": "",
+        "button_text_color": "#ffffff",
+        "button_bg_color": "#000000",
+        "button_border_radius": 8
+      }
+    }
+  },
+  "order": [
+    "split_banner_rMRyYP"
+  ]
+}
