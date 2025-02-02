@@ -1,0 +1,742 @@
+<style>
+    #shopify-section-{{ section.id }} .featured-products {
+      padding: 0 !important;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__container {
+      padding: 24px;
+      background-color: {{ section.settings.background_color }};
+      color: {{ section.settings.text_color }};
+      border-radius: 10px;
+      display: flex;
+      column-gap: 65px;
+      flex-wrap: wrap;
+      margin: 0 30px;
+      row-gap: 40px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__opinions svg path {
+      fill: {{ section.settings.stars_color }};
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__subtitle,
+    #shopify-section-{{ section.id }} .featured-prods__title,
+    #shopify-section-{{ section.id }} .featured-prods__description {
+      color: {{ section.settings.text_color }};
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__icons--mobile {
+      background-color: {{ section.settings.background_color }};
+      color: {{ section.settings.text_color }};
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__container.--has-tag .featured-prods__prods{
+      padding-top: 30px;
+    }
+
+
+    #shopify-section-{{ section.id }} .featured-prods__content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__subtitle {
+      margin: 0 0 90px;
+      font-family: "Suisse-Intl", sans-serif;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__title{
+      font-size: 55px;
+      line-height: 1;
+      margin: 0;
+      margin-bottom: 10px;
+      max-width: 750px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__logo {
+      margin-bottom: 48px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__description {
+      margin: 0;
+      max-width: 550px;
+      font-size: 20px;
+      font-weight: 400;
+      margin-top: 5px;
+      line-height: 1.3;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__opinions{
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__opinions span{
+      margin-left: 5px;
+    }
+
+
+    #shopify-section-{{ section.id }} .featured-prods__description > * {
+      margin: 0;
+    }
+
+    #shopify-section-{{ section.id }} .highlighted-text.featured-prods__description em {
+      background-color: {{ section.settings.tag_background_color }};
+      color: {{ section.settings.tag_text_color }};
+      border-radius: 6px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__icons {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      margin-top: 35px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__icon {
+      display: flex;
+      align-items: center;
+      column-gap: 13px;
+      font-family: "Suisse-Intl", sans-serif;
+      font-size: 15px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__icon img{
+      height: 21px;
+      width: 21px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__icon + .featured-prods__icon {
+      margin-top: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prods {
+      display: flex;
+      column-gap: 24px;
+      width: max-content;
+      row-gap: 28px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prods.--large-row-gap {
+      row-gap: 24px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prods.--large-top-padding {
+      padding-top: 33px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod {
+      background-color: {{ section.settings.card_background_color }};
+      color: {{ section.settings.card_text_color }};
+      border-radius: 10px;
+      padding: 17px 22px 20px;
+      width: 345px;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      min-height: 550px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__title {
+      font-family: "Suisse-Intl", sans-serif;
+      font-size: 20px;
+      margin: 0;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__price {
+      margin: 0;
+      font-family: "Suisse-Intl", sans-serif;
+      position: relative;
+      font-size: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .discount-label{
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translateY(100%);
+      font-size: 15px;
+      font-weight: 400;
+      z-index: 1;
+      line-height: 1.6;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__price span {
+      display: inline-block;
+      margin-right: 10px;
+      opacity: 0.4;
+      position: relative;
+      text-decoration: line-through;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__serving {
+      font-size: 14px;
+      color: rgb(var(--color-ac));
+      margin: 6px 0 0;
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod__title-wrapper{
+      
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      margin: 54px 0 40px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__image img {
+      display: flex;
+      justify-content: center;
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__description {
+      font-size: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__description > p {
+      font-family: "Suisse-Intl", sans-serif;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__description ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 8px;
+      margin-bottom: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__description li {
+      display: flex;
+      column-gap: 10px;
+      line-height: 1.4;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__description li svg {
+      flex-shrink: 0;
+      margin-top: 9px;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__cta {
+      margin-top: auto;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .__tag {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      background-color: {{ section.settings.tag_background_color }};
+      z-index: 1;
+      padding: 6px 25px;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 20px;
+      text-align: center;
+      min-height: 33px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: {{ section.settings.tag_text_color }};
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod__cta{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 10px 20px;
+      background-color: {{ section.settings.tag_background_color }};
+      color: {{ section.settings.tag_text_color }};
+      border-radius: 30px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod__cta:hover{
+      filter: brightness(0.9);
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod:not(.--subscription) .button--primary {
+      --color-button-text: var(--color-bg);
+      --color-button: var(--color-fg);
+      --alpha-button-background: 1;
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod:not(.--subscription) .button--primary:hover {
+      --color-button: var(--color-fg-faded);
+      /* color: var(--color-button);
+      background: transparent;
+      border: 1px solid var(--color-button); */
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__prod .button--primary {
+      min-height: 52px;
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    /* @media screen and (min-width: 1200px) {
+      .featured-prods__logo img {
+        width: 100%;
+        height: auto;
+      }
+    } */
+
+    @media screen and (max-width: 990px) {
+      #shopify-section-{{ section.id }} .featured-prods__container {
+        margin: 0;
+        border-radius: 0;
+        padding: 37px 20px;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__container.--has-tag {
+        padding-top: 37px;
+        row-gap: 70px;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__prod .__title {
+        font-size: 18px;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__prod .__price {
+        font-size: 16px;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__title{
+        font-size: 30px;
+        line-height: 1.1;
+        margin-bottom: 18px;
+        margin-top: 12px;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__subtitle {
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__logo {
+        width: max-content;
+        max-width: 90%;
+        margin: 0 auto 20px;
+        height: max-content;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__logo img {
+        max-width: 100%;
+        display: block;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__description {
+        font-size: 15px;
+        width: 100%;
+        max-width: 500px;
+        line-height: 1.45;
+        margin: 0 auto;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__opinions span{
+        font-size: 15px;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__icons {
+        margin-top: 0;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__icon {
+        margin-top: 15px;
+        font-size: 16px;
+        padding-left: 0;
+        width: fit-content;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__prods {
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+      }
+    }
+
+    #shopify-section-{{ section.id }} .featured-prods__icons--mobile{
+      padding: 0 0 30px;
+      margin-top: -2px;
+    }
+
+    @media (max-width: 990px){
+      /* .featured-prods__icons{
+        display: none;
+      } */
+
+      #shopify-section-{{ section.id }} .featured-prods__prod{
+        width: 100%;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__prods.--large-row-gap{
+        gap: 24px;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__prod{
+        min-height: 440px;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__container.--has-tag{
+        row-gap: 40px;
+      }
+
+      #shopify-section-{{ section.id }} .featured-prods__prods.--large-row-gap > div:nth-child(2) {
+        margin-top: 20px;
+      }
+    }
+
+    @media (min-width: 991px){
+      #shopify-section-{{ section.id }} .featured-prods__icons--mobile{
+        display: none;
+      }
+    }
+</style>
+
+<style>
+  #mt-{{ section.id }} {
+    margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #mt-{{ section.id }} {
+      margin-top: {{ section.settings.margin_top }}px;
+    }
+  }
+</style>
+
+{%- assign _s = section.settings -%}
+
+{%- assign has_tag = 0 -%}
+{%- for block in section.blocks -%}
+    {%- if block.type == 'product' -%}
+        {%- assign past_prod_1 = true -%}
+        {%- if block.settings.tag != blank -%}
+            {%- if past_prod_1 -%}
+                {%- assign has_tag = 2 -%}
+            {%- else -%}
+                {%- assign has_tag = 1 -%}
+            {%- endif -%}
+        {%- endif -%}
+    {%- endif -%}
+{%- endfor -%}
+
+<div class="page-width featured-products" id="mt-{{ section.id }}">
+  <div class="featured-prods__container {% if has_tag > 0 %}--has-tag{% endif %}">
+    <div class="featured-prods__content">
+      {%- if _s.subtitle != blank -%}
+        <p class="featured-prods__subtitle">{{ _s.subtitle }}</p>
+      {%- endif -%}
+     {%- if _s.title != blank -%}
+        <h3 class="featured-prods__title">{{ _s.title }}</h3>
+     {%- endif -%}
+      {%- if _s.description != blank -%}
+        <div class="featured-prods__description highlighted-text">
+          {{ _s.description }}
+        </div>
+      {%- endif -%}
+     {% if _s.opinions != blank %}
+      <div class="featured-prods__opinions">
+        {% for i in (0..4) %}
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.9834 0.713623L11.0487 7.07009H17.7323L12.3252 10.9986L14.3905 17.3551L8.9834 13.4266L3.57627 17.3551L5.64161 10.9986L0.23448 7.07009H6.91806L8.9834 0.713623Z" fill="#A8FF73"/>
+          </svg>
+        {% endfor %}
+        <span>{{ _s.opinions }}</span>
+      </div>      
+     {% endif %}
+      <div class="featured-prods__icons">
+        {%- for block in section.blocks -%}
+          {%- assign _bs = block.settings -%}
+          {%- if _bs.icon != blank and _bs.description != blank -%}
+          <div class="featured-prods__icon">
+            {{ _bs.icon | image_url: width: 30 | image_tag }}
+            <span>{{ _bs.description }}</span>
+          </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    <div class="featured-prods__prods {% if has_tag > 1 %}--large-row-gap {% elsif has_tag > 0 %}--large-top-padding{% endif %}">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'product' and block.settings.product != blank -%}
+  
+          {%- assign prod = block.settings.product -%}
+          {%- assign tag = block.settings.tag -%}
+          {%- assign is_sub = false -%}
+          {%- assign price_adj_type = '' -%}
+          {%- assign price_adj_val = '' -%}
+
+          {%- if block.settings.subscription -%}
+            {%- for variant in prod.variants -%}
+              {%- if variant.selling_plan_allocations.size > 0 -%}
+                {%- assign sp = variant.selling_plan_allocations[0].selling_plan -%}
+                {%- assign is_sub = sp.id -%}
+                {%- assign price_adj_type = sp.price_adjustments[0].value_type -%}
+                {%- assign price_adj_val = sp.price_adjustments[0].value -%}
+                {% break %}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+  
+          {%- if prod != blank -%}
+            <div class="featured-prods__prod {% if is_sub != false %}--subscription{% endif %}">
+              {%- if tag != blank -%}
+                <div class="__tag">{{ tag }}</div>
+              {%- endif -%}
+              <div class="featured-prods__prod__title-wrapper">
+                <p class="__title">
+                  {{ prod.title }}
+                </p>
+                <p class="__price">
+                  {%- if is_sub -%}
+                    {%- assign sub_price = prod.price -%}
+                    {%- if price_adj_type == 'fixed_amount' -%}
+                      {%- assign sub_price = sub_price | minus: price_adj_val -%}
+                    {%- elsif price_adj_type == 'percentage' -%}
+                      {%- assign percentage_left = 100 | minus: price_adj_val -%}
+                      {%- assign sub_price = sub_price | times: percentage_left | divided_by: 100 -%}
+                    {%- elsif price_adj_type == 'price' -%}
+                      {%- assign sub_price = price_adj_val -%}
+                    {%- endif -%}
+                    {%- if prod.price > sub_price -%}
+                      <span>{{ prod.price | money_without_trailing_zeros }}</span>
+                    {%- endif -%}
+                    {{ sub_price | money_without_trailing_zeros }}
+                  {%- else -%}
+                    {%- if prod.compare_at_price > prod.price -%}
+                      <span>{{ prod.compare_at_price | money_without_trailing_zeros }}</span>
+                    {%- endif -%}
+                    {{ prod.price | money_without_trailing_zeros }}
+                  {%- endif -%}
+                </p>
+               {% if is_sub %}
+                <div class="discount-label">
+                  {{ price_adj_val }}% off
+                </div>                
+               {% endif %}
+              </div>
+              {%- assign total_price = prod.price -%}
+              {%- if is_sub -%}
+                {%- assign total_price = sub_price -%}
+              {%- endif -%}
+              <a href="{{ prod.url }}{% unless is_sub != false %}?purchase=one-time{% endunless %}" class="__image">
+                {%- if block.settings.custom_image != blank -%}
+                  {{ block.settings.custom_image | image_url: width: 1200 | image_tag }}
+                {%- else -%}
+                  {{ prod.featured_image | image_url: width: 1200 | image_tag }}
+                {%- endif -%}
+              </a>
+                <div class="__description">
+                  <p>{{ block.settings.description_title | strip }}</p>
+                </div>
+              {%- assign form_id = 'product-form-' | append: section.id | append: forloop.index -%}
+              {%- assign s_id = section.id | append: forloop.index -%}
+              <div class="__cta">
+                <a href="{{ prod.url }}" class="featured-prods__prod__cta">
+                  {{ block.settings.custom_button_text | strip }}
+                </a>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  {%- comment -%} <div class="featured-prods__icons--mobile featured-prods__icons--mobile--{{ section.id }} swiper">
+    <div class="swiper-wrapper">
+      {% for i in (0..4) %}
+        {%- for block in section.blocks -%}
+          {%- assign _bs = block.settings -%}
+          {%- if _bs.icon != blank and _bs.description != blank -%}
+          <div class="featured-prods__icon swiper-slide">
+            {{ _bs.icon | image_url: width: 30 | image_tag }}
+            <span>{{ _bs.description }}</span>
+          </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {% endfor %}
+    </div>
+  </div> {%- endcomment -%}
+</div>
+{%- comment -%} 
+<script>
+  document.addEventListener("DOMContentLoaded", ()=>{
+    new Swiper('.featured-prods__icons--mobile--{{ section.id }}', {
+      slidesPerView: "auto",
+      centeredSlides: true,
+      loop: true,
+      initialSlide: 2,
+      spaceBetween: 10,
+      autoplay: {
+        delay: 3000
+      }
+    })
+  })
+</script> {%- endcomment -%}
+
+
+{% schema %}
+{
+  "name": "Featured products",
+  "tag": "section",
+  "class": "section section-featured-product",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "checkbox",
+          "id": "subscription",
+          "default": false,
+          "label": "Subscription"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag"
+        },
+        {
+          "type": "text",
+          "id": "description_title",
+          "label": "Description"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom image"
+        },
+        {
+          "type": "text",
+          "id": "custom_button_text",
+          "label": "Custom button text"
+        }
+      ]
+    },
+    {
+      "type": "info-icon",
+      "name": "Info icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "opinions",
+      "label": "Opinions",
+      "default": "20 opiniones"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#4A332E"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#F6F6E5"
+    },
+    {
+      "type": "color",
+      "id": "stars_color",
+      "label": "Stars Color",
+      "default": "#A8FF73"
+    },
+    {
+      "type": "color",
+      "id": "tag_background_color",
+      "label": "Tag Background Color",
+      "default": "#4A332E"
+    },
+    {
+      "type": "color",
+      "id": "tag_text_color",
+      "label": "Tag Text Color",
+      "default": "#F6F6E5"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card Background Color",
+      "default": "#F6F6E5"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card Text Color",
+      "default": "#4A332E"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured products"
+    }
+  ]
+}
+{% endschema %}
