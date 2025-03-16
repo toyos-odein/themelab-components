@@ -1,0 +1,218 @@
+<section class="image-with-blocks image-with-blocks--{{ section.settings.content_position }}" style="background-color: {{ section.settings.background_color }}; --spacing: {{ section.settings.spacing }}px;--border-radius: {{ section.settings.border_radius }}px;">
+    <div class="image-with-blocks__main-image">
+        {% if section.settings.video %}
+            {{ section.settings.video | video_tag: image_size: '1924x', autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+        {% else %}
+            <img src="{{ section.settings.image | image_url: width: 1924 }}" alt="{{ section.settings.image.alt }}" loading="lazy">
+        {% endif %}
+    </div>
+    <div class="image-with-blocks__blocks">
+        {% for block in section.blocks %}
+            <div class="image-with-blocks__blocks__block" style="background-color: {{ block.settings.background_color }}; --text-color: {{ block.settings.text_color }}; --block-icon-width: {{ block.settings.icon_width }}%;">
+                <div class="image-with-blocks__blocks__block__content">
+                    {% if block.settings.image %}
+                        <img src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.image.alt }}" loading="lazy">
+                    {% endif %}
+                    {% if block.settings.title %}
+                        <h3>{{ block.settings.title }}</h3>    
+                    {% endif %}
+                    {% if block.settings.content %}
+                        {{ block.settings.content | newline_to_br }}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+<style>
+    .image-with-blocks{
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        padding: var(--spacing);
+        gap: var(--spacing);
+    }
+
+    .image-with-blocks__main-image{
+        flex: 1;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+    }
+
+    .image-with-blocks__main-image img,
+    .image-with-blocks__main-image video{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+    .image-with-blocks__blocks{
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: var(--spacing);
+    }
+
+    .image-with-blocks__blocks__block{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        color: var(--text-color);
+        border-radius: var(--border-radius);
+    }
+
+    .image-with-blocks__blocks__block__content{
+        width: 100%;
+    }
+
+    .image-with-blocks__blocks__block h3{
+        font-size: 1.6em;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .image-with-blocks__blocks__block p{
+        margin: 0;
+        line-height: 1.5;
+        font-size: 1.1em;
+        opacity: 0.8;
+    }
+
+    .image-with-blocks__blocks__block img{
+        width: min(var(--block-icon-width), 200px);
+        margin-bottom: 30px;
+        object-fit: contain;
+    }
+
+    @media screen and (max-width: 768px) {
+        .image-with-blocks {
+            flex-direction: column;
+        }
+
+        .image-with-blocks__blocks{
+            grid-template-columns: 1fr;
+            grid-template-rows: unset;
+        }
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Image with Blocks",
+  "settings": [
+    {
+        "type": "header",
+        "content": "Content"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color"
+    },
+    {
+        "type": "header",
+        "content": "Layout"
+    },
+    {
+        "type": "select",
+        "id": "content_position",
+        "label": "Content Position",
+        "options": [
+            {
+                "value": "left",
+                "label": "Image Left"
+            },
+            {
+                "value": "right",
+                "label": "Image Right"
+            }
+        ]
+    },
+    {
+        "type": "range",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": 10,
+        "min": 0,
+        "max": 100
+    },
+    {
+        "type": "range",
+        "id": "border_radius",
+        "label": "Card Border Radius",
+        "default": 0,
+        "min": 0,
+        "max": 50,
+        "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Content Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "icon_width",
+          "label": "Icon Width",
+          "default": 35,
+          "min": 10,
+          "max": 100,
+          "unit": "%"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Blocks",
+      "blocks": [
+        {
+          "type": "block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

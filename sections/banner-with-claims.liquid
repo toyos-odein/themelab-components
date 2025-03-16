@@ -1,0 +1,580 @@
+<section class="banner-with-claims banner-with-claims--{{section.id}}" style="--color: {{ section.settings.color }}; --background-color: {{ section.settings.background_color }}; --button-color: {{ section.settings.button_color }};">
+    <div class="banner-with-claims__inner">
+        <div class="banner-with-claims__content banner-with-claims__content--{{ section.settings.content_position }} banner-with-claims__content--mobile-{{ section.settings.content_position_mobile }}">
+            {% if section.settings.tag != blank %}
+                <span class="banner-with-claims__tag">{{ section.settings.tag }}</span>
+            {% endif %}
+            {% if section.settings.title != blank %}
+                <h2 class="banner-with-claims__title">{{ section.settings.title }}</h2>
+            {% endif %}
+            {% if section.settings.description != blank %}
+                <div class="banner-with-claims__description">{{ section.settings.description }}</div>
+            {% endif %}
+            {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+                <a href="{{ section.settings.button_link }}" class="banner-with-claims__button">{{ section.settings.button_text }}</a>
+            {% endif %}
+        </div>
+        <div class="banner-with-claims__background">
+            {% if section.settings.background_video != blank %}
+                {{ section.settings.background_video | video_tag: image_size: '1924x', class: 'banner-with-claims__background-video--desktop', autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+            {% else %}
+                <img src="{{ section.settings.background_image | image_url: width: 1924 }}" alt="{{ section.settings.background_image.alt }}" class="banner-with-claims__background-image--desktop" width="{{ section.settings.background_image.width }}" height="{{ section.settings.background_image.height }}">
+            {% endif %}
+            {% if section.settings.background_video_mobile != blank %}
+                {{ section.settings.background_video_mobile | default: section.settings.background_video | video_tag: image_size: '1024x', class: 'banner-with-claims__background-video--mobile', autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+            {% else %}
+                <img src="{{ section.settings.background_image_mobile | default: section.settings.background_image | image_url: width: 1024 }}" alt="{{ section.settings.background_image.alt }}" class="banner-with-claims__background-image--mobile" width="{{ section.settings.background_image.width }}" height="{{ section.settings.background_image.height }}">
+            {% endif %}
+        </div>
+        <div class="banner-with-claims__claims" style="--animation-duration: {{ section.blocks.size | times: 10 }}s;">
+            <div class="banner-with-claims__claims-wrapper">
+                {% for i in (1..6) %}
+                    {% for block in section.blocks %}
+                        <div class="banner-with-claims__claim">
+                            <img src="{{ block.settings.icon | image_url: width: 400 }}" alt="{{ block.settings.icon.alt }}" class="banner-with-claims__claim-icon" width="{{ block.settings.icon.width }}" height="{{ block.settings.icon.height }}">
+                            {% if block.settings.title != blank %}
+                                <span class="banner-with-claims__claim-title">{{ block.settings.title }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .banner-with-claims__inner{
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .banner-with-claims__content{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        padding: 40px;
+    }
+
+    .banner-with-claims__content--top_left{
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .banner-with-claims__content--top_center{
+        align-items: center;
+        justify-content: flex-start;
+        text-align: center;
+    }
+
+    .banner-with-claims__content--top_right{
+        align-items: flex-end;
+        justify-content: flex-start;
+    }
+
+    .banner-with-claims__content--middle_left{
+        align-items: flex-start;
+        justify-content: center;
+        text-align: left;
+    }
+
+    .banner-with-claims__content--middle_center{
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .banner-with-claims__content--middle_right{
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+    .banner-with-claims__content--bottom_left{
+        align-items: flex-start;
+        justify-content: flex-end;
+    }
+
+    .banner-with-claims__content--bottom_center{
+        align-items: center;
+        justify-content: flex-end;
+        text-align: center;
+    }
+
+    .banner-with-claims__content--bottom_right{
+        align-items: flex-end;
+        justify-content: flex-end;
+    }
+
+    .banner-with-claims__title{
+        font-size: 60px;
+        font-weight: 500;
+        line-height: 1.1;
+        text-align: center;
+        margin: 0;
+    }
+
+    .banner-with-claims__description,
+    .banner-with-claims__title,
+    .banner-with-claims__tag{
+        max-width: 700px;
+        text-align: inherit;
+        color: var(--color, #000);
+    }
+
+    .banner-with-claims__description{
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 1.2;
+        margin: 0;
+    }
+
+    .banner-with-claims__button{
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.2;
+        text-decoration: none;
+        color: var(--button-color, #000);
+        background-color: var(--background-color, #fff);
+        padding: 13px 30px;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .banner-with-claims__button:hover{
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .banner-with-claims__background{
+        width: 100%;
+    }
+
+    .banner-with-claims__background img,
+    .banner-with-claims__background video{
+        width: 100%;
+        height: auto;
+        display: flex;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    @media (max-width: 989px){
+        .banner-with-claims__background-video--desktop,
+        .banner-with-claims__background-image--desktop{
+            display: none!important;
+        }
+    }
+
+    @media (min-width: 990px){
+        .banner-with-claims__background-video--mobile,
+        .banner-with-claims__background-image--mobile{
+            display: none!important;
+        }
+    }
+
+
+    .banner-with-claims__claims{
+        position: absolute;
+        bottom: 0;
+        z-index: 2;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        padding: 10px 0;
+    }
+
+    .banner-with-claims__claims-wrapper{
+        display: flex;
+        gap: 80px;
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        align-items: center;
+        animation: animate-claims var(--animation-duration) linear infinite;
+    }
+
+    @keyframes animate-claims {
+        0%{
+            transform: translateX(0);
+        }
+        100%{
+            transform: translateX(-100%);
+        }
+    }
+
+    .banner-with-claims__claim{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        flex-shrink: 0;
+        flex-wrap: nowrap;
+        text-transform: uppercase;
+        font-size: 14px;
+        color: var(--color, #000);
+    }
+
+    .banner-with-claims__claim-icon{
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+    }
+
+    /* Desktop Positions (990px and above) */
+    @media (min-width: 990px) {
+        .banner-with-claims__content--top_left{
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .banner-with-claims__content--top_center{
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+        }
+
+        .banner-with-claims__content--top_right{
+            align-items: flex-end;
+            justify-content: flex-start;
+        }
+
+        .banner-with-claims__content--middle_left{
+            align-items: flex-start;
+            justify-content: center;
+            text-align: left;
+        }
+
+        .banner-with-claims__content--middle_center{
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .banner-with-claims__content--middle_right{
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .banner-with-claims__content--bottom_left{
+            align-items: flex-start;
+            justify-content: flex-end;
+        }
+
+        .banner-with-claims__content--bottom_center{
+            align-items: center;
+            justify-content: flex-end;
+            text-align: center;
+        }
+
+        .banner-with-claims__content--bottom_right{
+            align-items: flex-end;
+            justify-content: flex-end;
+        }
+    }
+
+    /* Mobile Positions (989px and below) */
+    @media (max-width: 989px) {
+        .banner-with-claims__content--mobile-top_left{
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .banner-with-claims__content--mobile-top_center{
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+        }
+
+        .banner-with-claims__content--mobile-top_right{
+            align-items: flex-end;
+            justify-content: flex-start;
+        }
+
+        .banner-with-claims__content--mobile-middle_left{
+            align-items: flex-start;
+            justify-content: center;
+            text-align: left;
+        }
+
+        .banner-with-claims__content--mobile-middle_center{
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .banner-with-claims__content--mobile-middle_right{
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .banner-with-claims__content--mobile-bottom_left{
+            align-items: flex-start;
+            justify-content: flex-end;
+        }
+
+        .banner-with-claims__content--mobile-bottom_center{
+            align-items: center;
+            justify-content: flex-end;
+            text-align: center;
+        }
+
+        .banner-with-claims__content--mobile-bottom_right{
+            align-items: flex-end;
+            justify-content: flex-end;
+        }
+
+        .banner-with-claims__title{
+            font-size: 40px;
+        }
+
+        .banner-with-claims__description{
+            font-size: 16px;
+        }
+
+        .banner-with-claims__content{
+            padding: 50px 20px;
+        }
+
+        .banner-with-claims__claims-wrapper{
+            animation-duration: calc(var(--animation-duration) / 3);
+            gap: 40px;
+        }
+    }
+</style>
+
+{% if section.settings.content_height == 'fixed' %}
+    <style>
+        .banner-with-claims--{{section.id}}{
+            height: {{ section.settings.content_height_fixed }}svh;
+        }
+
+        .banner-with-claims--{{section.id}} .banner-with-claims__background{
+            height: 100%;
+        }
+
+        .banner-with-claims--{{section.id}} .banner-with-claims__background-image--desktop,
+        .banner-with-claims--{{section.id}} .banner-with-claims__background-image--mobile,
+        .banner-with-claims--{{section.id}} .banner-with-claims__background-video--desktop,
+        .banner-with-claims--{{section.id}} .banner-with-claims__background-video--mobile{
+            height: 100%;
+        }
+    </style>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Banner with Claims",
+  "settings": [
+    {
+        "type": "select",
+        "id": "content_height",
+        "label": "Content Height",
+        "options": [
+            {
+                "value": "fixed",
+                "label": "Fixed"
+            },
+            {
+                "value": "adaptive",
+                "label": "Adaptive"
+            }
+        ],
+        "default": "adaptive"
+    },
+    {
+        "type": "range",
+        "id": "content_height_fixed",
+        "label": "Content Height - Fixed",
+        "min": 10,
+        "max": 100,
+        "step": 10,
+        "default": 100,
+        "unit": "%",
+        "info": "Only applies when content height is set to fixed"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Button Background Color",
+      "default": "#fff"
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Tag Text"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content Position",
+      "options": [
+        {
+          "value": "top_left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top_center",
+          "label": "Top Center"
+        },
+        {
+          "value": "top_right",
+          "label": "Top Right"
+        },
+        {
+          "value": "middle_left",
+          "label": "Middle Left"
+        },
+        {
+          "value": "middle_center",
+          "label": "Middle Center"
+        },
+        {
+          "value": "middle_right",
+          "label": "Middle Right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "middle_left"
+    },
+    {
+      "type": "select",
+      "id": "content_position_mobile",
+      "label": "Content Position - Mobile",
+      "options": [
+        {
+          "value": "top_left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top_center",
+          "label": "Top Center"
+        },
+        {
+          "value": "top_right",
+          "label": "Top Right"
+        },
+        {
+          "value": "middle_left",
+          "label": "Middle Left"
+        },
+        {
+          "value": "middle_center",
+          "label": "Middle Center"
+        },
+        {
+          "value": "middle_right",
+          "label": "Middle Right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "middle_left"
+    },
+    {
+      "type": "video",
+      "id": "background_video",
+      "label": "Background Video - Desktop"
+    },
+    {
+      "type": "video",
+      "id": "background_video_mobile",
+      "label": "Background Video - Mobile"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image - Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Background Image - Mobile"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "claim",
+      "name": "Claim",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner with Claims",
+      "category": "Banner"
+    }
+  ]
+}
+{% endschema %}
+

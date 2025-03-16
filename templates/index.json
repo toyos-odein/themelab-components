@@ -38,9 +38,121 @@
         "button_bg_color": "#000000",
         "button_border_radius": 8
       }
+    },
+    "featured_products_RcKRtb": {
+      "type": "featured-products",
+      "blocks": {
+        "product_kpXzde": {
+          "type": "product",
+          "settings": {
+            "product": "image-with-product-slider",
+            "subscription": false,
+            "tag": "20% OFF",
+            "description_title": "Transform your Shopify store with visual appealing sections and components",
+            "custom_image": "shopify://shop_images/CenteredPDP.jpg",
+            "custom_button_text": "BUY NOW AT 20% OFF"
+          }
+        },
+        "product_7b3cxd": {
+          "type": "product",
+          "settings": {
+            "product": "mega-menu",
+            "subscription": false,
+            "tag": "EXCLUSIVE",
+            "description_title": "Transform your Shopify store with visual appealing sections and components",
+            "custom_button_text": "BUY NOW AT 20%"
+          }
+        }
+      },
+      "block_order": [
+        "product_kpXzde",
+        "product_7b3cxd"
+      ],
+      "settings": {
+        "title": "Find the perfect section for your store",
+        "subtitle": "SHOPIFY THEME SECTIONS",
+        "opinions": "20 opinions",
+        "description": "<p>Transform your Shopify store with visual appealing sections and components</p>",
+        "margin_top": 0,
+        "background_color": "#000000",
+        "text_color": "#ffffff",
+        "stars_color": "#0000fe",
+        "tag_background_color": "#0000fe",
+        "tag_text_color": "#ffffff",
+        "card_background_color": "#ffffff",
+        "card_text_color": "#000000"
+      }
+    },
+    "reviews_QkDXC6": {
+      "type": "reviews",
+      "blocks": {
+        "review_bBBwrT": {
+          "type": "review",
+          "settings": {
+            "title": "Mejor atencion imposible",
+            "content": "<p>Me encanta que estos productos se adapten a mi cabello y a mis preocupaciones. El shampoo y el acondicionador me dejan el pelo limpio e hidratado, y la mascarilla capilar es el capricho semanal perfecto. ¡Resultados fantásticos!</p>",
+            "author": "Test",
+            "rating": 5
+          }
+        },
+        "review_zPcYJw": {
+          "type": "review",
+          "settings": {
+            "title": "Test2",
+            "content": "<p>Me encanta que estos productos se adapten a mi cabello y a mis preocupaciones. El shampoo y el acondicionador me dejan el pelo limpio e hidratado, y la mascarilla capilar es el capricho semanal perfecto. ¡Resultados fantásticos!</p>",
+            "author": "Test",
+            "rating": 5
+          }
+        },
+        "review_YjBaYq": {
+          "type": "review",
+          "settings": {
+            "title": "Testing",
+            "content": "<p>Me encanta que estos productos se adapten a mi cabello y a mis preocupaciones. El shampoo y el acondicionador me dejan el pelo limpio e hidratado, y la mascarilla capilar es el capricho semanal perfecto. ¡Resultados fantásticos!</p>",
+            "author": "",
+            "rating": 5
+          }
+        },
+        "review_4XgYaL": {
+          "type": "review",
+          "settings": {
+            "title": "Manoloo",
+            "content": "<p>Me encanta que estos productos se adapten a mi cabello y a mis preocupaciones.</p>",
+            "author": "",
+            "rating": 5
+          }
+        },
+        "review_QMrRcT": {
+          "type": "review",
+          "settings": {
+            "title": "Pues la polla",
+            "content": "<p>Me encanta que estos productos se adapten a mi cabello y a mis preocupaciones. El shampoo y el acondicionador me dejan el pelo limpio e hidratado, y la mascarilla capilar es el capricho semanal perfecto. ¡Resultados fantásticos!</p>",
+            "author": "",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "review_bBBwrT",
+        "review_zPcYJw",
+        "review_YjBaYq",
+        "review_4XgYaL",
+        "review_QMrRcT"
+      ],
+      "settings": {
+        "title": "Find the perfect section for your store",
+        "average_rating": "4.9",
+        "average_rating_label": "100 opinions",
+        "icon": "<svg width=\"15\" height=\"14\" viewbox=\"0 0 15 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                 <path d=\"M7.5 10.2453L10.5417 9.47445L11.8125 13.3911L7.5 10.2453ZM14.5 5.18278H9.14583L7.5 0.141113L5.85417 5.18278H0.5L4.83334 8.30778L3.1875 13.3494L7.52083 10.2244L10.1875 8.30778L14.5 5.18278Z\" fill=\"black\"></path>\n                </svg>\n<svg width=\"15\" height=\"14\" viewbox=\"0 0 15 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                 <path d=\"M7.5 10.2453L10.5417 9.47445L11.8125 13.3911L7.5 10.2453ZM14.5 5.18278H9.14583L7.5 0.141113L5.85417 5.18278H0.5L4.83334 8.30778L3.1875 13.3494L7.52083 10.2244L10.1875 8.30778L14.5 5.18278Z\" fill=\"black\"></path>\n                </svg>\n<svg width=\"15\" height=\"14\" viewbox=\"0 0 15 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                 <path d=\"M7.5 10.2453L10.5417 9.47445L11.8125 13.3911L7.5 10.2453ZM14.5 5.18278H9.14583L7.5 0.141113L5.85417 5.18278H0.5L4.83334 8.30778L3.1875 13.3494L7.52083 10.2244L10.1875 8.30778L14.5 5.18278Z\" fill=\"black\"></path>\n                </svg>\n<svg width=\"15\" height=\"14\" viewbox=\"0 0 15 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                 <path d=\"M7.5 10.2453L10.5417 9.47445L11.8125 13.3911L7.5 10.2453ZM14.5 5.18278H9.14583L7.5 0.141113L5.85417 5.18278H0.5L4.83334 8.30778L3.1875 13.3494L7.52083 10.2244L10.1875 8.30778L14.5 5.18278Z\" fill=\"black\"></path>\n                </svg>\n<svg width=\"15\" height=\"14\" viewbox=\"0 0 15 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                 <path d=\"M7.5 10.2453L10.5417 9.47445L11.8125 13.3911L7.5 10.2453ZM14.5 5.18278H9.14583L7.5 0.141113L5.85417 5.18278H0.5L4.83334 8.30778L3.1875 13.3494L7.52083 10.2244L10.1875 8.30778L14.5 5.18278Z\" fill=\"black\"></path>\n                </svg>",
+        "text_color": "#000000",
+        "box_color": "#f3f3f3",
+        "shadow_color": "rgba(148, 88, 255, 0.05)"
+      }
     }
   },
   "order": [
-    "split_banner_rMRyYP"
+    "split_banner_rMRyYP",
+    "featured_products_RcKRtb",
+    "reviews_QkDXC6"
   ]
 }

@@ -1,0 +1,223 @@
+<section class="image-with-products">
+    <div class="image-with-products__image">
+        {% if section.settings.video %}
+            {{ section.settings.video | video_tag: image_size: '1924x', autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+        {% else %}
+            <img src="{{ section.settings.image | image_url: width: 1924 }}" alt="{{ section.settings.image.alt }}" loading="lazy">
+        {% endif %}
+    </div>
+    <div class="image-with-products__products">
+        {% for block in section.blocks %}
+            <div class="image-with-products__products__product" style="background-color: {{ block.settings.background_color }}; --btn-bg-color: {{ block.settings.button_background_color }}; --btn-color: {{ block.settings.button_text_color }};">
+                <img src="{{ block.settings.image | image_url: width: 1900 }}" alt="{{ block.settings.image.alt }}" loading="lazy">
+                <div class="image-with-products__products__product__content">
+                    <h3 style="color: {{ block.settings.text_color }};">{{ block.settings.title }}</h3>
+                    <a class="image-with-products__products__product__button image-with-products__products__product__button--{{ block.settings.button_style }}" href="{{ block.settings.url }}">{{ block.settings.button_text }}</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+    .image-with-products{
+        width: 100%;
+        position: relative;
+        display: grid;
+        grid-template-columns: 1.3fr 0.7fr;
+    }
+    .image-with-products__image{
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        left: 0;
+    }
+
+    .image-with-products__image img,
+    .image-with-products__image video{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .image-with-products__products{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .image-with-products__products__product{
+        width: 100%;
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .image-with-products__products__product img{
+        width: 65%;
+        object-fit: contain;
+    }
+
+    .image-with-products__products__product__content{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .image-with-products__products__product__button{
+        text-decoration: none;
+        color: var(--btn-color);
+        background-color: var(--btn-bg-color);
+        padding: 5px 14px;
+        border-radius: 5px;
+        font-size: 1.2rem;
+    }
+
+    .image-with-products__products__product__button--square{
+        border-radius: 0;
+    }
+
+    .image-with-products__products__product__button--rounded{
+        border-radius: 10px;
+    }
+
+    .image-with-products__products__product__button--round{
+        border-radius: 50%;
+    }
+
+    .image-with-products__products__product__content h3{
+        font-size: 1.8rem;
+        max-width: 50%;
+        margin-right: auto;
+    }
+
+    @media (max-width: 768px){
+        .image-with-products{
+            grid-template-columns: 1fr;
+        }
+
+        .image-with-products__products{
+            flex-direction: row;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-snap-align: start;
+        }
+
+        .image-with-products__image{
+            height: 80vh;
+            position: relative;
+        }
+
+        .image-with-products__products__product{
+            height:60vh;
+            width: 100%;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+        }
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Image with Products",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Background Video"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Product Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Button Link"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button Style",
+          "options": [
+            {
+              "value": "square",
+              "label": "Square"
+            },
+            {
+              "value": "rounded",
+              "label": "Rounded Corners"
+            },
+            {
+              "value": "round",
+              "label": "Round"
+            }
+          ],
+          "default": "rounded"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#000"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#ffffff"
+        },
+        {
+            "type": "color",
+            "id": "button_background_color",
+            "label": "Button Background Color",
+            "default": "#000000"
+        },
+        {
+            "type": "color",
+            "id": "button_text_color",
+            "label": "Button Text Color",
+            "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Products",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}

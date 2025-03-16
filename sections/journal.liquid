@@ -1,0 +1,343 @@
+{% if template.name == 'blog' %}
+    {% assign blog = blog %}
+    {% assign show_all_articles = true %}
+{% else %}
+    {% assign blog = section.settings.blog %}
+    {% assign show_all_articles = section.settings.show_all_articles %}
+{% endif %}
+
+{% assign show_date = section.settings.show_date %}
+{% assign show_excerpt = section.settings.show_excerpt %}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --posts-per-row-desktop: {{ section.settings.posts_per_row_desktop }};
+    --posts-per-row-mobile: {{ section.settings.posts_per_row_mobile }};
+    --gap-spacing: {{ section.settings.gap_spacing }}px;
+  }
+
+  /* Add this to hide the default pagination */
+  .journal__pagination__next.is-loading {
+    opacity: 1;
+  }
+  .journal__pagination__next.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<section class="journal">
+    <journal-infinite-scroll>
+        <div class="journal__title">
+            <h2>{{ section.settings.title }}</h2>
+        </div>
+        <div class="journal__wrapper" data-journal-grid>
+            {% if show_all_articles and blog %}
+                {% paginate blog.articles by 30 %}
+                    {% for article in blog.articles %}
+                        <a href="{{ article.url }}" class="journal__item">
+                            <div class="journal__item__image">
+                                <img src="{{ article.image | image_url: width: 1500 }}" alt="{{ article.title }}">
+                            </div>
+                            <h3 class="journal__item__title">{{ article.title }}</h3>
+                            {% if show_date %}
+                                <p class="journal__item__date">{{ article.published_at | date: '%B %d, %Y' }}</p>
+                            {% endif %}
+                        </a>
+                    {% endfor %}
+                    {% if paginate.next %}
+                        <div class="journal__pagination__next" data-current-page="{{ paginate.current_page }}" data-total-pages="{{ paginate.pages }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 66 66"><circle stroke-width="6" cx="33" cy="33" r="30" fill="none" class="path"/></svg>
+                        </div>
+                    {% endif %}
+                {% endpaginate %}
+            {% else %}
+                {% for article in blog.articles limit: section.settings.posts_limit %}
+                    <a href="{{ article.url }}" class="journal__item">
+                        <div class="journal__item__image">
+                            <img src="{{ article.image | image_url: width: 1500 }}" alt="{{ article.title }}">
+                        </div>
+                        <h3 class="journal__item__title">{{ article.title }}</h3>
+                        {% if show_date %}
+                            <p class="journal__item__date">{{ article.published_at | date: '%B %d, %Y' }}</p>
+                        {% endif %}
+                        {% if show_excerpt %}
+                            <p class="journal__item__excerpt">{{ article.content | strip_html | truncate: 150 }}</p>
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </journal-infinite-scroll>
+</section>
+
+<script>
+class JournalInfiniteScroll {
+  constructor() {
+    this.grid = document.querySelector('[data-journal-grid]');
+    this.paginationNext = this.grid.querySelector('.journal__pagination__next');
+    
+    if (!this.paginationNext) return;
+    
+    this.currentPage = parseInt(this.paginationNext.dataset.currentPage);
+    this.totalPages = parseInt(this.paginationNext.dataset.totalPages);
+    this.isLoading = false;
+    
+    this.initIntersectionObserver();
+  }
+
+  initIntersectionObserver() {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !this.isLoading) {
+          this.loadNextPage();
+        }
+      });
+    }, options);
+
+    observer.observe(this.paginationNext);
+  }
+
+  async loadNextPage() {
+    if (this.isLoading || this.currentPage >= this.totalPages) return;
+    
+    this.isLoading = true;
+    this.paginationNext.classList.add('is-loading');
+
+    try {
+      const nextPage = this.currentPage + 1;
+      const url = window.location.pathname + '?page=' + nextPage;
+      const response = await fetch(url);
+      const html = await response.text();
+      
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const newItems = doc.querySelectorAll('.journal__item');
+      
+      newItems.forEach(item => {
+        this.grid.insertBefore(item, this.paginationNext);
+      });
+
+      this.currentPage = nextPage;
+      
+      if (this.currentPage >= this.totalPages) {
+        this.paginationNext.classList.add('is-hidden');
+      }
+    } catch (error) {
+      console.error('Error loading next page:', error);
+    } finally {
+      this.isLoading = false;
+      this.paginationNext.classList.remove('is-loading');
+    }
+  }
+}
+
+// Initialize the infinite scroll
+customElements.define('journal-infinite-scroll', class extends HTMLElement {
+  connectedCallback() {
+    new JournalInfiniteScroll();
+  }
+});
+</script>
+
+<style>
+.journal {
+  padding: 40px 0;
+}
+
+.journal__title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.journal__wrapper {
+  display: grid;
+  gap: calc(var(--gap-spacing) * 2) var(--gap-spacing);
+  margin: 0 calc(var(--gap-spacing) * 2);
+}
+
+/* Grid layout based on settings */
+@media screen and (min-width: 750px) {
+  .journal__wrapper {
+    grid-template-columns: repeat(var(--posts-per-row-desktop), 1fr);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .journal__wrapper {
+    grid-template-columns: repeat(var(--posts-per-row-mobile), 1fr);
+  }
+}
+
+.journal__item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.journal__item__image {
+  aspect-ratio: 3/4;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.journal__item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.journal__item__title {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.journal__item__date {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin: 0 0 10px;
+}
+
+.journal__item__excerpt {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Pagination spinner */
+.journal__pagination__next {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  animation: rotate 2s linear infinite;
+}
+
+.spinner .path {
+  stroke: rgba(var(--color-foreground), 0.75);
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Journal",
+  "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Journal"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show excerpt",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all_articles",
+      "label": "Show all articles",
+      "default": true,
+      "info": "If unchecked, will respect the post limit setting unless on blog page"
+    },
+    {
+      "type": "range",
+      "id": "posts_limit",
+      "label": "Number of posts to show",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "default": 9,
+      "info": "Only applies when 'Show all articles' is unchecked"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "posts_per_row_desktop",
+      "label": "Posts per row on desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "posts_per_row_mobile",
+      "label": "Posts per row on mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "gap_spacing",
+      "label": "Space between posts",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Journal",
+      "category": "Blog"
+    }
+  ]
+}
+{% endschema %}

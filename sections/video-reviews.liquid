@@ -1,0 +1,250 @@
+<section class="video-reviews" {{ section.shopify_attributes }} style="--title-size: {{ section.settings.title_size }}rem;">
+    <div class="video-reviews__inner">
+        <h3 class="video-reviews__inner__title">{{ section.settings.title }}</h3>
+        <div class="video-reviews__wrapper video-reviews__wrapper--{{ section.id }} swiper">
+            <div class="swiper-wrapper">
+                {% for block in section.blocks %}
+                    <review-player class="video-reviews__video-wrapper swiper-slide" {{ block.shopify_attributes }}>
+                        {% assign imgUrl = block.settings.poster | image_url: width: 1500 %}
+                        {{ block.settings.video | video_tag: poster: imgUrl, loop: false }}
+                        <div class="js-custom-player">
+                            <svg width="113" height="111" viewBox="0 0 113 111" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M91 55.5L39.25 85.3779L39.25 25.6221L91 55.5Z" fill="#FDF9F2"/>
+                            <path d="M110.5 55.5C110.5 84.7292 86.3657 108.5 56.5 108.5C26.6343 108.5 2.5 84.7292 2.5 55.5C2.5 26.2708 26.6343 2.5 56.5 2.5C86.3657 2.5 110.5 26.2708 110.5 55.5Z" stroke="#FDF9F2" stroke-width="5"/>
+                            </svg>
+                        </div>
+                        {% assign imgUrl = blank %}
+                    </review-player>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+
+    .video-reviews__inner__title{
+        text-align: center;
+        margin-bottom: 3rem;
+        font-size: var(--title-size, 3rem);
+    }
+
+    .video-reviews{
+        margin: 100px 30px;
+    }
+
+    .video-reviews__video-wrapper{
+        position: relative;
+        height: 0;
+        padding-bottom: 40%;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .video-reviews__video-wrapper video{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    review-player{
+        display: flex;
+    }
+
+    .js-custom-player{
+        all: unset;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .playing svg{
+      opacity: 0;
+    }
+
+    .js-custom-player *{
+        height: 117px;
+        width: 117px;
+        pointer-events: none;
+    }
+
+    @media (max-width: 768px){
+        .js-custom-player *{
+            width: 50px;
+            height: 50px;
+        }
+
+        .video-reviews__video-wrapper{
+            padding-bottom: 125%;
+        }
+
+        .video-reviews{
+            margin: 80px 0;
+        }
+
+        .swiper-custom-pagination .swiper-pagination-bullet{
+            width: 10px;
+            height: 10px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+        new Swiper('.video-reviews__wrapper--{{ section.id }}', {
+            slidesPerView: {{ section.settings.mobile_slides | default: 1.2 }},
+            spaceBetween: {{ section.settings.mobile_space | default: 15 }},
+            loop: true,
+            centeredSlides: true,
+            {% if section.settings.enable_autoplay %}
+            autoplay: {
+                delay: {{ section.settings.autoplay_delay | times: 1000 | default: 3000 }},
+                disableOnInteraction: false
+            },
+            {% endif %}
+            breakpoints: {
+                768:{
+                    slidesPerView: {{ section.settings.desktop_slides | default: 4 }},
+                    spaceBetween: {{ section.settings.desktop_space | default: 65 }},
+                    centeredSlides: false
+                }
+            }
+        })
+    })
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+        if(!customElements.get("review-player")){
+            customElements.define("review-player", class ReviewPlayer extends HTMLElement{
+                constructor(){
+                    super()
+
+                    this.video = this.querySelector("video")
+                    this.control = this.querySelector(".js-custom-player")
+                    this.playing = false
+
+                    this.control.addEventListener("click", this.toggleVideo.bind(this))
+                }
+
+                toggleVideo(){
+                  this.classList.toggle('playing')
+                    if(this.playing){
+                        this.video.pause()
+                        this.playing = false
+                    }else{
+                        this.video.play()
+                        this.playing = true
+                    }
+                }
+            })
+        }
+    })
+</script>
+
+{%- schema -%}
+{
+    "name": "UGC Slider",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "range",
+            "id": "title_size",
+            "min": 1,
+            "max": 6,
+            "step": 0.5,
+            "default": 3,
+            "label": "Title Size (rem)"
+        },
+        {
+            "type": "range",
+            "id": "desktop_slides",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4,
+            "label": "Desktop Slides"
+        },
+        {
+            "type": "range",
+            "id": "mobile_slides",
+            "min": 1,
+            "max": 3,
+            "step": 0.1,
+            "default": 1.2,
+            "label": "Mobile Slides"
+        },
+        {
+            "type": "range",
+            "id": "desktop_space",
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "default": 65,
+            "label": "Desktop Space Between Slides (px)"
+        },
+        {
+            "type": "range",
+            "id": "mobile_space",
+            "min": 0,
+            "max": 50,
+            "step": 5,
+            "default": 15,
+            "label": "Mobile Space Between Slides (px)"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_autoplay",
+            "label": "Enable Autoplay",
+            "default": false
+        },
+        {
+            "type": "range",
+            "id": "autoplay_delay",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "default": 3,
+            "label": "Autoplay Delay (s)",
+            "info": "Time between slide transitions in seconds"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "review",
+            "name": "Review",
+            "settings": [
+                {
+                    "type": "video",
+                    "id": "video",
+                    "label": "Video"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "poster",
+                    "label": "Image Preview"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "UGC Slider"
+        }
+    ]
+}
+{%- endschema -%}

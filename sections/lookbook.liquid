@@ -1,0 +1,325 @@
+{% assign unique_types = '' | split: '' %}
+
+{% capture togglers %}
+    <button class="collection-images__grid-toggler-button" data-block-type="all">
+        All
+    </button>
+{% endcapture %}
+
+{% for block in section.blocks %}
+    {% assign type = block.settings.type | strip %}
+    {% unless type == blank or unique_types contains type %}
+        {% assign unique_types = unique_types | push: type %}
+        {% capture togglers %}
+            {{ togglers }}
+            <button class="collection-images__grid-toggler-button" data-block-type="{{ type }}">
+                {{ type }}
+            </button>
+        {% endcapture %}
+    {% endunless %}
+
+    {% capture media_content %}
+        {{ media_content }}
+        <div class="collection-images__image" data-block-type="{{ type }}">
+            {% if block.settings.url %}
+              <a href="{{ block.settings.url }}">
+            {% endif %}
+            <div class="collection-images__image-wrapper">
+                {% if block.settings.video %}
+                    {{ block.settings.video | video_tag: image_size: '1024x', autoplay: true, loop: true, muted: true, playsinline: true }}
+                {% else %}
+                    <img src="{{ block.settings.image | image_url: width: 1920 }}" alt="{{ block.settings.image.alt }}">
+                {% endif %}
+            </div>
+            <span class="collection-images__image-title">{{ block.settings.title }}</span>
+            {% if block.settings.url %}
+              </a>
+            {% endif %}
+        </div>
+    {% endcapture %}
+{% endfor %}
+
+
+<section class="collection-images">
+    <div class="collection-images__top-row page-width">
+        <div class="collection-images__header-wrapper">
+            <h2 class="collection-images__header">{{ section.settings.title }}</h2>
+            <div class="collection-images__description">{{ section.settings.description }}</div>
+            {% unless unique_types.size == 1 or unique_types.size == 0%}
+                {{ togglers }}
+            {% endunless %}
+        </div>
+        <div class="collection-images__grid-layout-togglers">
+            <button class="collection-images__grid-layout-toggler" data-layout="4">4</button>
+            <button class="collection-images__grid-layout-toggler" data-layout="6">6</button>
+        </div>
+    </div>
+    <div class="collection-images__inner page-width collection-images__inner--{{ section.id }} collection-images__inner--{{ section.blocks.size }}">
+        {{ media_content }}
+    </div>
+</section>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const togglers = document.querySelectorAll('.collection-images__grid-toggler-button');
+        const images = document.querySelectorAll('.collection-images__image');
+        const layoutTogglers = document.querySelectorAll('.collection-images__grid-layout-toggler');
+
+        // Set initial states
+        togglers[0]?.setAttribute('aria-selected', 'true');
+        layoutTogglers[0]?.setAttribute('aria-selected', 'true');
+
+        // Show all images initially
+        images.forEach(image => {
+            image.style.display = 'flex';
+        });
+
+        togglers.forEach(toggler => {
+            toggler.addEventListener('click', function() {
+                // Update active state for type togglers
+                togglers.forEach(t => t.setAttribute('aria-selected', 'false'));
+                toggler.setAttribute('aria-selected', 'true');
+
+                // Update images
+                const type = toggler.dataset.blockType;
+                images.forEach(image => {
+                    if (type === 'all') {
+                        image.style.display = 'flex';
+                    } else {
+                        image.style.display = image.dataset.blockType === type ? 'flex' : 'none';
+                    }
+                });
+            });
+        });
+
+        layoutTogglers.forEach(toggler => {
+            toggler.addEventListener('click', function() {
+                // Update active state for layout togglers
+                layoutTogglers.forEach(t => t.setAttribute('aria-selected', 'false'));
+                toggler.setAttribute('aria-selected', 'true');
+
+                // Update layout
+                var layout = parseInt(toggler.dataset.layout);
+                window.innerWidth < 990 ? (layout == 4 ? layout = 1 : layout = 2) : layout;
+                console.log(layout);
+                const container = document.querySelector('.collection-images__inner--{{ section.id }}');
+                container.style.gridTemplateColumns = `repeat(${layout}, 1fr)`;
+            });
+        });
+    });
+</script>
+
+<style>
+    .collection-images {
+        padding: 4rem 0;
+    }
+
+    .collection-images__top-row{
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 2rem;
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    .collection-images__header-wrapper {
+        text-align: center;
+    }
+
+    .collection-images__header {
+        font-size: 1.6em;
+        margin-bottom: .4em;
+        text-align: left;
+    }
+
+    .collection-images__description p{
+        font-size: 1em;
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+    .collection-images__grid-toggler {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        gap: 10px;        
+    }
+
+    .collection-images__grid-toggler-button {
+        padding: 0.5rem 1rem;
+        margin: 0 0.5rem;
+        border: 1px solid #ddd;
+        background: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .collection-images__grid-toggler-button:hover,
+    .collection-images__grid-toggler-button[aria-selected="true"] {
+        background: #000;
+        color: #fff;
+    }
+
+    .collection-images__grid-layout-toggler {
+        all: unset;
+        padding: 0;
+        height: 34px;
+        width: 34px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .collection-images__grid-layout-togglers {
+        display: flex;
+        gap: 10px;
+    }
+
+    .collection-images__grid-layout-toggler svg {
+        height: 24px;
+        width: fit-content;
+    }
+
+    .collection-images__grid-layout-toggler svg rect{
+        stroke-width: 0.6px;
+    }
+
+    .collection-images__grid-layout-toggler:hover,
+    .collection-images__grid-layout-toggler[aria-selected="true"]{
+        background-color: black;
+        color: white;
+    }
+
+    .collection-images__inner {
+        display: grid;
+        gap: 1rem;
+    }
+
+    /* Mobile styles (default) */
+    .collection-images__inner {
+        width: 100%;
+        grid-template-columns: repeat(1, 1fr);
+        align-items: stretch;
+    }
+
+    /* Tablet styles */
+    @media screen and (min-width: 768px) {
+        .collection-images__inner {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    /* Desktop styles with layout switching */
+    @media screen and (min-width: 990px) {
+        .collection-images__inner {
+            grid-template-columns: repeat(4, 1fr); /* Default to 4 columns */
+        }
+    }
+
+    .collection-images__image {
+        display: none; /* Hidden by default */
+        transition: opacity 0.3s ease;
+        background-color: #f0f0f0;
+        position: relative;
+    }
+
+    .collection-images__image-title{
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        color: white;
+        font-size: 12px;
+    }
+
+    .collection-images__image[data-block-type="image"] {
+        display: flex; /* Show only selected type */
+    }
+
+    .collection-images__image-wrapper{
+        display: flex;
+      height: 100%;
+    }
+
+    .collection-images__image-wrapper img,
+    .collection-images__image-wrapper video {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    @media screen and (max-width: 990px) {
+        .collection-images__top-row{
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+        }
+
+        .collection-images__header-wrapper{
+            width: 100%;
+        }
+
+        .collection-images__grid-layout-togglers{
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            width: 100%;
+        }
+    }
+</style>
+
+{% schema %}
+{
+    "name": "Lookbook",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Image",
+            "type": "image",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "type",
+                    "label": "Block Type",
+                    "info": "This will be used for filtering (e.g., 'Summer', 'Winter', etc.)"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "URL"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Imagen"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Lookbook"
+        }
+    ]
+}
+{% endschema %}

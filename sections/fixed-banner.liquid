@@ -1,0 +1,335 @@
+<section class="hero-product-scroll">
+    <div class="hero-product-scroll__inner hero-product-scroll__inner--{{section.id}}">
+        {% for block in section.blocks %}
+            <div class="hero-product-scroll__block-wrapper hero-product-scroll__block-wrapper--{{forloop.index}} container--large" style="
+                --section-text-color: {{ block.settings.text_color }};
+                --section-gradient: {{ block.settings.gradient }};
+                --section-background: {{ block.settings.background_color }};">
+                <div class="hero-product-scroll__block-left">
+                    <h3 class="hero-product-scroll__title quicksans gradient-text hideOnDesktop"
+                    style="--text-gradient: {{ block.settings.gradient }};">{{ block.settings.title }}</h3>
+                    <h3 class="hero-product-scroll__title quicksans gradient-text hideOnMobile"
+                    style="--text-gradient: {{ block.settings.gradient }};">{{ block.settings.title | newline_to_br   }}</h3>
+                </div>
+                <div class="hero-product-scroll__center">
+                    <div class="hero-product-scroll__ball"></div>
+                    <div class="hero-product-scroll__image">
+                        <img src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.image.alt }}">
+                    </div>
+                </div>
+                <div class="hero-product-scroll__right">
+                    <p class="hero-product-scroll__product-title">{{ block.settings.product_title }}</p>
+                    <div class="hero-product-scroll__right-text">{{ block.settings.description | newline_to_br }}</div>
+                    <a href="{{ block.settings.btn_url }}" class="button hero-product-scroll__btn">{{ block.settings.btn_text }}</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<script>
+    window.onload = ()=>{
+        setTimeout(()=>{
+            document.querySelector('.hero-product-scroll__outer').style.opacity = "1"
+        },300)
+    }
+</script>
+
+<style>
+    .hero-product-scroll__outer{
+        opacity: 0;
+    }
+    .hero-product-scroll__top{
+        display: flex;
+        width: 100%;
+        transform: translateY(1px);
+    }
+
+    .hero-product-scroll__top svg{
+        width: 100%;
+        display: flex;
+    }
+
+    .hero-product-scroll__top path{
+        fill: var(--svg-background);
+    }
+    
+    .hero-product-scroll__bottom{
+        display: flex;
+        width: 100%;
+        transform: rotate(180deg) translateY(1px);
+    }
+
+    .hero-product-scroll__bottom svg{
+        width: 100%;
+        display: flex;
+    }
+
+    .hero-product-scroll__bottom path{
+        fill: var(--svg-background);
+    }
+
+    .hero-product-scroll, .hero-product-scroll *{
+        transition: none!important;
+    }
+    .hero-product-scroll__inner{
+        width: 100%;
+        height: 100vh;
+        transition: none;
+    }
+
+    .hero-product-scroll__inner *{
+        transition: none;
+    }
+
+    .hero-product-scroll__block-wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--section-text-color);
+        background: var(--section-background);
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+        z-index: 1;
+        width: 100%;
+    }
+
+    .hero-product-scroll__block-wrapper--1{
+        visibility: visible;
+        clip-path: none;
+    }
+
+    .hero-product-scroll__block-left{
+        width: 30%;
+    }
+
+    .hero-product-scroll__title{
+        font-size: 70px;
+        line-height: 60px;
+        text-transform: unset;
+    }
+
+    .hero-product-scroll__center{
+        width: 40%;
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-product-scroll__product-title{
+        font-size: 40px;
+        color: var(--section-text-color);
+    }
+
+    .hero-product-scroll__ball{
+        width: 70%;
+        height: 0;
+        padding-bottom: 70%;
+        border-radius: 50%;
+        background: var(--section-gradient);
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 15%;
+        z-index: -1;
+    }
+
+    .hero-product-scroll__image{
+        width: 100%;
+    }
+
+    .hero-product-scroll__image img{
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .hero-product-scroll__right{
+        width: 30%;
+        padding: 0 20px;
+    }
+
+    .hero-product-scroll__right-text{
+        max-width: 275px;
+        margin-bottom: 40px;
+    }
+    
+    .hero-product-scroll__right-text *{
+        font-size: 20px;
+        color: var(--section-text-color);
+    }
+
+    .hero-product-scroll__btn{
+        margin: 0 auto;
+        max-width: 275px;
+        background: var(--section-text-color);
+        border-color: var(--section-text-color);
+        width: 100%;
+        text-align: center;
+        color: white;
+    }
+
+    @media(max-width: 1100px){
+        .hero-product-scroll__block-wrapper{
+            flex-direction: column;
+            padding: 120px 20px;
+        }
+
+        .hero-product-scroll__block-left,
+        .hero-product-scroll__center,
+        .hero-product-scroll__right{
+            width: 100%;
+        }
+
+        .hero-product-scroll__title{
+            line-height: 1;
+            font-size: 40px;
+            text-align: center;
+        }
+
+        .hero-product-scroll__right-text,
+        .hero-product-scroll__btn{
+            max-width: unset;
+            text-align: center;
+        }
+
+        .hero-product-scroll__product-title{
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .hero-product-scroll__right-text *{
+            font-size: 16px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        try{
+            const blocksSize = {{ section.blocks.size }};
+        
+            gsap.set(`#shopify-section-{{ section.id }} .hero-product-scroll__block-wrapper:not(:first-child)`, {
+                opacity: 1,
+                scale: 1,
+                // y: '100%',
+                clipPath: 'inset(100% 0% 0%)',
+                scale: 1,
+            })
+        
+            gsap.set(`#shopify-section-{{ section.id }} .hero-product-scroll__image img`, {
+                y: 5
+            })
+        
+            const animation = gsap.to(`#shopify-section-{{ section.id }} .hero-product-scroll__block-wrapper:not(:first-child)`, {
+                opacity: 1,
+                scale: 1,
+                duration: 1,
+                stagger: 1,
+                // y: '0%',
+                clipPath: 'inset(0% 0% 0%)',
+                scale: 1,
+            })
+
+            gsap.to(`#shopify-section-{{ section.id }} .hero-product-scroll__image img`, {
+                y: -5,
+                duration: 1,
+                repeat: -1,
+                yoyo: true,
+                ease: 'power1.inOut',
+            })
+        
+            ScrollTrigger.create({
+                trigger: `#shopify-section-{{ section.id }} .hero-product-scroll`,
+                start: 'top top',
+                end: `${blocksSize * window.innerHeight}px bottom`,
+                pin: `#shopify-section-{{ section.id }} .hero-product-scroll__inner`,
+                animation: animation,
+                scrub: 2,
+                //markers: true,
+            })
+        }catch(e){
+            console.log("Section not enabled")
+        }
+    })
+</script>
+
+{%- schema -%}
+{
+    "name": "Hero Scroll Section",
+    "class": "hero-product-scroll__outer",
+    "blocks": [
+        {
+            "type": "slide",
+            "name": "Slide",
+            "settings": [
+                {
+                    "type": "header",
+                    "content": "Colores"
+                },
+                {
+                    "type": "color",
+                    "id": "text_color",
+                    "label": "Color de texto"
+                },
+                {
+                    "type": "color",
+                    "id": "background_color",
+                    "label": "Color de fondo"
+                },
+                {
+                    "type": "color_background",
+                    "id": "gradient",
+                    "label": "Gradiente"
+                },
+                {
+                    "type": "header",
+                    "content": "Contenido"
+                },
+                {
+                    "type": "text",
+                    "id": "product_title",
+                    "label": "Título Producto"
+                },
+                {
+                    "type": "textarea",
+                    "id": "title",
+                    "label": "Título"
+                },
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Descripción"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_text",
+                    "label": "Texto Botón"
+                },
+                {
+                    "type": "url",
+                    "id": "btn_url",
+                    "label": "URL Botón"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Imagen"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Hero Scroll Section"
+        }
+    ] 
+}
+{%- endschema -%}

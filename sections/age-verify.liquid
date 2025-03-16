@@ -1,0 +1,366 @@
+<section class="age-verify age-verify--{{ section.id }}" style="
+    --logo-width-mobile: {{ section.settings.logo_width_mobile }}px;
+    --logo-width-desktop: {{ section.settings.logo_width }}px;
+    --title-size: {{ section.settings.title_size }}px;
+    --background-color: {{ section.settings.background_color }};
+    --color-content: {{ section.settings.content_color }};
+    display: none;
+">
+    <div class="age-verify__background">
+        {% if section.settings.background_image != blank %}
+            <img src="{{ section.settings.background_image | image_url: width: 1920 }}" alt="{{ section.settings.background_image.alt }}">
+        {% else %}
+            &nbsp;
+        {% endif %}
+    </div>
+    <div class="age-verify__content">
+        <img 
+            src="{{ section.settings.logo | image_url: width: 1920 }}" 
+            alt="{{ section.settings.logo.alt }}"
+            class="age-verify__logo"
+        >
+        <h3 class="age-verify__title">{{ section.settings.title }}</h3>
+        <p class="age-verify__description">{{ section.settings.description }}</p>
+        <div class="age-verify__buttons">
+            <button class="age-verify__button age-verify__button--{{ section.settings.button_style }} age-verify__button--yes">{{ section.settings.yes_text }}</button>
+            <button class="age-verify__button age-verify__button--{{ section.settings.button_style }} age-verify__button--no">{{ section.settings.no_text }}</button>
+        </div>
+    </div>
+    <div class="age-verify__no-message" style="display: none;">
+        <h3 class="age-verify__title">{{ section.settings.no_message_title }}</h3>
+        {{ section.settings.no_message }}
+        {% if section.settings.no_message_secondary != blank %}
+            <div class="age-verify__no-message-secondary">{{ section.settings.no_message_secondary }}</div>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+    .age-verify--{{ section.id }} *:not(button){
+        color: var(--color-content);
+    }
+
+    .age-verify{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .age-verify__background{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background-color: var(--background-color);  
+    }
+
+    .age-verify__background img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .age-verify__content,
+    .age-verify__no-message{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        z-index: 1;
+        text-align: center;
+        padding: 20px;
+        width: 100%;
+    }
+
+    .age-verify--{{ section.id }} .age-verify__logo {
+        width: var(--logo-width-mobile);
+        max-width: 100%;
+        height: auto;
+    }
+
+    .age-verify--{{ section.id }} .age-verify__title {
+        font-size: calc(var(--title-size) * 0.75);
+        margin: 0;
+    }
+
+
+    .age-verify__buttons{
+        display: flex;
+        gap: 10px;
+    }
+
+    .age-verify__description{
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .age-verify__button{
+        padding: 8px 40px;
+        border-radius: 5px;
+        background-color: transparent;
+        color: var(--background-color);
+        background: var(--color-content);
+        cursor: pointer;
+        outline: none;
+        border: none;
+        transition: filter 0.3s ease-in-out;
+        font-size: 14px;
+    }
+
+    .age-verify__button--rounded{
+        border-radius: 40px;
+    }
+
+    .age-verify__button--square{
+        border-radius: 0;
+    }
+
+    .age-verify__button:hover{
+        filter: brightness(0.95);
+    }
+
+
+    @media screen and (min-width: 750px) {
+        .age-verify--{{ section.id }} .age-verify__logo {
+            width: var(--logo-width-desktop);
+        }
+
+        .age-verify--{{ section.id }} .age-verify__title {
+            font-size: var(--title-size);
+        }
+    }
+</style>
+
+<script>
+class AgeVerify {
+    constructor() {
+        this.cookieName = 'age_verified';
+        this.cookieDuration = 30; // days
+        this.section = document.querySelector('.age-verify');
+        this.yesButton = this.section.querySelector('.age-verify__button--yes');
+        this.noButton = this.section.querySelector('.age-verify__button--no');
+        this.noMessage = this.section.querySelector('.age-verify__no-message');
+        this.content = this.section.querySelector('.age-verify__content');
+        
+        if (!this.section) return;
+
+        // Check if we're in Shopify customizer and this section is selected
+        if (Shopify.designMode && this.section.dataset.sectionId === window.Shopify.currentSection.id) {
+            this.showSection();
+        }
+
+        console.log(this.getCookie());
+        if (!this.getCookie()) {
+            this.showSection();
+        }else if(this.getCookie() === 'false'){
+            this.content.style.display = 'none';
+            this.noMessage.removeAttribute('style');
+            this.showSection();
+        }
+
+        
+
+        this.bindEvents();
+    }
+
+    bindEvents() {
+        this.yesButton.addEventListener('click', () => this.handleYesClick());
+        this.noButton.addEventListener('click', () => this.handleNoClick());
+    }
+
+    handleYesClick() {
+        this.setCookie('true');
+        this.hideSection();
+    }
+
+    handleNoClick() {
+        this.setCookie('false');
+        this.content.style.display = 'none';
+        this.noMessage.style.display = 'block';
+    }
+
+    hideSection() {
+        document.body.style.overflow = 'unset';
+        this.section.style.display = 'none';
+    }
+
+    showSection() {
+        document.body.style.overflow = 'hidden';
+        this.section.style.display = 'flex';
+    }
+
+    setCookie(value) {
+        const date = new Date();
+        date.setTime(date.getTime() + (this.cookieDuration * 24 * 60 * 60 * 1000));
+        const expires = `expires=${date.toUTCString()}`;
+        document.cookie = `${this.cookieName}=${value};${expires};path=/`;
+    }
+
+    getCookie() {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split('=');
+            if (name === this.cookieName) {
+                return value;
+            }
+        }
+        return null;
+    }
+}
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    new AgeVerify();
+});
+
+// Re-initialize when Shopify section is selected in customizer
+document.addEventListener('shopify:section:select', (event) => {
+    if (event.target.classList.contains('age-verify')) {
+        event.target.style.display = 'flex';
+    }
+});
+
+// Hide section when deselected in customizer
+document.addEventListener('shopify:section:deselect', (event) => {
+    if (event.target.classList.contains('age-verify')) {
+        const ageVerify = new AgeVerify();
+        if (ageVerify.getCookie()) {
+            event.target.style.display = 'none';
+        }
+    }
+});
+</script>
+
+{% schema %}
+    {
+        "name": "Age Verify",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Content"
+            },
+            {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Logo"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "text",
+                "id": "description",
+                "label": "Description"
+            },
+            {
+                "type": "text",
+                "id": "yes_text",
+                "label": "Yes Text",
+                "default": "Yes"
+            },
+            {
+                "type": "text",
+                "id": "no_text",
+                "label": "No Text",
+                "default": "No"
+            },
+            {
+                "type": "select",
+                "id": "button_style",
+                "label": "Button Style",
+                "options": [
+                    {
+                        "value": "rounded",
+                        "label": "Rounded"
+                    },
+                    {
+                        "value": "square",
+                        "label": "Square"
+                    },
+                    {
+                        "value": "rounded-square",
+                        "label": "Rounded Square"
+                    }
+                ]
+            },
+            {
+                "type": "range",
+                "id": "logo_width",
+                "min": 100,
+                "max": 500,
+                "step": 10,
+                "unit": "px",
+                "label": "Logo Width",
+                "default": 300
+            },
+            {
+                "type": "range",
+                "id": "logo_width_mobile",
+                "min": 50,
+                "max": 300,
+                "step": 10,
+                "unit": "px",
+                "label": "Logo Width Mobile",
+                "default": 200
+            },
+            {
+                "type": "range",
+                "id": "title_size",
+                "min": 16,
+                "max": 40,
+                "step": 1,
+                "unit": "px",
+                "label": "Title Size",
+                "default": 24
+            },
+            {
+                "type": "header",
+                "content": "Background"
+            },
+            {
+                "type": "color",
+                "id": "background_color",
+                "label": "Background Color",
+                "default": "#000000"
+            },
+            {
+                "type": "color",
+                "id": "content_color",
+                "label": "Content Color",
+                "default": "#ffffff"
+            },
+            {
+                "type": "image_picker",
+                "id": "background_image",
+                "label": "Background Image"
+            },
+            {
+                "type": "richtext",
+                "id": "no_message",
+                "label": "Message when user clicks No",
+                "default": "<p>Sorry, you must be 21 or older to enter this site.</p>"
+            },
+            {
+                "type": "richtext",
+                "id": "no_message_secondary",
+                "label": "Secondary message when user clicks No (optional)",
+                "info": "Additional message to display below the main message"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Age Verify"
+            }
+        ]
+    }
+{% endschema %}

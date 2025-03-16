@@ -1,0 +1,269 @@
+<section class="cards-slider" style="--border-radius: {{ section.settings.border_radius }}px;">
+    <div class="cards-slider__header">
+        <h2 class="cards-slider__title">{{ section.settings.title }}</h2>
+        <p class="cards-slider__description">{{ section.settings.description }}</p>
+    </div>
+    <div class="cards-slider__inner cards-slider__inner--{{ section.id }} swiper">
+        <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+                <div class="cards-slider__card swiper-slide">
+                    <a href="{{ block.settings.url }}">
+                        <div class="cards-slider__card-image" style="aspect-ratio: {{ section.settings.image_ratio }}; border-radius: {{ section.settings.border_radius }}px;">
+                            <img src="{{ block.settings.image | image_url: width: 500 }}" alt="{{ block.settings.image.alt }}">
+                        </div>
+                        <h4 class="cards-slider__card-title">{{ block.settings.title }}</h4>
+                        <p class="cards-slider__card-description">{{ block.settings.description }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="cards-slider__navigation">
+            <div class="cards-slider__button-prev">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-4 w-8"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path></svg>
+            </div>
+            <div class="cards-slider__button-next">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-4 w-8"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg>
+            </div>
+            <div class="cards-slider__pagination"></div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .cards-slider{
+        padding: 0 30px;
+    }
+
+    .cards-slider__title{
+        font-size: 1.5em;
+        margin-bottom: 0.5em;
+    }
+
+    .cards-slider__description{
+        font-size: 1em;
+        margin-bottom: 2em;
+        line-height: 1.5;
+        margin-top: 0;
+    }
+
+    .cards-slider__card a{
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .cards-slider__card-image{
+        width: 100%;
+        object-fit: cover;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+    }
+    
+    .cards-slider__card-image img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .cards-slider__card-title{
+        font-size: 1.4em;
+        margin-bottom: 0.2em;
+        margin-top: 1em;
+    }
+
+    .cards-slider__card-description{
+        font-size: 1em;
+        line-height: 1.3;
+        opacity: 0.8;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    .cards-slider__navigation{
+        display: flex;
+        align-items: center;
+        gap: .5em;
+        width: 100%;
+        align-items: center;
+        position: relative;
+        margin: 20px 0;
+    }
+
+    .cards-slider__button-prev,
+    .cards-slider__button-next{
+        height: 24px;
+        width: 50px;
+        border-radius: calc(var(--border-radius));
+        border: 1px solid #0000004c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .cards-slider__button-prev svg,
+    .cards-slider__button-next svg{
+        width: 15px;
+    }
+    
+    .cards-slider__button-prev:not(.swiper-button-disabled):hover,
+    .cards-slider__button-next:not(.swiper-button-disabled):hover{
+        background-color: black;
+    }
+
+    .cards-slider__button-prev:not(.swiper-button-disabled):hover svg,
+    .cards-slider__button-next:not(.swiper-button-disabled):hover svg{
+        filter: invert(1);
+    }
+
+    .cards-slider__pagination{
+        width: 100%;
+        height: 2px;
+        background-color: #c9c9c9;
+        border-radius: calc(var(--border-radius) / 2);
+        position: relative;
+        top: unset;
+        left: unset;
+        overflow: hidden;
+    }
+
+    .cards-slider__pagination span{
+        background-color: black!important;
+
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+        new Swiper('.cards-slider__inner--{{ section.id }}', {
+            slidesPerView: 2,
+            spaceBetween: 10,
+            pagination: {
+                el: ".cards-slider__inner--{{ section.id }} .cards-slider__pagination",
+                type: "progressbar",
+            },
+            navigation: {
+                nextEl: ".cards-slider__inner--{{ section.id }} .cards-slider__button-next",
+                prevEl: ".cards-slider__inner--{{ section.id }} .cards-slider__button-prev",
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 15,
+                },
+                1024: {
+                    slidesPerView: {{ section.settings.visible_slides }},
+                    spaceBetween: 20,
+                }
+            }
+        })
+    })
+</script>
+
+{% schema %}
+{
+  "name": "Cards Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Featured Cards"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Browse through our selection"
+    },
+    {
+      "type": "range",
+      "id": "visible_slides",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "Visible Slides"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "label": "Border Radius"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image Aspect Ratio",
+      "options": [
+        {
+          "value": "1/1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "3/4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "4/3",
+          "label": "Landscape (4:3)"
+        }
+      ],
+      "default": "1/1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Card Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Card description goes here"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cards Slider",
+      "blocks": [
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+

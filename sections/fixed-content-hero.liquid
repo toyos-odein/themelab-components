@@ -1,0 +1,312 @@
+<fixed-content-hero-controller>
+<section class="fixed-content-hero" style="--color: {{ section.settings.color }};">
+    <div class="fixed-content-hero__container">
+        {% for block in section.blocks %}
+            {% if block.settings.link %}
+                {% assign hasLink = true %}
+            {% endif %}
+            {% capture block_info %}
+                {{ block_info }}
+                <div class="fixed-content-hero__container__block" data-block-link="{{ block.settings.link }}">
+                    <span>{{ block.settings.title }}</span>
+                </div>
+            {% endcapture %}
+            <div class="fixed-content-hero__container__media" data-media-index="{{ forloop.index0 }}">
+                {% if block.settings.video %}
+                    {{ block.settings.video | video_tag: image_size: '1900x', autoplay: true, loop: true, muted: true, playsinline: true, controls: false, id: 'video-' | append: forloop.index0 }}
+                {% else %}
+                    <img src="{{ block.settings.image | image_url: width: 1900 }}" alt="{{ block.settings.title }}">
+                {% endif %}
+                <div class="fixed-content-hero__container__media-overlay" style="opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }}; background-color: {{ block.settings.overlay_color }}"></div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="fixed-content-hero__container__blocks">
+        <div class="fixed-content-hero__container__blocks__inner">
+            <h3 class="fixed-content-hero__container__title">{{ section.settings.title }}</h3>
+            {{ block_info }}
+            {% if hasLink %}
+                <a href="#" class="fixed-content-hero__container__link">
+                    <span>{{ section.settings.button_link }}</span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+</fixed-content-hero-controller>
+
+
+<style>
+    .fixed-content-hero{
+        position: relative;
+    }
+
+    .fixed-content-hero__container__media{
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .fixed-content-hero__container__media img,
+    .fixed-content-hero__container__media video{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .fixed-content-hero__container__media-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        display: block!important;
+    }
+
+    .fixed-content-hero__container__blocks{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .fixed-content-hero__container__blocks__inner{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: sticky;
+        top: 50vh;
+        left: 0;
+        width: 100%;
+        z-index: 10;
+    }
+
+    .fixed-content-hero__container__title{
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        color: var(--color);
+    }
+
+    .fixed-content-hero__container__block span{
+        font-size: 3.5rem;
+        font-weight: 600;
+        color: var(--color);
+        opacity: 0.6;
+        line-height: 1;
+        margin: 0;
+    }
+
+    .fixed-content-hero__container__link{
+        all: unset;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--color);
+        position: relative;
+        text-transform: uppercase;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+
+    .fixed-content-hero__container__link::after{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--color);
+        transform: scaleX(1);
+        transform-origin: bottom left;
+        transition: transform 0.3s ease;
+    }
+
+    .fixed-content-hero__container__link:hover::after{
+        transform: scaleX(0);
+        transform-origin: bottom right;
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Fixed Content Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Explore collections"
+    },
+    {
+      "type": "text",
+      "id": "button_link",
+      "label": "Button Text",
+      "default": "Discover"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Color",
+      "default": "#fff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero_block",
+      "name": "Hero Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Block Title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Block Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Overlay Opacity",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fixed Content Hero",
+      "blocks": [
+        {
+          "type": "hero_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+// Define custom element for controlling the hero section
+document.addEventListener('DOMContentLoaded', function() {
+class FixedContentHeroController extends HTMLElement {
+    constructor() {
+        super();
+        this.section = this.querySelector('.fixed-content-hero');
+        this.mediaElements = this.querySelectorAll('.fixed-content-hero__container__media');
+        this.blocks = this.querySelectorAll('.fixed-content-hero__container__block');
+        this.link = this.querySelector('.fixed-content-hero__container__link');
+        this.activeIndex = 0;
+        
+        // Bind methods
+        this.checkVisibility = this.checkVisibility.bind(this);
+        
+        // Initialize
+        this.init();
+    }
+    
+    init() {
+        // Add scroll event listener
+        window.addEventListener('scroll', this.checkVisibility);
+        
+        // Initial check
+        this.checkVisibility();
+        
+        // Add resize listener to handle viewport changes
+        window.addEventListener('resize', this.checkVisibility);
+    }
+    
+    checkVisibility() {
+        const windowHeight = window.innerHeight;
+        const halfWindowHeight = windowHeight / 2;
+        
+        this.mediaElements.forEach((media, index) => {
+            const rect = media.getBoundingClientRect();
+            const isHalfVisible = rect.top <= halfWindowHeight && rect.bottom >= halfWindowHeight;
+            const isOffScreen = rect.bottom < 0 || rect.top > windowHeight;
+            
+            // Handle block visibility and link update
+            if (isHalfVisible) {
+                this.activeIndex = index;
+                this.updateActiveBlock(index);
+                this.updateLink(index);
+            }
+            
+            // Handle video playback
+            this.manageVideoPlayback(media, isOffScreen);
+        });
+    }
+    
+    updateActiveBlock(activeIndex) {
+        this.blocks.forEach((block, blockIndex) => {
+            const span = block.querySelector('span');
+            if (blockIndex === activeIndex) {
+                span.style.opacity = '1';
+            } else {
+                span.style.opacity = '0.6';
+            }
+        });
+    }
+    
+    updateLink(activeIndex) {
+        if (this.link) {
+            const activeBlockLink = this.blocks[activeIndex].getAttribute('data-block-link');
+            if (activeBlockLink) {
+                this.link.href = activeBlockLink;
+            }
+        }
+    }
+    
+    manageVideoPlayback(media, isOffScreen) {
+        const video = media.querySelector('video');
+        if (video) {
+            if (isOffScreen) {
+                if (!video.paused) {
+                    video.pause();
+                }
+            } else {
+                if (video.paused) {
+                    video.play().catch(e => console.log('Video play error:', e));
+                }
+            }
+        }
+    }
+    
+    disconnectedCallback() {
+        // Clean up event listeners when element is removed
+        window.removeEventListener('scroll', this.checkVisibility);
+        window.removeEventListener('resize', this.checkVisibility);
+    }
+}
+
+// Register the custom element
+customElements.define('fixed-content-hero-controller', FixedContentHeroController);
+
+});
+</script>

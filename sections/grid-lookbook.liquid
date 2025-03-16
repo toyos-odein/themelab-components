@@ -1,0 +1,390 @@
+{% if section.settings.use_custom_font %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+{% endif %}
+
+<section class="grid-lookbook" style="--color: {{ section.settings.text_color }};">
+    <div class="grid-lookbook__header">
+        <span>{{ section.settings.subtitle }}</span>
+        <h3 class="grid-lookbook__title {% if section.settings.use_custom_font %}grid-lookbook__title--custom-font{% endif %}">{{ section.settings.title }}</h3>
+        <a href="{{ section.settings.link_url }}">{{ section.settings.link_text }}</a>
+    </div>
+    <div class="grid-lookbook__inner" style="--items-per-row-desktop: {{ section.settings.items_per_row_desktop }}; --items-per-row-mobile: {{ section.settings.items_per_row_mobile }}; --max-width: {{ section.settings.max_width }}px;">
+        {% for block in section.blocks %}
+            <div class="grid-lookbook__item" data-index="{{ forloop.index }}">
+                <img src="{{ block.settings.image | image_url: width: 1920 }}" alt="{{ block.settings.image.alt }}">
+            </div>
+        {% endfor %}
+    </div>
+    <div class="grid-lookbook__slider grid-lookbook__slider--{{ section.id }} swiper">
+        <div class="grid-lookbook__slider__header">
+            <img src="{{ section.settings.logo | image_url: width: 1000 }}" alt="{{ section.settings.logo.alt }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="js-close-slider" viewBox="0 0 12 13"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M8.486 9.33 2.828 3.67M2.885 9.385l5.544-5.77"/></svg>
+        </div>
+        <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+                <div class="grid-lookbook__slider__slide swiper-slide">
+                    <img src="{{ block.settings.image | image_url: width: 1920 }}" alt="{{ block.settings.image.alt }}">
+                </div>
+            {% endfor %}
+        </div>
+        <div class="grid-lookbook__slider__pagination"></div>
+        <div class="grid-lookbook__slider__button-prev">
+            <svg style="transform: rotate(90deg)" viewBox="0 0 10 6"><path fill="currentColor" fill-rule="evenodd" d="M9.354.646a.5.5 0 0 0-.708 0L5 4.293 1.354.646a.5.5 0 0 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708" clip-rule="evenodd"/></svg>
+        </div>
+        <div class="grid-lookbook__slider__button-next">
+            <svg style="transform: rotate(-90deg);" viewBox="0 0 10 6"><path fill="currentColor" fill-rule="evenodd" d="M9.354.646a.5.5 0 0 0-.708 0L5 4.293 1.354.646a.5.5 0 0 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708" clip-rule="evenodd"/></svg>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.querySelector('.grid-lookbook__slider--{{ section.id }}');
+        const swiper = new Swiper(slider, {
+            pagination: {
+                el: '.grid-lookbook__slider__pagination',
+                clickable: true
+            },
+            navigation: {
+                nextEl: '.grid-lookbook__slider__button-next',
+                prevEl: '.grid-lookbook__slider__button-prev',
+            }
+        });
+
+        const togglers = slider.closest('.grid-lookbook').querySelectorAll('.grid-lookbook__item');
+        togglers.forEach(toggler => {
+            toggler.addEventListener('click', function() {
+                slider.classList.add('active')
+                swiper.slideTo(toggler.dataset.index - 1);
+            });
+        });
+
+        const closeSlider = document.querySelector('.js-close-slider');
+        closeSlider.addEventListener('click', function() {
+            slider.classList.remove('active');
+        });
+    });
+</script>
+
+<style>
+    .grid-lookbook__header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px;
+        color: var(--text-color, var(--color));
+    }
+
+    .grid-lookbook__header span{
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    .grid-lookbook__title{
+        font-size: 4rem;
+        margin: 0;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .grid-lookbook__title--custom-font{
+        font-family: 'Cormorant', serif;
+        font-weight: 300;
+    }
+
+    .grid-lookbook__header a{
+        all: unset;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: var(--color);
+        position: relative;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
+
+    .grid-lookbook__header a::after{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: var(--color);
+        transform: scaleX(1);
+        transform-origin: bottom left;
+        transition: transform 0.3s ease;
+    }
+
+    .grid-lookbook__header a:hover::after{
+        transform: scaleX(0);
+        transform-origin: bottom right;
+    }
+
+    .grid-lookbook__inner{
+        display: grid;
+        grid-template-columns: repeat(var(--items-per-row-desktop), 1fr);
+        gap: 20px;
+        align-items: start;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .grid-lookbook__item{
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 133.33%; /* This creates a 3:4 aspect ratio */
+        display: block;
+        line-height: 0;
+        font-size: 0;
+        cursor: pointer;
+    }
+
+    .grid-lookbook__item img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        vertical-align: bottom;
+    }
+
+    .grid-lookbook__slider:not(.active){
+        display: none;
+    }
+
+    .grid-lookbook__slider{
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: white;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .grid-lookbook__slider__slide{
+        width: 100%;
+        height: 100%;
+        background: white;
+        text-align: center;
+    }
+
+    .grid-lookbook__slider__slide img{
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        margin: 0 auto;
+    }
+
+    .grid-lookbook__slider__header{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        z-index: 2;
+    }
+
+    .grid-lookbook__slider__header svg{
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    .grid-lookbook__slider__header img{
+        width: 120px;
+    }
+
+    .grid-lookbook__slider__pagination{
+        position: absolute;
+        top: 0!important;
+        left: 0!important;
+        width: 100%!important;
+        padding: 10px 20px!important;
+        height: 100%!important;
+        z-index: 2!important;
+        display: flex!important;
+        align-items: center!important;
+        justify-content: flex-start!important;
+        height: fit-content!important;
+    }
+
+    .grid-lookbook__slider__pagination .swiper-pagination-bullet{
+        border-radius: 0!important;
+        flex-grow: 1!important;
+        height: 2px!important;
+    }
+
+    .grid-lookbook__slider__pagination .swiper-pagination-bullet-active{
+        background: black!important;
+    }
+
+    .grid-lookbook__slider__button-prev{
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+        z-index: 2;
+    }
+
+    .grid-lookbook__slider__button-next{
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        z-index: 2;
+    }
+
+    .grid-lookbook__slider__button-prev svg,
+    .grid-lookbook__slider__button-next svg{
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        .grid-lookbook__inner{
+            grid-template-columns: repeat(var(--items-per-row-mobile), 1fr);
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .grid-lookbook__header{
+            padding: 40px 20px;
+        }
+
+        .grid-lookbook__title{
+            font-size: 3rem;
+        }
+
+        .grid-lookbook__slider__slide img{
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Grid Lookbook",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Lookbook"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_custom_font",
+      "label": "Use Custom Font",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Our Collection"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link Text",
+      "default": "View Collection"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Slider Logo"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "items_per_row_desktop",
+      "label": "Items per row on desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "items_per_row_mobile",
+      "label": "Items per row on mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max Width",
+      "min": 300,
+      "max": 1900,
+      "step": 100,
+      "default": 1200
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Lookbook Image",
+      "type": "lookbook_image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grid Lookbook",
+      "blocks": [
+        {
+          "type": "lookbook_image"
+        },
+        {
+          "type": "lookbook_image"
+        },
+        {
+          "type": "lookbook_image"
+        },
+        {
+          "type": "lookbook_image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
