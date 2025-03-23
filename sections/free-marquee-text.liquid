@@ -1,0 +1,166 @@
+{{ 'section-marquee-text.css' | asset_url | stylesheet_tag }}
+
+{% if section.settings.link != blank %}
+<a href="{{ section.settings.link }}" class="marquee-text-link">
+{% endif %}
+<section class="marquee-text" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; background-color: {{ section.settings.background_color }};">
+    <div class="marquee-text__inner">
+       {% for i in (0..12) %}
+        {% for block in section.blocks %}
+            <div class="marquee-text__text" style="--desktop-font-size: {{ section.settings.desktop_font_size }}px; --mobile-font-size: {{ section.settings.mobile_font_size }}px; color: {{ section.settings.text_color }};">{{block.settings.text }}</div>
+        {% endfor %}
+       {% endfor %}
+    </div>
+</section>
+{% if section.settings.link != blank %}
+</a>
+{% endif %}
+
+<style>
+    .marquee-text{
+        overflow: hidden;
+    }
+
+    .marquee-text__inner{
+        display: flex;
+        align-items: center;
+        animation: marquee 30s linear infinite;
+        width: fit-content;
+    }
+    
+    .marquee-text:hover .marquee-text__inner {
+        animation-play-state: paused;
+    }
+
+    @keyframes marquee{
+        0%{
+            transform: translateX(-50%);
+        }
+        100%{
+            transform: translateX(0);
+        }
+    }
+
+    .marquee-text__text{
+        text-transform: uppercase;
+        font-size: var(--desktop-font-size, 26px);
+        margin: 0 calc(var(--desktop-margin, 20px) * 2);
+        flex-shrink: 0;
+    }
+
+    .marquee-text__text *{
+        margin: 0;
+    }
+    
+    .marquee-text-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    @media (max-width: 768px){
+        .marquee-text__text{
+            margin: 0 calc(var(--mobile-margin, 20px) * 1.2);
+            font-size: var(--mobile-font-size, 16px);
+        }
+    }
+</style>
+
+{% schema %}
+{
+    "name": "Marquee text",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "url",
+            "id": "link",
+            "label": "Section link"
+        },
+        {
+            "type": "header",
+            "content": "Spacing"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Top padding",
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "default": 0,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "label": "Bottom padding",
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "default": 0,
+            "unit": "px"
+        },
+        {
+            "type": "header",
+            "content": "Text Size"
+        },
+        {
+            "type": "range",
+            "id": "desktop_font_size",
+            "label": "Desktop font size",
+            "min": 12,
+            "max": 72,
+            "step": 1,
+            "default": 24,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "mobile_font_size",
+            "label": "Mobile font size",
+            "min": 10,
+            "max": 48,
+            "step": 1,
+            "default": 18,
+            "unit": "px"
+        },
+        {
+            "type": "header",
+            "content": "Colors"
+        },
+        {
+            "type": "color",
+            "id": "background_color",
+            "label": "Background color",
+            "default": "#ffffff"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text color",
+            "default": "#000000"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "text",
+            "name": "Text",
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Marquee text"
+        }
+    ]
+}
+{% endschema %}

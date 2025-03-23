@@ -1,14 +1,197 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
-      "type": "main-page",
+      "type": "journal",
+      "disabled": true,
       "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
+        "blog": "",
+        "title": "Journal",
+        "show_date": true,
+        "show_excerpt": true,
+        "show_all_articles": true,
+        "posts_limit": 9,
+        "posts_per_row_desktop": 3,
+        "posts_per_row_mobile": "1",
+        "gap_spacing": 24
+      }
+    },
+    "grid_lookbook_id9k6Q": {
+      "type": "grid-lookbook",
+      "blocks": {
+        "lookbook_image_3metdq": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_Ebony_male_with_buzzcut_hair__tattoos_Fashion_photosh_bf6bb8f8-7c40-4e29-9b2f-3bb66cf71ce6.png"
+          }
+        },
+        "lookbook_image_HgRWNC": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_Ebony_male_with_buzzcut_hair__tattoos_Fashion_photosh_1aba4c6a-2f34-4506-a5c0-a2c15c06c09d.png"
+          }
+        },
+        "lookbook_image_4DHd8J": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_Ebony_male_with_buzzcut_hair__tattoos_Fashion_photosh_b4587645-84ce-4e0a-b49b-61ecd02e7efa.png"
+          }
+        },
+        "lookbook_image_gR3ycW": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_Blonde_25-year-old_women_Fashion_photoshooting_Wearin_aedb2fad-1275-4c28-89df-280b0a3ded08.png"
+          }
+        },
+        "lookbook_image_aKzJpM": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_Caucasian_25-year-old_women_Fashion_photoshooting_Wea_6870e868-8266-47a0-80df-a088e11b9f9f.png"
+          }
+        },
+        "lookbook_image_PWDAc3": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_Caucasian_25-year-old_women_Fashion_photoshooting_Wea_07110de2-cb1f-4f0f-93c6-fffed98e3c12.png"
+          }
+        },
+        "lookbook_image_3q8DNz": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_da6c35ea-2fe9-4470-9041-f4b2aee0b2ad.png"
+          }
+        },
+        "lookbook_image_HQKDX7": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_ae051454-7262-47af-9319-9ee0a05949d3.png"
+          }
+        },
+        "lookbook_image_VPXNkG": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_White_male_with_buzzcut_hair__tattoos_Fashion_photosh_b902b48a-7fac-4755-808c-0ec7b464ff63.png"
+          }
+        }
+      },
+      "block_order": [
+        "lookbook_image_3metdq",
+        "lookbook_image_HgRWNC",
+        "lookbook_image_4DHd8J",
+        "lookbook_image_gR3ycW",
+        "lookbook_image_aKzJpM",
+        "lookbook_image_PWDAc3",
+        "lookbook_image_3q8DNz",
+        "lookbook_image_HQKDX7",
+        "lookbook_image_VPXNkG"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "SS25 Basics Collection",
+        "use_custom_font": true,
+        "subtitle": "COLLECTION",
+        "link_text": "View Collection",
+        "link_url": "shopify://collections/frontpage",
+        "logo": "shopify://shop_images/themelab.svg",
+        "items_per_row_desktop": 3,
+        "items_per_row_mobile": 2,
+        "max_width": 1200,
+        "text_color": "#000000"
+      }
+    },
+    "lookbook_UPBf6c": {
+      "type": "lookbook",
+      "blocks": {
+        "image_8dPErA": {
+          "type": "image",
+          "settings": {
+            "type": "Summer",
+            "title": "LOOK 1",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_Ebony_male_with_buzzcut_hair__tattoos_Fashion_photosh_b4587645-84ce-4e0a-b49b-61ecd02e7efa.png"
+          }
+        },
+        "image_Arm9Qt": {
+          "type": "image",
+          "settings": {
+            "type": "Summer",
+            "title": "LOOK 2",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_ae051454-7262-47af-9319-9ee0a05949d3.png"
+          }
+        },
+        "image_dwU66W": {
+          "type": "image",
+          "settings": {
+            "type": "Summer",
+            "title": "LOOK 3",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_da6c35ea-2fe9-4470-9041-f4b2aee0b2ad.png"
+          }
+        },
+        "image_z3BLta": {
+          "type": "image",
+          "settings": {
+            "type": "Summer",
+            "title": "LOOK 4",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_White_male_with_buzzcut_hair__tattoos_Fashion_photosh_b902b48a-7fac-4755-808c-0ec7b464ff63.png"
+          }
+        },
+        "image_nmWJzK": {
+          "type": "image",
+          "settings": {
+            "type": "Winter",
+            "title": "LOOK 5",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_Caucasian_25-year-old_women_Fashion_photoshooting_Wea_07110de2-cb1f-4f0f-93c6-fffed98e3c12.png"
+          }
+        },
+        "image_98r9K3": {
+          "type": "image",
+          "settings": {
+            "type": "Winter",
+            "title": "LOOK 6",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_Caucasian_25-year-old_women_Fashion_photoshooting_Wea_6870e868-8266-47a0-80df-a088e11b9f9f.png"
+          }
+        },
+        "image_pj4HeN": {
+          "type": "image",
+          "settings": {
+            "type": "Winter",
+            "title": "LOOK 7",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_Blonde_25-year-old_women_Fashion_photoshooting_Wearin_aedb2fad-1275-4c28-89df-280b0a3ded08.png"
+          }
+        }
+      },
+      "block_order": [
+        "image_8dPErA",
+        "image_Arm9Qt",
+        "image_dwU66W",
+        "image_z3BLta",
+        "image_nmWJzK",
+        "image_98r9K3",
+        "image_pj4HeN"
+      ],
+      "settings": {
+        "title": "Find your look",
+        "description": "<p>Get inspired with the looks from our latest collection</p>"
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "grid_lookbook_id9k6Q",
+    "lookbook_UPBf6c"
   ]
 }

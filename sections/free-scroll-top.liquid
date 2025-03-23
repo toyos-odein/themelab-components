@@ -1,0 +1,173 @@
+{% schema %}
+{
+  "name": "Scroll to Top",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "select",
+      "id": "icon_type",
+      "label": "Icon Type",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default Arrow"
+        },
+        {
+          "value": "custom_svg",
+          "label": "Custom SVG"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_svg",
+      "label": "Custom SVG Code",
+      "info": "Paste your SVG code here",
+      "placeholder": "<svg>...</svg>"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image",
+      "label": "Icon Image",
+      "info": "Recommended size: 40x40px"
+    },
+    {
+      "type": "header",
+      "content": "Placement"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "options": [
+        {
+          "value": "bottom_right",
+          "label": "Bottom Right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "Bottom Left"
+        }
+      ],
+      "default": "bottom_right"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scroll to Top",
+      "category": "Interactive"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="js-scroll-top js-scroll-top--{{section.settings.position}}" style="background-color: {{ section.settings.background_color }};">
+  {% if section.settings.icon_type == 'default' %}
+      <svg width="101" height="135" viewBox="0 0 101 135" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_2559_2)">
+      <path d="M5 52.1103L50.03 7.07031L95.07 52.1103" stroke="#222222" stroke-width="10" stroke-miterlimit="10" stroke-linecap="round"/>
+      <path d="M50.0303 7.07031V129.69" stroke="#222222" stroke-width="10" stroke-miterlimit="10" stroke-linecap="round"/>
+      </g>
+      <defs>
+      <clipPath id="clip0_2559_2">
+      <rect width="100.07" height="134.69" fill="white"/>
+      </clipPath>
+      </defs>
+      </svg>
+  {% elsif section.settings.icon_type == 'custom_svg' %}
+      {{ section.settings.custom_svg }}
+  {% elsif section.settings.icon_type == 'image' and section.settings.icon_image != blank %}
+      <img src="{{ section.settings.icon_image | img_url: 'master' }}" alt="Scroll to top" loading="lazy">
+  {% endif %}
+</div>
+
+<style>
+    .js-scroll-top{
+        position: fixed;
+        z-index: 10;
+        right: 30px;
+        bottom: 30px;
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+        cursor: pointer;
+        transition: all 0.4s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        height: 40px;
+        width: 40px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .js-scroll-top--bottom_left{
+        left: 30px;
+        right: auto;
+    }
+
+    .js-scroll-top.show{
+        opacity: 1;
+        transform: none;
+        pointer-events: all;
+    }
+
+    .js-scroll-top svg{
+      width: 20px;
+      height: 20px;
+    }
+    
+    .js-scroll-top img {
+      width: 20px;
+      height: auto;
+      max-height: 20px;
+      object-fit: contain;
+    }
+
+    @media(max-width: 768px){
+        .js-scroll-top{
+            right: 15px;
+            bottom: 15px;
+        }
+
+        .js-scroll-top--bottom_left{
+            left: 15px;
+            right: auto;
+        }
+    }
+</style>
+
+<script>
+    window.addEventListener("scroll", ()=>{
+        window.scrollY > window.innerHeight ? 
+            document.querySelector('.js-scroll-top').classList.add("show")
+            :
+            document.querySelector('.js-scroll-top').classList.remove("show")
+    })
+
+    document.querySelector('.js-scroll-top').addEventListener("click", ()=>{
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+    })
+</script>
+

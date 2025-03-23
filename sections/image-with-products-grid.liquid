@@ -1,0 +1,278 @@
+<section class="image-with-products-grid" 
+    style="--section-gap: {{ section.settings.desktop_gap }}px; 
+           --section-margin: {{ section.settings.desktop_margin }}px;
+           --section-gap-mobile: {{ section.settings.mobile_gap }}px;
+           --section-margin-mobile: {{ section.settings.mobile_margin }}px;">
+    <div class="image-with-products-grid__image">
+        {% if section.settings.video %}
+            {{ section.settings.video | video_tag: image_size: '1924x', autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+        {% else if section.settings.image %}
+            <img src="{{ section.settings.image | image_url: width: 1924 }}" alt="{{ section.settings.image.alt }}" loading="lazy">
+        {% else %}
+            <img src="{{ 'collection-1' | placeholder_svg_tag }}" alt="Image with Products Grid Placeholder" loading="lazy">
+        {% endif %}
+    </div>
+    <div class="image-with-products-grid__products">
+        {% for block in section.blocks %}
+            {% assign product = block.settings.product %}
+            <a href="{{ product.url }}" class="image-with-products-grid__products__product" style="text-decoration: none;">
+                <div class="image-with-products-grid__products__product__image">
+                    <img src="{{ product.featured_image | image_url: width: 1900 }}" alt="{{ product.featured_image.alt }}" loading="lazy">
+                    {% if product.images.size > 1 %}
+                        <img src="{{ product.images[1] | image_url: width: 1900 }}" alt="{{ product.images[1].alt }}" loading="lazy">
+                    {% endif %}
+                </div>
+                <div class="image-with-products-grid__products__product__content">
+                    <div class="image-with-products-grid__products__product__content__row">
+                        <h4>{{ product.title }}</h4>
+                        <div class="image-with-products-grid__products__product__content__row__price">
+                            {% if product.compare_at_price %}
+                                <span class="image-with-products-grid__products__product__content__row__price__old">
+                                    {{ product.compare_at_price | money }}
+                                </span>
+                            <span class="image-with-products-grid__products__product__content__row__price__new">
+                                    {{ product.price | money }}
+                                </span>
+                            {% else %}
+                                <span class="image-with-products-grid__products__product__content__row__price__new">
+                                    {{ product.price | money }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+    .image-with-products-grid{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--section-gap, 20px);
+        margin: var(--section-margin, 20px);
+        align-items: stretch;
+    }
+
+    .image-with-products-grid__image{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .image-with-products-grid__image img,
+    .image-with-products-grid__image video{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .image-with-products-grid__products{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--section-gap);
+        align-items: start;
+    }
+
+    .image-with-products-grid__products__product__image{
+        width: 100%;
+        padding-bottom: 133.3%;
+        height: 0;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .image-with-products-grid__products__product__image img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .image-with-products-grid__products__product__image img:nth-child(2){
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .image-with-products-grid__products__product:hover img:nth-child(2){
+        opacity: 1;
+    }
+
+    .image-with-products-grid__products__product__content__row{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 10px 20px;
+        font-size: 1.5rem;
+    }
+
+    .image-with-products-grid__products__product__content__row h4{
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        color: black;
+        text-transform: uppercase;
+        max-width: 65%;
+        line-height: 1.2;
+    }
+
+    .image-with-products-grid__products__product__content__row__price{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0;
+        color: black;
+    }
+
+    .image-with-products-grid__products__product__content__row__price span{
+        line-height: 1;
+    }
+
+    .image-with-products-grid__products__product__content__row__price__old{
+        text-decoration: line-through;
+        font-size: 1.2rem;
+        opacity: 0.5;
+    }
+
+    .image-with-products-grid__products__product__content__row__price__new{
+        font-size: 1.4rem;
+    }
+
+    @media (max-width: 768px){
+        .image-with-products-grid{
+            grid-template-columns: 1fr;
+            gap: var(--section-gap-mobile, 10px);
+            margin: 0 var(--section-margin-mobile, 10px);
+        }
+
+        .image-with-products-grid__products{
+            gap: var(--section-gap-mobile, 10px);
+        }
+
+        .image-with-products-grid__image{
+            width: 100%;
+            display: flex;
+        }
+
+        .image-with-products-grid__image img,
+        .image-with-products-grid__image video{
+            width: 100%;
+        }
+
+        .image-with-products-grid__products__product__content__row{
+            padding: 5px 5px 10px;
+        }
+
+        .image-with-products-grid__products__product__content__row__price__new{
+            font-size: 1.2rem;
+        }
+
+        .image-with-products-grid__products__product__content__row__price__old{
+            font-size: 1rem;
+        }
+
+        .image-with-products-grid__products__product__content__row h4{
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Image with Products Grid",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image",
+      "info": "Displayed when no video is selected"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Background Video",
+      "info": "Takes priority over background image if both are set"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_gap",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Desktop Gap",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "desktop_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Desktop Margin",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Mobile Gap",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "mobile_margin",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Mobile Margin",
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Products Grid",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -9,34 +9,376 @@
  */
 {
   "sections": {
-    "split_banner_rMRyYP": {
-      "type": "split-banner",
+    "image_with_products_rAfGxT": {
+      "type": "image-with-products",
+      "blocks": {
+        "product_6bYr4f": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/LIGHT-GREY-MARLOSBOXYFRONT.webp",
+            "title": "Boxy T-Shirt",
+            "url": "",
+            "button_text": "Shop Now",
+            "button_style": "square",
+            "text_color": "#000",
+            "background_color": "#f3f3f3",
+            "button_background_color": "#000000",
+            "button_text_color": "#ffffff"
+          }
+        },
+        "product_3aFAte": {
+          "type": "product",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_full_body_picture_of_a_white_man_basketball_player_st_b184fdb5-f7b9-4374-9c66-7bd57d9088a2.png",
+            "title": "Product Title",
+            "url": "",
+            "button_text": "Shop Now",
+            "button_style": "square",
+            "text_color": "#000",
+            "background_color": "#ffffff",
+            "button_background_color": "#000000",
+            "button_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "product_6bYr4f",
+        "product_3aFAte"
+      ],
+      "disabled": true,
       "settings": {
-        "height_mode": "custom",
-        "custom_height": 800,
-        "desktop_layout": "content_first",
-        "gap": 12,
-        "border_radius": 8,
-        "first_bg_color": "#121212",
-        "first_text_color": "#ffffff",
-        "title": "Plug & Play high-converting",
-        "first_text": "<p>Transform your Shopify store with visual appealing sections and components</p>",
-        "text_horizontal_position": "left",
-        "text_vertical_position": "bottom",
-        "second_image": "shopify://shop_images/Test.jpg",
-        "second_image_mobile": "shopify://shop_images/Test_6db37b17-fa59-4b28-8298-6600303c3652.jpg",
-        "mobile_stack": "image_first",
-        "mobile_padding": 0,
-        "mobile_border_radius": 0,
-        "heading_size": 40,
-        "text_size": 16,
-        "mobile_heading_size": 32,
-        "mobile_text_size": 14,
-        "button_text": "Shop Now",
-        "button_link": "",
-        "button_text_color": "#ffffff",
-        "button_bg_color": "#000000",
-        "button_border_radius": 8
+        "image": "shopify://shop_images/toyos.xyz_White_male_with_buzzcut_hair__tattoos_Fashion_photosh_b902b48a-7fac-4755-808c-0ec7b464ff63.png"
+      }
+    },
+    "video_reviews_UCRm3E": {
+      "type": "video-reviews",
+      "blocks": {
+        "review_6BeCem": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/20250318_1614_Confident Minimalist Pose_simple_compose_01jpmx3ed2exe9573brs0k86q7.mp4",
+            "poster": "shopify://shop_images/WomanBannerMobile.jpg"
+          }
+        },
+        "review_YGULAN": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/20250318_1614_Confident Minimalist Pose_simple_compose_01jpmx3ed2exe9573brs0k86q7.mp4",
+            "poster": "shopify://shop_images/toyos.xyz_White_male_with_buzzcut_hair__tattoos_Fashion_photosh_b902b48a-7fac-4755-808c-0ec7b464ff63.png"
+          }
+        },
+        "review_9i6wnJ": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/925Preview.mp4",
+            "poster": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_da6c35ea-2fe9-4470-9041-f4b2aee0b2ad.png"
+          }
+        },
+        "review_KqKfeY": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/SusmiesHome.mp4",
+            "poster": "shopify://shop_images/toyos.xyz_Caucasian_25-year-old_women_Fashion_photoshooting_Wea_6870e868-8266-47a0-80df-a088e11b9f9f.png"
+          }
+        },
+        "review_i9aDiK": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/5c189ec56ea246e2afd050f0ed6626b0.mp4",
+            "poster": "shopify://shop_images/toyos.xyz_Blonde_25-year-old_women_Fashion_photoshooting_Wearin_aedb2fad-1275-4c28-89df-280b0a3ded08.png"
+          }
+        }
+      },
+      "block_order": [
+        "review_6BeCem",
+        "review_YGULAN",
+        "review_9i6wnJ",
+        "review_KqKfeY",
+        "review_i9aDiK"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "The Community",
+        "title_size": 5,
+        "desktop_slides": 4,
+        "mobile_slides": 1.3,
+        "desktop_space": 65,
+        "mobile_space": 15,
+        "enable_autoplay": false,
+        "autoplay_delay": 3
+      }
+    },
+    "two_column_banner_Wddknh": {
+      "type": "two-column-banner",
+      "blocks": {
+        "image_AUt8Lt": {
+          "type": "image",
+          "settings": {
+            "placement": "left",
+            "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_ae051454-7262-47af-9319-9ee0a05949d3.png",
+            "text_url_1": "shop now",
+            "url_1": "",
+            "text": "SS25 COLLECTION",
+            "title": "WOMENS",
+            "text_color": "#ffffff",
+            "hover_text_color": "#0d0907"
+          }
+        },
+        "image_tz8AG8": {
+          "type": "image",
+          "settings": {
+            "placement": "left",
+            "image": "shopify://shop_images/toyos.xyz_Ebony_male_with_buzzcut_hair__tattoos_Fashion_photosh_1aba4c6a-2f34-4506-a5c0-a2c15c06c09d.png",
+            "text_url_1": "shop now",
+            "url_1": "",
+            "text": "SS25 COLLECTION",
+            "title": "MENS",
+            "text_color": "#ffffff",
+            "hover_text_color": "#0d0907"
+          }
+        }
+      },
+      "block_order": [
+        "image_AUt8Lt",
+        "image_tz8AG8"
+      ],
+      "disabled": true,
+      "settings": {
+        "height_option": "full"
+      }
+    },
+    "image_with_products_grid_XVg8zx": {
+      "type": "image-with-products-grid",
+      "blocks": {
+        "product_UyNPHz": {
+          "type": "product",
+          "settings": {
+            "product": "cart-drawer-upsell"
+          }
+        },
+        "product_TYDcEx": {
+          "type": "product",
+          "settings": {
+            "product": "collection-page-quick-links"
+          }
+        },
+        "product_eJTqFd": {
+          "type": "product",
+          "settings": {
+            "product": "collection-page-creative"
+          }
+        },
+        "product_ch7hkW": {
+          "type": "product",
+          "settings": {
+            "product": "frequently-bought-together"
+          }
+        }
+      },
+      "block_order": [
+        "product_UyNPHz",
+        "product_TYDcEx",
+        "product_eJTqFd",
+        "product_ch7hkW"
+      ],
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/fashionable-man-by-textured-wall.jpg",
+        "video": "shopify://files/videos/925Preview_41945eab-e141-4964-bdc0-9d9118a89988.mp4",
+        "desktop_gap": 20,
+        "desktop_margin": 20,
+        "mobile_gap": 10,
+        "mobile_margin": 10
+      }
+    },
+    "free_image_hero_A7mPWr": {
+      "type": "free-image-hero",
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_ae051454-7262-47af-9319-9ee0a05949d3.png",
+        "image_mobile": "shopify://shop_images/toyos.xyz_Ebony_male_with_buzzcut_hair__tattoos_Fashion_photosh_1aba4c6a-2f34-4506-a5c0-a2c15c06c09d.png",
+        "link": "shopify://collections/frontpage",
+        "content_height": "adapt",
+        "overlay_opacity": 25,
+        "subheading": "The new collection",
+        "title": "BORN TO BE GREAT",
+        "btn_text": "SHOP NOW",
+        "position": "left",
+        "color": "white"
+      }
+    },
+    "banner_with_claims_gicEkf": {
+      "type": "banner-with-claims",
+      "blocks": {
+        "claim_axDcTU": {
+          "type": "claim",
+          "settings": {
+            "icon": "shopify://shop_images/grocery_24dp_28352C_FILL0_wght400_GRAD0_opsz24.svg",
+            "title": "LOCAL PRODUCTION"
+          }
+        },
+        "claim_gzBqJt": {
+          "type": "claim",
+          "settings": {
+            "icon": "shopify://shop_images/psychiatry_24dp_28352C_FILL0_wght400_GRAD0_opsz24.svg",
+            "title": "GLUTEN FREE"
+          }
+        },
+        "claim_aAmBny": {
+          "type": "claim",
+          "settings": {
+            "icon": "shopify://shop_images/eco_24dp_28352C_FILL0_wght400_GRAD0_opsz24.svg",
+            "title": "NATURAL INGREDIENTS"
+          }
+        },
+        "claim_eVTEUz": {
+          "type": "claim",
+          "settings": {
+            "icon": "shopify://shop_images/cruelty_free_24dp_28352C_FILL0_wght400_GRAD0_opsz24.svg",
+            "title": "VEGAN"
+          }
+        }
+      },
+      "block_order": [
+        "claim_axDcTU",
+        "claim_gzBqJt",
+        "claim_aAmBny",
+        "claim_eVTEUz"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_height": "adaptive",
+        "content_height_fixed": 100,
+        "color": "#28352c",
+        "button_color": "#ffffff",
+        "background_color": "#28352c",
+        "tag": "USED BY +5000 MEN WORLDWIDE",
+        "title": "You hair will thank you",
+        "description": "<p>A12 strengthens and nourishes your hair thanks to its multifactorial formula with high-quality natural ingredients.</p>",
+        "button_text": "Join now",
+        "button_link": "shopify://products/cart-drawer-upsell",
+        "content_position": "middle_left",
+        "content_position_mobile": "middle_left",
+        "background_image": "shopify://shop_images/toyos.xyz_picture_of_50_year_old_man_holding_a_gren_pill_suplem_af576e8f-21fc-4342-b232-a970b5e20fa6.png"
+      }
+    },
+    "banner_with_claims_DFYeBW": {
+      "type": "banner-with-claims",
+      "blocks": {
+        "claim_RLfk6p": {
+          "type": "claim",
+          "settings": {
+            "icon": "shopify://shop_images/grocery_24dp_28352C_FILL0_wght400_GRAD0_opsz24.svg",
+            "title": "LOCAL PRODUCTION"
+          }
+        },
+        "claim_UBdx99": {
+          "type": "claim",
+          "settings": {
+            "icon": "shopify://shop_images/psychiatry_24dp_28352C_FILL0_wght400_GRAD0_opsz24.svg",
+            "title": "GLUTEN FREE"
+          }
+        },
+        "claim_AmWEn8": {
+          "type": "claim",
+          "settings": {
+            "icon": "shopify://shop_images/eco_24dp_28352C_FILL0_wght400_GRAD0_opsz24.svg",
+            "title": "NATURAL INGREDIENTS"
+          }
+        },
+        "claim_MRigBb": {
+          "type": "claim",
+          "settings": {
+            "icon": "shopify://shop_images/cruelty_free_24dp_28352C_FILL0_wght400_GRAD0_opsz24.svg",
+            "title": "VEGAN"
+          }
+        }
+      },
+      "block_order": [
+        "claim_RLfk6p",
+        "claim_UBdx99",
+        "claim_AmWEn8",
+        "claim_MRigBb"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "settings": {
+        "content_height": "adaptive",
+        "content_height_fixed": 100,
+        "color": "#edefef",
+        "button_color": "#000000",
+        "background_color": "#edefef",
+        "tag": "UNLOCK YOUR POTENTIAL",
+        "title": "It's you vs you.",
+        "description": "<p>A12 is the perfect companion for top performers and athletes.</p>",
+        "button_text": "Join now",
+        "button_link": "shopify://products/cart-drawer-upsell",
+        "content_position": "middle_right",
+        "content_position_mobile": "middle_right",
+        "background_image": "shopify://shop_images/toyos.xyz_dynamic_picture_of_an_athlete_sprinting_on_a_black_ou_e97aeca8-4e38-41fb-a68b-d6daa2cb2edc.png"
+      }
+    },
+    "image_with_blocks_WbbhAV": {
+      "type": "image-with-blocks",
+      "blocks": {
+        "block_grKxDq": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/workspace_premium_24dp_000_FILL0_wght400_GRAD0_opsz24.svg",
+            "icon_width": 20,
+            "title": "10-year guarantee",
+            "content": "<p>Every product is guaranteed for at least 10 years against timber rot, decay or insect infestation. But expect it to last 25.</p>",
+            "background_color": "#fafafa",
+            "text_color": ""
+          }
+        },
+        "block_yte7xP": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/local_shipping_24dp_000_FILL0_wght400_GRAD0_opsz24.svg",
+            "icon_width": 20,
+            "title": "Express Delivery",
+            "content": "<p>FREE fast delivery on a recycled pallet, on your chosen date. No boxes to toss. </p>",
+            "background_color": "#fafafa",
+            "text_color": ""
+          }
+        },
+        "block_wazacT": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/hov_24dp_000_FILL0_wght400_GRAD0_opsz24.svg",
+            "icon_width": 20,
+            "title": "Free returns",
+            "content": "<p>If you’re not happy, we’ll collect your return without charging a collection fee. Simple.  </p>",
+            "background_color": "#fafafa",
+            "text_color": ""
+          }
+        },
+        "block_VfMxz3": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/support_agent_24dp_000_FILL0_wght400_GRAD0_opsz24.svg",
+            "icon_width": 20,
+            "title": "Premium Customer Service",
+            "content": "<p>Calls answered quickly by our US Customer Service team. </p>",
+            "background_color": "#fafafa",
+            "text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_grKxDq",
+        "block_yte7xP",
+        "block_wazacT",
+        "block_VfMxz3"
+      ],
+      "settings": {
+        "video": "shopify://files/videos/20250318_1614_Confident Minimalist Pose_simple_compose_01jpmx3ed2exe9573brs0k86q7.mp4",
+        "image": "shopify://shop_images/toyos.xyz_An_outside_view_of_the_roof_on_an_outdoor_wooden_play_ceff10ad-4fe9-42b1-854d-3524041325b3.png",
+        "background_color": "",
+        "content_position": "left",
+        "spacing": 15,
+        "border_radius": 12
       }
     },
     "featured_products_RcKRtb": {
@@ -68,6 +410,7 @@
         "product_kpXzde",
         "product_7b3cxd"
       ],
+      "disabled": true,
       "settings": {
         "title": "Find the perfect section for your store",
         "subtitle": "SHOPIFY THEME SECTIONS",
@@ -139,6 +482,7 @@
         "review_4XgYaL",
         "review_QMrRcT"
       ],
+      "disabled": true,
       "settings": {
         "title": "Find the perfect section for your store",
         "average_rating": "4.9",
@@ -148,11 +492,84 @@
         "box_color": "#f3f3f3",
         "shadow_color": "rgba(148, 88, 255, 0.05)"
       }
+    },
+    "cards_slider_GwEjMY": {
+      "type": "cards-slider",
+      "blocks": {
+        "card_gQE4H3": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Sun-Shining-Through-Forest.jpg",
+            "title": "Conscious production",
+            "description": "Each garment is made with a commitment to the environment and human well-being, ensuring a minimal ecological footprint and a long useful life.",
+            "url": ""
+          }
+        },
+        "card_qEP9GN": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_black_t-shirt_hanging_from_a_light_gray_concrete_wall_8a757173-9e28-47df-a57a-140728c09998.png",
+            "title": "Transparency",
+            "description": "We value your trust and clearly show you the costs of production, transportation and benefits, promoting informed and conscious consumption.",
+            "url": ""
+          }
+        },
+        "card_Q9GEPc": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_sky_picture_with_clouds_and_subtle_sun_b46fc2d0-6623-41d1-bf6f-6ac06e45db51.png",
+            "title": "CO2 Emissions",
+            "description": "Reducimos las emisiones durante el proceso de producción y las compensamos para ser neutros en carbono",
+            "url": ""
+          }
+        },
+        "card_bjzUyU": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/calm-sea-rolling-with-the-current.jpg",
+            "title": "Water Saving",
+            "description": "We investigate and create new garments and processes to reduce the water consumption in a 90%",
+            "url": ""
+          }
+        },
+        "card_mgM3pE": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_side_picture_of_an_european_45_year_old_woman_working_ffec2f81-d79a-4a81-b7be-720f96134ba1.png",
+            "title": "Fair Work",
+            "description": "We produce ethically, guaranteeing optimal working conditions",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_gQE4H3",
+        "card_qEP9GN",
+        "card_Q9GEPc",
+        "card_bjzUyU",
+        "card_mgM3pE"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Brand values",
+        "description": "Our compromise in taking care of our planet.",
+        "visible_slides": 3,
+        "border_radius": 6,
+        "image_ratio": "1/1"
+      }
     }
   },
   "order": [
-    "split_banner_rMRyYP",
+    "image_with_products_rAfGxT",
+    "video_reviews_UCRm3E",
+    "two_column_banner_Wddknh",
+    "image_with_products_grid_XVg8zx",
+    "free_image_hero_A7mPWr",
+    "banner_with_claims_gicEkf",
+    "banner_with_claims_DFYeBW",
+    "image_with_blocks_WbbhAV",
     "featured_products_RcKRtb",
-    "reviews_QkDXC6"
+    "reviews_QkDXC6",
+    "cards_slider_GwEjMY"
   ]
 }

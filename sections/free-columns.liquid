@@ -1,0 +1,292 @@
+<section class="themelab-columns themelab-columns--{{ section.id }}">
+    <div class="themelab-columns__inner">
+        {% for block in section.blocks %}
+            <div class="themelab-columns__column">
+                {% if block.settings.image != blank %}
+                    <div class="themelab-columns__image">
+                        <img src="{{ block.settings.image | image_url: width: 1900 }}" alt="{{ block.settings.image.alt }}">
+                    </div>
+                {% endif %}
+                {% if block.settings.title != blank %}
+                    <h2 class="themelab-columns__title">{{ block.settings.title }}</h2>
+                {% endif %}
+                {% if block.settings.text != blank %}
+                    <div class="themelab-columns__text">{{ block.settings.text | newline_to_br }}</div>
+                {% endif %}
+                {% if block.settings.link != blank %}
+                    <a href="{{ block.settings.link }}" class="themelab-columns__link">{{ block.settings.link_text }}</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Columns",
+  "settings": [
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Space between columns",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "section_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Section margin",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Number of columns (desktop)",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Mobile settings"
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Space between columns (mobile)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "column_width_mobile",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Column width (mobile)",
+      "default": 85
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "min": 5,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding (mobile)",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Image border radius",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Learn More"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Columns",
+      "blocks": [
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+    .themelab-columns--{{ section.id }} {
+        --column-gap: {{ section.settings.column_gap }}px;
+        --section-margin: {{ section.settings.section_margin }}px;
+        --columns-desktop: {{ section.settings.columns_desktop }};
+        --background-color: {{ section.settings.background_color }};
+        --text-color: {{ section.settings.text_color }};
+        --column-gap-mobile: {{ section.settings.column_gap_mobile }}px;
+        --column-width-mobile: {{ section.settings.column_width_mobile }}%;
+        --padding-mobile: {{ section.settings.padding_mobile }}px;
+        --image-border-radius: {{ section.settings.image_border_radius }}px;
+        
+        background-color: var(--background-color);
+        color: var(--text-color);
+        margin: var(--section-margin) 0;
+    }
+
+    .themelab-columns__inner {
+        display: grid;
+        grid-template-columns: repeat(var(--columns-desktop), 1fr);
+        gap: var(--column-gap);
+        padding: var(--column-gap);
+    }
+
+    @media screen and (max-width: 768px) {
+        .themelab-columns__inner {
+            display: flex;
+            overflow-x: auto;
+            padding: var(--column-gap-mobile);
+            gap: var(--column-gap-mobile);
+            scrollbar-width: none;
+        }
+        
+        .themelab-columns__inner::webkit-scrollbar {
+            display: none;
+            
+        }
+
+        .themelab-columns__inner::-webkit-scrollbar-thumb {
+            display: none;
+        }
+
+        .themelab-columns__column {
+            flex: 0 0 var(--column-width-mobile);
+        }
+        
+        .themelab-columns__column:last-child {
+            margin-right: 0;
+        }
+    }
+
+    .themelab-columns__column{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .themelab-columns__title{
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--text-color);
+        margin: 0;
+    }
+
+    .themelab-columns__text{
+        font-size: 1.4rem;
+        font-weight: 400;
+        color: var(--text-color);
+    }
+
+    .themelab-columns__text *{
+        margin: 0;
+    }
+
+    .themelab-columns__link{
+        all: unset;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: var(--text-color);
+        position: relative;
+        text-transform: uppercase;
+        text-decoration: none;
+        width: fit-content;
+    }
+
+    .themelab-columns__link::after{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: var(--text-color);
+        transform: scaleX(1);
+        transform-origin: bottom left;
+        transition: transform 0.3s ease;
+    }
+
+    .themelab-columns__link:hover::after{
+        transform: scaleX(0);
+        transform-origin: bottom right;
+    }
+
+    .themelab-columns__image{
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%;
+        position: relative;
+        border-radius: var(--image-border-radius);
+        overflow: hidden;
+    }
+
+    .themelab-columns__image img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+</style>

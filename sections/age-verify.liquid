@@ -75,6 +75,9 @@
         gap: 20px;
         align-items: center;
         z-index: 1;
+        position: relative;
+        height: 100%;
+        justify-content: center;
         text-align: center;
         padding: 20px;
         width: 100%;
@@ -140,6 +143,17 @@
 </style>
 
 <script>
+  document.addEventListener("shopify:section:select", (e)=>{
+    const currentSection = "{{ section.id }}"
+    console.log(currentSection)
+    if(currentSection == e.detail.sectionId){
+      console.log("Is this")
+      document.querySelector('.age-verify--{{ section.id }}').style.display = "block"
+    }else{
+      document.querySelector('.age-verify--{{ section.id }}').style.display = "none"
+    }
+    console.log("EEEE", e.detail.sectionId)
+  })
 class AgeVerify {
     constructor() {
         this.cookieName = 'age_verified';

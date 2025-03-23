@@ -1,0 +1,351 @@
+{{ 'component-image-hero.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    if section.settings.image_mobile != blank
+        assign image_class = "themelab-image-hero__img--desktop"
+        assign image_class_mobile = "themelab-image-hero__img--mobile"
+    else 
+        assign image_class = "themelab-image-hero__img"
+        assign image_class_mobile = "themelab-image-hero__img"
+    endif
+-%}
+
+
+{% capture image_content %}
+    <div class="themelab-image-hero__content themelab-image-hero__content--{{section.settings.position}} themelab-image-hero__content--{{section.settings.color}}">
+       {% if section.settings.subheading != blank %}
+            <p class="themelab-image-hero__content-subheading">{{ section.settings.subheading }}</p>    
+       {% endif %}
+       {% if section.settings.title != blank %}
+            <h2 class="themelab-image-hero__content-title">{{ section.settings.title }}</h2>    
+       {% endif %}
+        <div class="themelab-image-hero__content-btns" style="--color: {{ section.settings.color }};">
+            <div class="{% if section.settings.color == "black" %}themelab-image-hero__button--text{% else %}themelab-image-hero__button--text themelab-image-hero__button--text--light{% endif %}">{{ section.settings.btn_text }}</div>    
+        </div>
+    </div>
+{% endcapture %}
+
+
+{% capture image_inner %}
+  <div class="themelab-image-hero__inner">
+   {% if section.settings.image %}
+        <img class="{{image_class}}" src="{{ section.settings.image | image_url: width: 1500 }}" alt="{{ section.settings.image.alt }}">
+    {% else %}
+    <div style="background: #f2f2f2;">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+    {% endif %}
+    {% if section.settings.image_mobile != blank %}
+        <img class="{{image_class_mobile}}" src="{{ section.settings.image_mobile | image_url: width: 1500 }}" alt="{{ section.settings.image_mobile.alt }}">
+    {% endif %}
+  </div>
+{% endcapture %}
+
+
+
+<section class="themelab-image-hero themelab-image-hero--{{section.settings.content_height}}">
+  {% if section.settings.link != blank %}
+    <a href="{{section.settings.link}}">
+    {% endif %}
+    {{ image_inner }}
+    {{ image_content }}
+    {% if section.settings.link != blank %}
+    </a>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+ "name": "Image Hero",
+ "settings": [
+    {
+        "type": "header",
+        "content": "Image"
+    },
+    {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+    },
+    {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Image Mobile"
+    },
+    {
+        "type": "url",
+        "id": "link",
+        "label": "Image Link"
+    },
+    {
+        "type": "select",
+        "id": "content_height",
+        "options": [
+          {
+            "value": "adapt",
+            "label": "Adaptar a la imagen"
+          },
+          {
+            "value": "full",
+            "label": "Alto completo"
+          }
+        ],
+        "default": "full",
+        "label": "Altura del contenido"
+    },
+    {
+        "type": "range",
+        "id": "overlay_opacity",
+        "label": "Overlay Opacity",
+        "default": 40,
+        "min": 0,
+        "max": 100,
+        "step": 5
+    },
+    {
+        "type": "header",
+        "content": "Content"
+    },
+    {
+        "type": "text",
+        "id": "subheading",
+        "label": "Subheading"
+    },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+    },
+    {
+        "type": "text",
+        "id": "btn_text",
+        "label": "Button Text"
+    },
+    {
+        "type": "select",
+        "id": "position",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "left",
+        "label": "Content Position"
+    },
+    {
+        "type": "select",
+        "id": "color",
+        "options": [
+          {
+            "value": "black",
+            "label": "Black"
+          },
+          {
+            "value": "white",
+            "label": "White"
+          }
+        ],
+        "default": "white",
+        "label": "Content Color"
+    }
+ ],
+ "presets": [
+      {
+        "name": "Image Hero"
+      }
+    ]
+}
+{% endschema %}
+
+
+<style>
+    .themelab-image-hero{
+        width: 100%;
+        position: relative;
+        max-height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+    }
+
+.themelab-image-hero--full{
+    height: 100vh;
+}
+
+.themelab-image-hero--full .themelab-image-hero__inner,
+.themelab-image-hero--full .themelab-image-hero__inner svg,
+.themelab-image-hero--full .themelab-image-hero__inner img{
+    height: 100%;
+}
+
+.themelab-image-hero--full .themelab-image-hero__inner svg{
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.themelab-image-hero__inner{
+    height: auto;
+    width: 100%;
+    position: relative;
+    background: #f2f2f2;
+}
+
+.themelab-image-hero__inner::after{
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0  }});
+}
+
+.themelab-image-hero__inner img{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.themelab-image-hero__img--desktop{
+    display: block;
+}
+
+.themelab-image-hero__img--mobile{
+    display: none;
+}
+
+.themelab-image-hero__content{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: absolute;
+    bottom: 80px;
+    width: 30%;
+    max-width: 400px;
+}
+
+.themelab-image-hero__content--left{
+    left: 38px;
+}
+
+.themelab-image-hero__content--center{
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+}
+
+.themelab-image-hero__content--right{
+    right: 85px;
+}
+
+.themelab-image-hero__content-title{
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.themelab-image-hero__content-subheading{
+    margin: 0;
+}
+
+.themelab-image-hero__content--black .themelab-image-hero__content-title,
+.themelab-image-hero__content--black .themelab-image-hero__content-subheading,
+.themelab-image-hero__content--black .themelab-image-hero__content-text{
+    color: black;
+}
+
+.themelab-image-hero__content--white .themelab-image-hero__content-title,
+.themelab-image-hero__content--white .themelab-image-hero__content-subheading,
+.themelab-image-hero__content--white .themelab-image-hero__content-text{
+    color: white;
+}
+
+.themelab-image-hero__content-subheading{
+    font-size: 1.6rem;
+}
+
+.themelab-image-hero__content-text{
+    margin-top: 4px;
+}
+
+.themelab-image-hero__content-btns{
+    margin-top: 10px;
+}
+
+.themelab-image-hero a{
+    width: 100%;
+}
+
+.themelab-image-hero__button--text{
+    all: unset;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--color);
+    position: relative;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.themelab-image-hero__button--text::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color);
+    transform: scaleX(1);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease;
+}
+
+.themelab-image-hero__button--text:hover::after{
+    transform: scaleX(0);
+    transform-origin: bottom right;
+}
+
+@media (max-width: 768px){
+    .themelab-image-hero__img--desktop{
+        display: none;
+    }
+
+    .themelab-image-hero__img--mobile{
+        display: block;
+    }
+
+    .themelab-image-hero__content{
+        width: calc(100% - 54px);
+        left: 27px;
+        bottom: 30px;
+    }
+
+    .themelab-image-hero__content--right{
+        right: 27px;
+        left: auto;
+    }
+
+    .themelab-image-hero__content--center{
+        left: 50%;
+    }
+
+    .themelab-image-hero__content-title{
+        font-size: 20px;
+    }
+    
+
+    .themelab-image-hero__content-btns{
+        margin-top: 15px;
+    }
+}
+</style>

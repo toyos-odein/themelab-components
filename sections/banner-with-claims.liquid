@@ -1,6 +1,7 @@
 <section class="banner-with-claims banner-with-claims--{{section.id}}" style="--color: {{ section.settings.color }}; --background-color: {{ section.settings.background_color }}; --button-color: {{ section.settings.button_color }};">
     <div class="banner-with-claims__inner">
         <div class="banner-with-claims__content banner-with-claims__content--{{ section.settings.content_position }} banner-with-claims__content--mobile-{{ section.settings.content_position_mobile }}">
+            <div>
             {% if section.settings.tag != blank %}
                 <span class="banner-with-claims__tag">{{ section.settings.tag }}</span>
             {% endif %}
@@ -13,6 +14,7 @@
             {% if section.settings.button_text != blank and section.settings.button_link != blank %}
                 <a href="{{ section.settings.button_link }}" class="banner-with-claims__button">{{ section.settings.button_text }}</a>
             {% endif %}
+            </div>
         </div>
         <div class="banner-with-claims__background">
             {% if section.settings.background_video != blank %}
