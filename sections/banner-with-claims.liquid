@@ -1,4 +1,7 @@
-<section class="banner-with-claims banner-with-claims--{{section.id}}" style="--color: {{ section.settings.color }}; --background-color: {{ section.settings.background_color }}; --button-color: {{ section.settings.button_color }};">
+{% style %}
+  {{ section.settings.title_font | font_face: font_display: 'swap' }}
+{% endstyle %}
+<section class="banner-with-claims banner-with-claims--{{section.id}}" style="--color: {{ section.settings.color }}; --background-color: {{ section.settings.background_color }}; --button-color: {{ section.settings.button_color }}; --title-font-size-desktop: {{ section.settings.title_font_size_desktop }}px; --title-font-size-mobile: {{ section.settings.title_font_size_mobile }}px;">
     <div class="banner-with-claims__inner">
         <div class="banner-with-claims__content banner-with-claims__content--{{ section.settings.content_position }} banner-with-claims__content--mobile-{{ section.settings.content_position_mobile }}">
             <div>
@@ -6,7 +9,13 @@
                 <span class="banner-with-claims__tag">{{ section.settings.tag }}</span>
             {% endif %}
             {% if section.settings.title != blank %}
-                <h2 class="banner-with-claims__title">{{ section.settings.title }}</h2>
+                <style>
+                  .banner-with-claims__title--{{ section.id }} {
+                    font-family: {{ section.settings.title_font.family }};
+                    font-weight: {{ section.settings.title_font.weight }};
+                  }
+                </style>
+                <h2 class="banner-with-claims__title banner-with-claims__title--{{ section.id }}">{{ section.settings.title }}</h2>
             {% endif %}
             {% if section.settings.description != blank %}
                 <div class="banner-with-claims__description">{{ section.settings.description }}</div>
@@ -116,7 +125,7 @@
     }
 
     .banner-with-claims__title{
-        font-size: 60px;
+        font-size: var(--title-font-size-desktop, 60px);
         font-weight: 500;
         line-height: 1.1;
         text-align: center;
@@ -136,6 +145,8 @@
         font-weight: 400;
         line-height: 1.2;
         margin: 0;
+        margin-bottom: 30px;
+        max-width: 450px;
     }
 
     .banner-with-claims__button{
@@ -333,7 +344,7 @@
         }
 
         .banner-with-claims__title{
-            font-size: 40px;
+            font-size: var(--title-font-size-mobile, 40px);
         }
 
         .banner-with-claims__description{
@@ -375,6 +386,10 @@
   "name": "Banner with Claims",
   "settings": [
     {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
         "type": "select",
         "id": "content_height",
         "label": "Content Height",
@@ -400,49 +415,6 @@
         "default": 100,
         "unit": "%",
         "info": "Only applies when content height is set to fixed"
-    },
-    {
-      "type": "color",
-      "id": "color",
-      "label": "Color",
-      "default": "#000"
-    },
-    {
-      "type": "color",
-      "id": "button_color",
-      "label": "Button Color",
-      "default": "#fff"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Button Background Color",
-      "default": "#fff"
-    },
-    {
-      "type": "text",
-      "id": "tag",
-      "label": "Tag Text"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title"
-    },
-    {
-      "type": "richtext",
-      "id": "description",
-      "label": "Description"
-    },
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button Text"
-    },
-    {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button Link"
     },
     {
       "type": "select",
@@ -533,6 +505,69 @@
       "default": "middle_left"
     },
     {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Tag Text"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Title Font",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_desktop",
+      "label": "Title Font Size - Desktop",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "label": "Title Font Size - Mobile",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
       "type": "video",
       "id": "background_video",
       "label": "Background Video - Desktop"
@@ -551,6 +586,28 @@
       "type": "image_picker",
       "id": "background_image_mobile",
       "label": "Background Image - Mobile"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Text Color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Text Color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Button Background Color",
+      "default": "#fff"
     }
   ],
   "blocks": [

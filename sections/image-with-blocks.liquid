@@ -8,7 +8,7 @@
     </div>
     <div class="image-with-blocks__blocks">
         {% for block in section.blocks %}
-            <div class="image-with-blocks__blocks__block" style="background-color: {{ block.settings.background_color }}; --text-color: {{ block.settings.text_color }}; --block-icon-width: {{ block.settings.icon_width }}%;">
+            <div class="image-with-blocks__blocks__block" style="background-color: {{ block.settings.background_color }}; --text-color: {{ block.settings.text_color }}; --block-icon-width: {{ block.settings.icon_width }}%; --title-font-size: {{ block.settings.title_font_size }}px; --description-font-size: {{ block.settings.description_font_size }}px;">
                 <div class="image-with-blocks__blocks__block__content">
                     {% if block.settings.image %}
                         <img src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.image.alt }}" loading="lazy">
@@ -33,6 +33,14 @@
         justify-content: center;
         padding: var(--spacing);
         gap: var(--spacing);
+    }
+
+    .image-with-blocks--left{
+        flex-direction: row;
+    }
+
+    .image-with-blocks--right{
+        flex-direction: row-reverse;
     }
 
     .image-with-blocks__main-image{
@@ -71,7 +79,7 @@
     }
 
     .image-with-blocks__blocks__block h3{
-        font-size: 1.6em;
+        font-size: var(--title-font-size, 1.6em);
         margin: 0;
         margin-bottom: 10px;
     }
@@ -79,7 +87,7 @@
     .image-with-blocks__blocks__block p{
         margin: 0;
         line-height: 1.5;
-        font-size: 1.1em;
+        font-size: var(--description-font-size, 1.1em);
         opacity: 0.8;
     }
 
@@ -199,6 +207,24 @@
           "type": "color",
           "id": "text_color",
           "label": "Text Color"
+        },
+        {
+          "type": "range",
+          "id": "title_font_size",
+          "label": "Title Font Size",
+          "default": 24,
+          "min": 12,
+          "max": 60,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "description_font_size",
+          "label": "Description Font Size",
+          "default": 16,
+          "min": 10,
+          "max": 40,
+          "unit": "px"
         }
       ]
     }

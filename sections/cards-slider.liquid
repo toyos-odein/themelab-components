@@ -132,12 +132,26 @@
         background-color: black!important;
 
     }
+
+    @media (max-width: 990px){
+      .cards-slider{
+        padding: 0 15px;
+      }
+
+      .cards-slider__card-title{
+        font-size: 1.2em;
+      }
+
+      .cards-slider__card-description{
+        font-size: 0.9em;
+      }
+    }
 </style>
 
 <script>
     document.addEventListener("DOMContentLoaded", ()=>{
         new Swiper('.cards-slider__inner--{{ section.id }}', {
-            slidesPerView: 2,
+            slidesPerView: 1.2,
             spaceBetween: 10,
             pagination: {
                 el: ".cards-slider__inner--{{ section.id }} .cards-slider__pagination",

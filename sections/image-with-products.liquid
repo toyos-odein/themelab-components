@@ -1,15 +1,21 @@
-<section class="image-with-products">
+<section class="image-with-products {% if section.settings.image_position == 'right' %}image-with-products--reverse{% endif %}">
     <div class="image-with-products__image">
         {% if section.settings.video %}
             {{ section.settings.video | video_tag: image_size: '1924x', autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
-        {% else %}
+        {% elsif section.settings.image %}
             <img src="{{ section.settings.image | image_url: width: 1924 }}" alt="{{ section.settings.image.alt }}" loading="lazy">
+        {% else %}
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
         {% endif %}
     </div>
     <div class="image-with-products__products">
         {% for block in section.blocks %}
-            <div class="image-with-products__products__product" style="background-color: {{ block.settings.background_color }}; --btn-bg-color: {{ block.settings.button_background_color }}; --btn-color: {{ block.settings.button_text_color }};">
+            <div class="image-with-products__products__product" style="background-color: {{ block.settings.background_color }}; --btn-bg-color: {{ block.settings.button_background_color }}; --btn-color: {{ block.settings.button_text_color }}; --product-image-width: {{ block.settings.image_width }}%;">
+              {% if block.settings.image == blank %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
+              {% else %}
                 <img src="{{ block.settings.image | image_url: width: 1900 }}" alt="{{ block.settings.image.alt }}" loading="lazy">
+              {% endif %}    
                 <div class="image-with-products__products__product__content">
                     <h3 style="color: {{ block.settings.text_color }};">{{ block.settings.title }}</h3>
                     <a class="image-with-products__products__product__button image-with-products__products__product__button--{{ block.settings.button_style }}" href="{{ block.settings.url }}">{{ block.settings.button_text }}</a>
@@ -26,6 +32,19 @@
         display: grid;
         grid-template-columns: 1.3fr 0.7fr;
     }
+    
+    .image-with-products--reverse {
+        grid-template-columns: 0.7fr 1.3fr;
+    }
+    
+    .image-with-products--reverse .image-with-products__image {
+        order: 2;
+    }
+    
+    .image-with-products--reverse .image-with-products__products {
+        order: 1;
+    }
+
     .image-with-products__image{
         height: 100vh;
         position: sticky;
@@ -55,7 +74,7 @@
     }
 
     .image-with-products__products__product img{
-        width: 65%;
+        width: var(--product-image-width, 65%);
         object-fit: contain;
     }
 
@@ -89,7 +108,7 @@
     }
 
     .image-with-products__products__product__button--round{
-        border-radius: 50%;
+        border-radius: 30px;
     }
 
     .image-with-products__products__product__content h3{
@@ -99,8 +118,14 @@
     }
 
     @media (max-width: 768px){
-        .image-with-products{
+        .image-with-products,
+        .image-with-products--reverse {
             grid-template-columns: 1fr;
+        }
+        
+        .image-with-products--reverse .image-with-products__image,
+        .image-with-products--reverse .image-with-products__products {
+            order: initial;
         }
 
         .image-with-products__products{
@@ -137,6 +162,22 @@
       "type": "video",
       "id": "video",
       "label": "Background Video"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
     }
   ],
   "blocks": [
@@ -209,6 +250,16 @@
             "id": "button_text_color",
             "label": "Button Text Color",
             "default": "#ffffff"
+        },
+        {
+            "type": "range",
+            "id": "image_width",
+            "min": 30,
+            "max": 100,
+            "step": 5,
+            "unit": "%",
+            "label": "Image Width",
+            "default": 65
         }
       ]
     }

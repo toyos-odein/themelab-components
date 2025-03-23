@@ -1,20 +1,28 @@
 {%- style -%}
 
   .footer-minimal--{{ section.id }} {
-    background-color: {{ section.settings.background_color }};
-    color: {{ section.settings.text_color }};
+    --footer-background-color: {{ section.settings.background_color }};
+    --footer-text-color: {{ section.settings.text_color }};
+    --footer-link-color: {{ section.settings.link_color }};
+    --footer-border-radius: {{ section.settings.border_radius }}px;
+    --footer-spacing: {{ section.settings.spacing }}px;
+    --footer-inner-padding: {{ section.settings.inner_padding }}px;
+    --newsletter-border-radius: {{ section.settings.newsletter_border_radius }}px;
+    
+    background-color: var(--footer-background-color);
+    color: var(--footer-text-color);
   }
 
   .footer-minimal--{{ section.id }} h2 {
-    color: {{ section.settings.text_color }};
+    color: var(--footer-text-color);
   }
 
   .footer-minimal--{{ section.id }} a {
-    color: {{ section.settings.link_color }};
+    color: var(--footer-link-color);
   }
 
   .footer-minimal{
-    padding: 20px 20px 0 20px;
+    padding: var(--footer-inner-padding) var(--footer-inner-padding) 0 var(--footer-inner-padding);
     margin: 0;
     border-radius: 0;
   }
@@ -30,18 +38,18 @@
   }
 
   .footer-minimal--{{ section.id }} .footer-minimal__newsletter form {
-    box-shadow: inset 0 0 0 1px {{ section.settings.text_color }};
-    border-radius: {{ section.settings.newsletter_border_radius }}px;
+    box-shadow: inset 0 0 0 1px var(--footer-text-color);
+    border-radius: var(--newsletter-border-radius);
   }
 
   .footer-minimal--{{ section.id }} .footer-minimal__newsletter form input {
-    color:{{ section.settings.text_color }};
+    color: var(--footer-text-color);
   }
 
   .footer-minimal--{{ section.id }} .footer-minimal__newsletter form button {
-    background: {{ section.settings.text_color }};
-    color: {{ section.settings.background_color }};
-    border-radius: {{ section.settings.newsletter_border_radius }}px;
+    background: var(--footer-text-color);
+    color: var(--footer-background-color);
+    border-radius: var(--newsletter-border-radius);
   }
 
 .footer-minimal__content {
@@ -58,7 +66,7 @@
 }
 
 .footer-minimal__header-content{
-    display: flex;
+    display: grid;
     gap: 20px;
     align-items: flex-start;
 }
@@ -70,7 +78,7 @@
 }
 
 .footer-minimal__heading {
-    font-size: calc(var(--font-heading-scale) * 4rem);
+    font-size: 3rem;
     line-height: 1.1;
     margin: 0;
     max-width: 60rem;
@@ -146,6 +154,10 @@
     opacity: 1;
 }
 
+.footer-minimal__header-content-wrapper{
+  width: 100%;
+}
+
 .footer-minimal__newsletter form{
     display: flex;
     align-items: center;
@@ -154,6 +166,7 @@
     height: 40px;
     overflow: hidden;
     margin-top: 20px;
+    width: 100%;
 }
 
 .footer-minimal__newsletter input{
@@ -161,8 +174,10 @@
     border: none;
     padding: 0 10px;
     background: transparent;
-    outline: none;
-    border: none;
+    outline: none!important;
+    border: none!important;
+    box-shadow: none!important;
+    flex-grow: 1;
 }
 
 .footer-minimal__newsletter form button {
@@ -197,10 +212,13 @@
     transform: rotate(180deg);
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 990px) {
+  .footer-minimal__header-content-wrapper{
+    width: 30%;
+  }
     .footer-minimal{
-        margin: 20px;
-        border-radius: 10px;
+        margin: var(--footer-spacing);
+        border-radius: var(--footer-border-radius);
     }
 
     .footer-minimal__content {
@@ -216,7 +234,7 @@
     }
 
     .footer-minimal__heading {
-        font-size: calc(var(--font-heading-scale) * 6rem);
+        font-size: 3.4rem;
     }
 
     .footer-minimal__menus {
@@ -266,7 +284,7 @@
 
     .footer-minimal--{{ section.id }} .footer-minimal__menus{
       width: 100%;
-      border-bottom: 1px solid {{ section.settings.text_color }};
+      border-bottom: 1px solid var(--footer-text-color);
       padding: 20px 0;
       flex-direction: column;
       gap: 0;
@@ -291,7 +309,6 @@
     }
 }
 {%- endstyle -%}
-{{ 'section-footer-minimal.css' | asset_url | stylesheet_tag }}
 
 <footer class="footer-minimal footer-minimal--{{ section.id }}">
   <div class="footer-minimal__content page-width">
@@ -391,6 +408,36 @@
       "id": "link_color",
       "label": "Link Color",
       "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Footer Border Radius",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Footer Spacing",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "inner_padding",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Inner Padding",
+      "default": 20
     },
     {
       "type": "checkbox",

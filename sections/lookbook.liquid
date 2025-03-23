@@ -7,20 +7,9 @@
 {% endcapture %}
 
 {% for block in section.blocks %}
-    {% assign type = block.settings.type | strip %}
-    {% unless type == blank or unique_types contains type %}
-        {% assign unique_types = unique_types | push: type %}
-        {% capture togglers %}
-            {{ togglers }}
-            <button class="collection-images__grid-toggler-button" data-block-type="{{ type }}">
-                {{ type }}
-            </button>
-        {% endcapture %}
-    {% endunless %}
-
     {% capture media_content %}
         {{ media_content }}
-        <div class="collection-images__image" data-block-type="{{ type }}">
+        <div class="collection-images__image">
             {% if block.settings.url %}
               <a href="{{ block.settings.url }}">
             {% endif %}
@@ -45,13 +34,16 @@
         <div class="collection-images__header-wrapper">
             <h2 class="collection-images__header">{{ section.settings.title }}</h2>
             <div class="collection-images__description">{{ section.settings.description }}</div>
-            {% unless unique_types.size == 1 or unique_types.size == 0%}
-                {{ togglers }}
-            {% endunless %}
         </div>
-        <div class="collection-images__grid-layout-togglers">
-            <button class="collection-images__grid-layout-toggler" data-layout="4">4</button>
-            <button class="collection-images__grid-layout-toggler" data-layout="6">6</button>
+        <div class="collection-images__grid-layout-togglers {% if section.settings.square_togglers %}collection-images__grid-layout-togglers--square{% endif %}">
+            <button class="collection-images__grid-layout-toggler" data-layout="4">
+                <span class="collection-images__grid-layout-toggler--desktop">4</span>
+                <span class="collection-images__grid-layout-toggler--mobile">1</span>
+            </button>
+            <button class="collection-images__grid-layout-toggler" data-layout="6">
+                <span class="collection-images__grid-layout-toggler--desktop">6</span>
+                <span class="collection-images__grid-layout-toggler--mobile">2</span>
+            </button>
         </div>
     </div>
     <div class="collection-images__inner page-width collection-images__inner--{{ section.id }} collection-images__inner--{{ section.blocks.size }}">
@@ -62,36 +54,10 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const togglers = document.querySelectorAll('.collection-images__grid-toggler-button');
-        const images = document.querySelectorAll('.collection-images__image');
         const layoutTogglers = document.querySelectorAll('.collection-images__grid-layout-toggler');
 
         // Set initial states
-        togglers[0]?.setAttribute('aria-selected', 'true');
         layoutTogglers[0]?.setAttribute('aria-selected', 'true');
-
-        // Show all images initially
-        images.forEach(image => {
-            image.style.display = 'flex';
-        });
-
-        togglers.forEach(toggler => {
-            toggler.addEventListener('click', function() {
-                // Update active state for type togglers
-                togglers.forEach(t => t.setAttribute('aria-selected', 'false'));
-                toggler.setAttribute('aria-selected', 'true');
-
-                // Update images
-                const type = toggler.dataset.blockType;
-                images.forEach(image => {
-                    if (type === 'all') {
-                        image.style.display = 'flex';
-                    } else {
-                        image.style.display = image.dataset.blockType === type ? 'flex' : 'none';
-                    }
-                });
-            });
-        });
 
         layoutTogglers.forEach(toggler => {
             toggler.addEventListener('click', function() {
@@ -181,6 +147,10 @@
         gap: 10px;
     }
 
+    .collection-images__grid-layout-togglers--square .collection-images__grid-layout-toggler {
+        border-radius: 0;
+    }
+
     .collection-images__grid-layout-toggler svg {
         height: 24px;
         width: fit-content;
@@ -223,7 +193,7 @@
     }
 
     .collection-images__image {
-        display: none; /* Hidden by default */
+        display: flex; /* Always visible now */
         transition: opacity 0.3s ease;
         background-color: #f0f0f0;
         position: relative;
@@ -235,10 +205,6 @@
         left: 10px;
         color: white;
         font-size: 12px;
-    }
-
-    .collection-images__image[data-block-type="image"] {
-        display: flex; /* Show only selected type */
     }
 
     .collection-images__image-wrapper{
@@ -270,6 +236,26 @@
             width: 100%;
         }
     }
+
+    @media (max-width: 990px){
+        .collection-images__grid-layout-toggler--desktop{
+            display: none;
+        }
+
+        .collection-images__grid-layout-toggler--mobile{
+            display: block;
+        }
+    }
+
+    @media (min-width: 991px){
+        .collection-images__grid-layout-toggler--mobile{
+            display: none;
+        }
+
+        .collection-images__grid-layout-toggler--desktop{
+            display: block;
+        }
+    }
 </style>
 
 {% schema %}
@@ -285,6 +271,16 @@
             "type": "richtext",
             "id": "description",
             "label": "Description"
+        },
+        {
+            "type": "checkbox",
+            "id": "square_togglers",
+            "label": "Use square layout switchers",
+            "default": false
+        },
+        {
+            "type": "paragraph",
+            "content": "Please save changes for all the changes to take effect"
         }
     ],
     "blocks": [
@@ -292,12 +288,6 @@
             "name": "Image",
             "type": "image",
             "settings": [
-                {
-                    "type": "text",
-                    "id": "type",
-                    "label": "Block Type",
-                    "info": "This will be used for filtering (e.g., 'Summer', 'Winter', etc.)"
-                },
                 {
                     "type": "text",
                     "id": "title",

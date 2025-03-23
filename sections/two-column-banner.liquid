@@ -4,6 +4,9 @@
 >
 
   {% for block in section.blocks %}
+    {% style %}
+      {{ block.settings.title_font_family | font_face: font_display: 'swap' }}
+    {% endstyle %}
     <a href="{{ block.settings.url_1 }}" style="text-decoration: none; color: unset;" {{ block.shopify_attributes }}>
     <div class="image image--{{ block.settings.placement }}" 
          {% if section.settings.height_option == 'fixed' %}
@@ -16,7 +19,14 @@
           <span class="text" style="color: {{ block.settings.text_color }}">{{ block.settings.text }}</span>
         {%- endif -%}
         {%- if block.settings.title != '' %}
-          <h3 class="title" style="color: {{ block.settings.text_color }}">{{ block.settings.title }}</h3>
+          <style>
+            .title--{{ block.id }} {
+              --font-family: {{ block.settings.title_font_family.family }}, {{ block.settings.title_font_family.fallback_families }};
+              --desktop-font-size: {{ block.settings.desktop_font_size }}px;
+              --mobile-font-size: {{ block.settings.mobile_font_size }}px;
+            }
+          </style>
+          <h3 class="title title--{{ block.id }}" style="color: {{ block.settings.text_color }}; font-family: var(--font-family);">{{ block.settings.title }}</h3>
         {%- endif -%}
         <div class="image__btns-wrapper">
         {% if block.settings.text_url_1 != "" %}
@@ -30,17 +40,47 @@
         assign image_class = ''
         assign sizes = '100vw'
       -%}
-      {{
-        block.settings.image
-        | image_url: width: 3840
-        | image_tag:
-          loading: 'lazy',
-          width: block.settings.image.width,
-          height: image_height,
-          class: image_class,
-          sizes: sizes,
-          widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
-      }}
+      
+      {% if block.settings.mobile_image != blank %}
+        <div class="section-two-column-links__desktop-image">
+          {{
+            block.settings.image
+            | image_url: width: 3840
+            | image_tag:
+              loading: 'lazy',
+              width: block.settings.image.width,
+              height: image_height,
+              class: image_class,
+              sizes: sizes,
+              widths: '750, 1100, 1500, 1780, 2000, 3000, 3840'
+          }}
+        </div>
+        <div class="section-two-column-links__mobile-image">
+          {{
+            block.settings.mobile_image
+            | image_url: width: 1500
+            | image_tag:
+              loading: 'lazy',
+              width: block.settings.mobile_image.width,
+              height: image_height,
+              class: image_class,
+              sizes: sizes,
+              widths: '750, 1100, 1500'
+          }}
+        </div>
+      {% else %}
+        {{
+          block.settings.image
+          | image_url: width: 3840
+          | image_tag:
+            loading: 'lazy',
+            width: block.settings.image.width,
+            height: image_height,
+            class: image_class,
+            sizes: sizes,
+            widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+        }}
+      {% endif %}
     </div>
     </a>
   {% endfor %}
@@ -74,8 +114,9 @@
 }
 
 .section-two-column-links .title{
-    font-size: 60px;
+    font-size: var(--desktop-font-size, 60px);
     margin: 0;
+    font-family: var(--font-heading-family);
 }
 
 .section-two-column-links .text{
@@ -142,6 +183,24 @@
     padding-bottom: 20px;
 }
 
+.section-two-column-links__desktop-image, 
+.section-two-column-links__mobile-image {
+    width: 100%;
+    height: 100%;
+}
+
+.section-two-column-links__desktop-image img, 
+.section-two-column-links__mobile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.section-two-column-links__mobile-image {
+    display: none;
+}
+
 @media only screen and (max-width: 740px) {
     .section-two-column-links .image {
         width: 100vw;
@@ -149,7 +208,15 @@
     }
 
     .section-two-column-links .title{
-        font-size: 30px;
+        font-size: var(--mobile-font-size, 30px);
+    }
+    
+    .section-two-column-links__desktop-image {
+        display: none;
+    }
+    
+    .section-two-column-links__mobile-image {
+        display: block;
     }
 }
 
@@ -225,12 +292,18 @@
         },
         {
           "type": "header",
-          "content": "Imagen"
+          "content": "Image"
         },
         {
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image (optional)",
+          "info": "If not provided, desktop image will be used on mobile devices"
         },
         {
           "type": "header",
@@ -247,6 +320,10 @@
           "label": "Link 1"
         },
         {
+          "type": "header",
+          "content": "Text"
+        },
+        {
             "type": "text",
             "id": "text",
             "label": "Text",
@@ -259,6 +336,40 @@
             "default": "Title"
         },
         {
+          "type": "header",
+          "content": "Typography"
+        },
+        {
+          "type": "font_picker",
+          "id": "title_font_family",
+          "label": "Title font",
+          "default": "helvetica_n4"
+        },
+        {
+          "type": "range",
+          "id": "desktop_font_size",
+          "min": 20,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop font size",
+          "default": 60
+        },
+        {
+          "type": "range",
+          "id": "mobile_font_size",
+          "min": 16,
+          "max": 60,
+          "step": 2,
+          "unit": "px",
+          "label": "Mobile font size",
+          "default": 30
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
           "type": "color",
           "id": "text_color",
           "label": "Text color",
@@ -267,7 +378,7 @@
         {
           "type": "color",
           "id": "hover_text_color",
-          "label": "Button hover text color",
+          "label": "Hover text color",
           "default": "#FFFFFF"
         }
       ]

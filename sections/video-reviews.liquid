@@ -1,4 +1,4 @@
-<section class="video-reviews" {{ section.shopify_attributes }} style="--title-size: {{ section.settings.title_size }}rem;">
+<section class="video-reviews" {{ section.shopify_attributes }} style="--title-size: {{ section.settings.title_size }}rem; --video-border-radius: {{ section.settings.border_radius }}px; --play-icon-size: {{ section.settings.play_icon_size }}px;">
     <div class="video-reviews__inner">
         <h3 class="video-reviews__inner__title">{{ section.settings.title }}</h3>
         <div class="video-reviews__wrapper video-reviews__wrapper--{{ section.id }} swiper">
@@ -8,10 +8,16 @@
                         {% assign imgUrl = block.settings.poster | image_url: width: 1500 %}
                         {{ block.settings.video | video_tag: poster: imgUrl, loop: false }}
                         <div class="js-custom-player">
-                            <svg width="113" height="111" viewBox="0 0 113 111" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M91 55.5L39.25 85.3779L39.25 25.6221L91 55.5Z" fill="#FDF9F2"/>
-                            <path d="M110.5 55.5C110.5 84.7292 86.3657 108.5 56.5 108.5C26.6343 108.5 2.5 84.7292 2.5 55.5C2.5 26.2708 26.6343 2.5 56.5 2.5C86.3657 2.5 110.5 26.2708 110.5 55.5Z" stroke="#FDF9F2" stroke-width="5"/>
-                            </svg>
+                            {% if section.settings.custom_play_icon != blank %}
+                                {{ section.settings.custom_play_icon }}
+                            {% elsif section.settings.play_icon_image != blank %}
+                                <img src="{{ section.settings.play_icon_image | image_url: width: 150 }}" alt="Play button" class="custom-play-icon">
+                            {% else %}
+                                <svg width="113" height="111" viewBox="0 0 113 111" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M91 55.5L39.25 85.3779L39.25 25.6221L91 55.5Z" fill="{{ section.settings.default_icon_color | default: '#FDF9F2' }}"/>
+                                <path d="M110.5 55.5C110.5 84.7292 86.3657 108.5 56.5 108.5C26.6343 108.5 2.5 84.7292 2.5 55.5C2.5 26.2708 26.6343 2.5 56.5 2.5C86.3657 2.5 110.5 26.2708 110.5 55.5Z" stroke="{{ section.settings.default_icon_color | default: '#FDF9F2' }}" stroke-width="5"/>
+                                </svg>
+                            {% endif %}
                         </div>
                         {% assign imgUrl = blank %}
                     </review-player>
@@ -39,6 +45,7 @@
         padding-bottom: 40%;
         width: 100%;
         overflow: hidden;
+        border-radius: var(--video-border-radius, 0px);
     }
 
     .video-reviews__video-wrapper video{
@@ -72,15 +79,27 @@
     }
 
     .js-custom-player *{
-        height: 117px;
-        width: 117px;
+        height: var(--play-icon-size, 117px);
+        width: var(--play-icon-size, 117px);
         pointer-events: none;
+    }
+
+    .custom-play-icon {
+        max-height: var(--play-icon-size, 117px);
+        max-width: var(--play-icon-size, 117px);
+        height: auto;
+        width: auto;
     }
 
     @media (max-width: 768px){
         .js-custom-player *{
             width: 50px;
             height: 50px;
+        }
+
+        .custom-play-icon {
+            max-height: 50px;
+            max-width: 50px;
         }
 
         .video-reviews__video-wrapper{
@@ -169,6 +188,54 @@
             "step": 0.5,
             "default": 3,
             "label": "Title Size (rem)"
+        },
+        {
+            "type": "header",
+            "content": "Video Appearance"
+        },
+        {
+            "type": "range",
+            "id": "border_radius",
+            "min": 0,
+            "max": 50,
+            "step": 1,
+            "default": 0,
+            "label": "Video Border Radius (px)"
+        },
+        {
+            "type": "header",
+            "content": "Custom Play Button"
+        },
+        {
+            "type": "color",
+            "id": "default_icon_color",
+            "label": "Default Icon Color",
+            "default": "#FDF9F2"
+        },
+        {
+            "type": "range",
+            "id": "play_icon_size",
+            "min": 50,
+            "max": 200,
+            "step": 5,
+            "default": 80,
+            "label": "Play Icon Size (Desktop)",
+            "info": "Size in pixels. Mobile size is fixed at 50px."
+        },
+        {
+            "type": "image_picker",
+            "id": "play_icon_image",
+            "label": "Custom Play Icon Image"
+        },
+        {
+            "type": "html",
+            "id": "custom_play_icon",
+            "label": "Custom Play Icon SVG",
+            "info": "Enter custom SVG code. This will override the image if both are provided."
+        },
+        {
+            "type": "header",
+            "content": "Slider Settings"
         },
         {
             "type": "range",

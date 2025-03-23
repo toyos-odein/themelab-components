@@ -1,8 +1,10 @@
-<section class="image-with-products-grid" 
+<section class="image-with-products-grid {% if section.settings.image_position == 'right' %}image-with-products-grid--image-right{% endif %}" 
     style="--section-gap: {{ section.settings.desktop_gap }}px; 
            --section-margin: {{ section.settings.desktop_margin }}px;
            --section-gap-mobile: {{ section.settings.mobile_gap }}px;
-           --section-margin-mobile: {{ section.settings.mobile_margin }}px;">
+           --section-margin-mobile: {{ section.settings.mobile_margin }}px;
+           --background-color: {{ section.settings.background_color }};
+           --text-color: {{ section.settings.text_color }};">
     <div class="image-with-products-grid__image">
         {% if section.settings.video %}
             {{ section.settings.video | video_tag: image_size: '1924x', autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
@@ -17,14 +19,21 @@
             {% assign product = block.settings.product %}
             <a href="{{ product.url }}" class="image-with-products-grid__products__product" style="text-decoration: none;">
                 <div class="image-with-products-grid__products__product__image">
-                    <img src="{{ product.featured_image | image_url: width: 1900 }}" alt="{{ product.featured_image.alt }}" loading="lazy">
-                    {% if product.images.size > 1 %}
-                        <img src="{{ product.images[1] | image_url: width: 1900 }}" alt="{{ product.images[1].alt }}" loading="lazy">
+                    {% if block.settings.custom_image != blank %}
+                        <img src="{{ block.settings.custom_image | image_url: width: 1900 }}" alt="{{ block.settings.custom_image.alt }}" loading="lazy">
+                        {% if block.settings.custom_hover_image != blank %}
+                            <img src="{{ block.settings.custom_hover_image | image_url: width: 1900 }}" alt="{{ block.settings.custom_hover_image.alt }}" loading="lazy">
+                        {% endif %}
+                    {% else %}
+                        <img src="{{ product.featured_image | image_url: width: 1900 }}" alt="{{ product.featured_image.alt }}" loading="lazy">
+                        {% if product.images.size > 1 %}
+                            <img src="{{ product.images[1] | image_url: width: 1900 }}" alt="{{ product.images[1].alt }}" loading="lazy">
+                        {% endif %}
                     {% endif %}
                 </div>
                 <div class="image-with-products-grid__products__product__content">
                     <div class="image-with-products-grid__products__product__content__row">
-                        <h4>{{ product.title }}</h4>
+                        <h4>{% if block.settings.custom_title != blank %}{{ block.settings.custom_title }}{% else %}{{ product.title }}{% endif %}</h4>
                         <div class="image-with-products-grid__products__product__content__row__price">
                             {% if product.compare_at_price %}
                                 <span class="image-with-products-grid__products__product__content__row__price__old">
@@ -53,6 +62,20 @@
         gap: var(--section-gap, 20px);
         margin: var(--section-margin, 20px);
         align-items: stretch;
+        background-color: var(--background-color, transparent);
+        color: var(--text-color, inherit);
+    }
+    
+    .image-with-products-grid--image-right {
+        grid-template-areas: "products image";
+    }
+    
+    .image-with-products-grid--image-right .image-with-products-grid__image {
+        grid-area: image;
+    }
+    
+    .image-with-products-grid--image-right .image-with-products-grid__products {
+        grid-area: products;
     }
 
     .image-with-products-grid__image{
@@ -114,7 +137,7 @@
         font-size: 1.5rem;
         font-weight: 600;
         text-decoration: none;
-        color: black;
+        color: var(--text-color, black);
         text-transform: uppercase;
         max-width: 65%;
         line-height: 1.2;
@@ -125,7 +148,7 @@
         flex-direction: column;
         align-items: flex-end;
         gap: 0;
-        color: black;
+        color: var(--text-color, black);
     }
 
     .image-with-products-grid__products__product__content__row__price span{
@@ -147,6 +170,10 @@
             grid-template-columns: 1fr;
             gap: var(--section-gap-mobile, 10px);
             margin: 0 var(--section-margin-mobile, 10px);
+        }
+        
+        .image-with-products-grid--image-right {
+            grid-template-areas: "image" "products";
         }
 
         .image-with-products-grid__products{
@@ -196,6 +223,38 @@
       "id": "video",
       "label": "Background Video",
       "info": "Takes priority over background image if both are set"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
     },
     {
       "type": "header",
@@ -251,6 +310,28 @@
           "type": "product",
           "id": "product",
           "label": "Product"
+        },
+        {
+          "type": "header",
+          "content": "Custom Content (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Title",
+          "info": "Overrides product title if set"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image",
+          "info": "Overrides product image if set"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_hover_image",
+          "label": "Custom Hover Image",
+          "info": "Shown on hover if set"
         }
       ]
     }

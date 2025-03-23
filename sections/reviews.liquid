@@ -129,6 +129,25 @@
 #shopify-section-{{ section.id }} .FeaturedReviews__review__author {
   color: {{ section.settings.text_color }};
 }
+
+/* Swiper specific styles */
+.FeaturedReviews__section .swiper-container {
+  overflow: unset;
+  position: relative;
+}
+
+.FeaturedReviews__section .swiper-wrapper {
+  display: flex;
+  transition-timing-function: linear !important;
+  align-items: center;
+}
+
+.FeaturedReviews__section .swiper-slide {
+  height: auto;
+  width: fit-content;
+  width: auto;
+  display: flex;
+}
 </style>
 
 <div class="FeaturedReviews__section">
@@ -140,169 +159,100 @@
       <span class="FeaturedReviews__header__content__averageRating">{{ section.settings.average_rating_label }}</span>
     </div>
   </div>
-  <featured-reviews-slider
-    id="UGC--{{ section.id }}"
-    class="FeaturedReviews__wrapper"
-  >
-    <div class="FeaturedReviews__slider js-featured-reviews-slider">
-      {% for block in section.blocks %}
-        <div class="FeaturedReviews__review">
-          <span class="FeaturedReviews__review__rating">
-            {% for star_index in (1..5) %}
-              {% if star_index <= block.settings.rating %}
-                <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                 <path d="M7.5 10.2453L10.5417 9.47445L11.8125 13.3911L7.5 10.2453ZM14.5 5.18278H9.14583L7.5 0.141113L5.85417 5.18278H0.5L4.83334 8.30778L3.1875 13.3494L7.52083 10.2244L10.1875 8.30778L14.5 5.18278Z" fill="black"/>
-                </svg>
-              {% else %}
-                <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7.30707 9.76234L6.3683 9.99541L6.67243 10.2198L4.13862 12.0471L5.30865 8.46295L5.42197 8.11582L5.1258 7.90224L2.04815 5.68278H5.85417H6.21691L6.32948 5.33795L7.5 1.75231L8.67052 5.33795L8.78309 5.68278H9.14583H12.9579L9.89568 7.90177L9.89411 7.90291L7.30707 9.76234ZM10.2099 10.072L10.8563 12.0642L8.67337 10.4535L10.2099 10.072Z" stroke="black"/>
-                </svg>
-              {% endif %}
-            {% endfor %}
-          </span>
-          <h3 class="FeaturedReviews__review__title">{{ block.settings.title }}</h3>
-          <div class="FeaturedReviews__review__content">{{ block.settings.content }}</div>
-          <p class="FeaturedReviews__review__author">{{ block.settings.author }}</p>
-        </div>
-      {% endfor %}
-      {% for block in section.blocks %}
-        <div class="FeaturedReviews__review">
-          <span class="FeaturedReviews__review__rating">
-            {% for star_index in (1..5) %}
-              {% if star_index <= block.settings.rating %}
-                <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                 <path d="M7.5 10.2453L10.5417 9.47445L11.8125 13.3911L7.5 10.2453ZM14.5 5.18278H9.14583L7.5 0.141113L5.85417 5.18278H0.5L4.83334 8.30778L3.1875 13.3494L7.52083 10.2244L10.1875 8.30778L14.5 5.18278Z" fill="black"/>
-                </svg>
-              {% else %}
-                <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7.30707 9.76234L6.3683 9.99541L6.67243 10.2198L4.13862 12.0471L5.30865 8.46295L5.42197 8.11582L5.1258 7.90224L2.04815 5.68278H5.85417H6.21691L6.32948 5.33795L7.5 1.75231L8.67052 5.33795L8.78309 5.68278H9.14583H12.9579L9.89568 7.90177L9.89411 7.90291L7.30707 9.76234ZM10.2099 10.072L10.8563 12.0642L8.67337 10.4535L10.2099 10.072Z" stroke="black"/>
-                </svg>
-              {% endif %}
-            {% endfor %}
-          </span>
-          <h3 class="FeaturedReviews__review__title">{{ block.settings.title }}</h3>
-          <div class="FeaturedReviews__review__content">{{ block.settings.content }}</div>
-          <p class="FeaturedReviews__review__author">{{ block.settings.author }}</p>
-        </div>
-      {% endfor %}
+  <div class="FeaturedReviews__wrapper">
+    <div class="swiper-container" id="reviews-swiper-{{ section.id }}">
+      <div class="swiper-wrapper">
+        {% for i in (1..2) %}
+          {% for block in section.blocks %}
+            <div class="swiper-slide">
+              <div class="FeaturedReviews__review">
+                <span class="FeaturedReviews__review__rating">
+                  {% for star_index in (1..5) %}
+                    {% if star_index <= block.settings.rating %}
+                      <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                       <path d="M7.5 10.2453L10.5417 9.47445L11.8125 13.3911L7.5 10.2453ZM14.5 5.18278H9.14583L7.5 0.141113L5.85417 5.18278H0.5L4.83334 8.30778L3.1875 13.3494L7.52083 10.2244L10.1875 8.30778L14.5 5.18278Z" fill="black"/>
+                      </svg>
+                    {% else %}
+                      <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.30707 9.76234L6.3683 9.99541L6.67243 10.2198L4.13862 12.0471L5.30865 8.46295L5.42197 8.11582L5.1258 7.90224L2.04815 5.68278H5.85417H6.21691L6.32948 5.33795L7.5 1.75231L8.67052 5.33795L8.78309 5.68278H9.14583H12.9579L9.89568 7.90177L9.89411 7.90291L7.30707 9.76234ZM10.2099 10.072L10.8563 12.0642L8.67337 10.4535L10.2099 10.072Z" stroke="black"/>
+                      </svg>
+                    {% endif %}
+                  {% endfor %}
+                </span>
+                <h3 class="FeaturedReviews__review__title">{{ block.settings.title }}</h3>
+                <div class="FeaturedReviews__review__content">{{ block.settings.content }}</div>
+                <p class="FeaturedReviews__review__author">{{ block.settings.author }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
     </div>
-  </featured-reviews-slider>
+  </div>
 </div>
 
-
 <script>
-    if (!customElements.get('featured-reviews-slider')) {
-  customElements.define(
-    'featured-reviews-slider',
-    class FeaturedReviewsSlider extends HTMLElement {
-      constructor() {
-        super();
-        this.slider = this.querySelector('.js-featured-reviews-slider');
-        if (!this.slider) return;
-        
-        this.setupInfiniteScroll();
-        this.setupSlider();
-        this.setupDragging();
-      }
-
-      setupInfiniteScroll() {
-        const reviews = this.slider.querySelectorAll('.FeaturedReviews__review');
-        reviews.forEach(review => {
-          const clone = review.cloneNode(true);
-          this.slider.appendChild(clone);
-        });
-
-        this.slider.style.animation = 'slide 30s linear infinite';
-      }
-
-      setupSlider() {
-        this.addEventListener('mouseenter', () => {
-          this.slider.classList.add('FeaturedReviews__slider--paused');
-        });
-
-        this.addEventListener('mouseleave', () => {
-          if (!this.isDragging) {
-            this.slider.classList.remove('FeaturedReviews__slider--paused');
+document.addEventListener('DOMContentLoaded', function() {
+  // Load Swiper if it's not already loaded
+  if (typeof Swiper === 'undefined') {
+    const swiperScript = document.createElement('script');
+    swiperScript.src = 'https://unpkg.com/swiper@8/swiper-bundle.min.js';
+    swiperScript.onload = initReviewsSwiper;
+    document.head.appendChild(swiperScript);
+    
+    const swiperStyles = document.createElement('link');
+    swiperStyles.rel = 'stylesheet';
+    swiperStyles.href = 'https://unpkg.com/swiper@8/swiper-bundle.min.css';
+    document.head.appendChild(swiperStyles);
+  } else {
+    initReviewsSwiper();
+  }
+  
+  function initReviewsSwiper() {
+    const reviewsSwiper = new Swiper('#reviews-swiper-{{ section.id }}', {
+      slidesPerView: 'auto',
+      spaceBetween: 10,
+      loop: true,
+      loopedSlides: {{ section.blocks.size | times: 2 }},
+      grabCursor: true,
+      speed: 5000,
+      autoplay: {
+        delay: 0,
+        disableOnInteraction: false,
+      },
+      centeredSlides: true,
+      breakpoints: {
+        821: {
+          spaceBetween: 25,
+          slidesPerView: 'auto',
+          freeMode: {
+            enabled: true,
+            momentum: false,
           }
-        });
+        }
+      },
+      on: {
+        touchStart: function() {
+          this.autoplay.stop();
+        },
+        touchEnd: function() {
+          this.autoplay.start();
+        }
       }
-
-      setupDragging() {
-        this.isDragging = false;
-        this.startPos = 0;
-        this.currentTranslate = 0;
-        this.prevTranslate = 0;
-        this.animationID = 0;
-
-        // Mouse events
-        this.slider.addEventListener('mousedown', this.startDragging.bind(this));
-        window.addEventListener('mousemove', this.drag.bind(this));
-        window.addEventListener('mouseup', this.stopDragging.bind(this));
-
-        // Touch events
-        this.slider.addEventListener('touchstart', this.startDragging.bind(this));
-        window.addEventListener('touchmove', this.drag.bind(this));
-        window.addEventListener('touchend', this.stopDragging.bind(this));
-
-        // Prevent context menu
-        this.slider.addEventListener('contextmenu', e => e.preventDefault());
-      }
-
-      startDragging(e) {
-        this.isDragging = true;
-        this.slider.classList.add('FeaturedReviews__slider--dragging');
-        this.slider.classList.add('FeaturedReviews__slider--paused');
-        
-        // Get the starting position
-        const position = e.type.includes('mouse') 
-          ? e.pageX 
-          : e.touches[0].clientX;
-        
-        this.startPos = position - this.currentTranslate;
-        
-        // Stop any existing animation
-        this.slider.style.animation = 'none';
-        cancelAnimationFrame(this.animationID);
-      }
-
-      drag(e) {
-        if (!this.isDragging) return;
-
-        e.preventDefault();
-        const currentPosition = e.type.includes('mouse')
-          ? e.pageX
-          : e.touches[0].clientX;
-
-        this.currentTranslate = currentPosition - this.startPos;
-        this.setSliderPosition();
-      }
-
-      stopDragging() {
-        this.isDragging = false;
-        this.slider.classList.remove('FeaturedReviews__slider--dragging');
-        
-        // Reset the animation
-        requestAnimationFrame(() => {
-          this.slider.style.animation = 'slide 30s linear infinite';
-          this.slider.style.transform = '';
-        });
-
-        // Remove the pause after a short delay
-        setTimeout(() => {
-          if (!this.matches(':hover')) {
-            this.slider.classList.remove('FeaturedReviews__slider--paused');
-          }
-        }, 100);
-      }
-
-      setSliderPosition() {
-        this.slider.style.transform = `translateX(${this.currentTranslate}px)`;
-      }
-    }
-  );
-}
+    });
+    
+    // Pause on hover
+    const swiperContainer = document.querySelector('#reviews-swiper-{{ section.id }}');
+    swiperContainer.addEventListener('mouseenter', function() {
+      reviewsSwiper.autoplay.stop();
+    });
+    
+    swiperContainer.addEventListener('mouseleave', function() {
+      reviewsSwiper.autoplay.start();
+    });
+  }
+});
 </script>
-
 
 {% schema %}
   {
@@ -386,5 +336,4 @@
       }
     ]
   }
-
 {% endschema %}
