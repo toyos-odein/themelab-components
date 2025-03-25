@@ -1,11 +1,3 @@
-{% assign unique_types = '' | split: '' %}
-
-{% capture togglers %}
-    <button class="collection-images__grid-toggler-button" data-block-type="all">
-        All
-    </button>
-{% endcapture %}
-
 {% for block in section.blocks %}
     {% capture media_content %}
         {{ media_content }}
@@ -68,7 +60,6 @@
                 // Update layout
                 var layout = parseInt(toggler.dataset.layout);
                 window.innerWidth < 990 ? (layout == 4 ? layout = 1 : layout = 2) : layout;
-                console.log(layout);
                 const container = document.querySelector('.collection-images__inner--{{ section.id }}');
                 container.style.gridTemplateColumns = `repeat(${layout}, 1fr)`;
             });

@@ -1,6 +1,6 @@
 <style>
     .FeaturedReviews__section {
-  margin: 160px 0;
+  padding: 160px 0;
 }
 
 .FeaturedReviews__header {
@@ -45,7 +45,6 @@
 
 .FeaturedReviews__wrapper {
   position: relative;
-  overflow: hidden;
   padding: 40px 0;
   width: 100%;
   display: block;
@@ -95,7 +94,7 @@
 
 @media screen and (max-width: 820px) {
   .FeaturedReviews__section {
-    margin: 100px 0 32px 0;
+    padding: 100px 0 32px 0;
   }
 
   .FeaturedReviews__header__title {
@@ -113,22 +112,12 @@
   }
 }
 
-#shopify-section-{{ section.id }} .FeaturedReviews__header__title {
-  color: {{ section.settings.text_color }};
-}
-
-#shopify-section-{{ section.id }} .FeaturedReviews__header__content span {
-  color: {{ section.settings.text_color }};
-}
 
 #shopify-section-{{ section.id }} .FeaturedReviews__review {
   box-shadow: 0px 15px 43px 0px {{ section.settings.shadow_color }};
   background-color: {{ section.settings.box_color }};
 }
 
-#shopify-section-{{ section.id }} .FeaturedReviews__review__author {
-  color: {{ section.settings.text_color }};
-}
 
 /* Swiper specific styles */
 .FeaturedReviews__section .swiper-container {
@@ -153,11 +142,6 @@
 <div class="FeaturedReviews__section">
   <div class="FeaturedReviews__header">
     <h2 class="FeaturedReviews__header__title">{{ section.settings.title }}</h2>
-    <div class="FeaturedReviews__header__content">
-      <span>{{ section.settings.average_rating }}</span>
-      <span>{{ section.settings.icon }}</span>
-      <span class="FeaturedReviews__header__content__averageRating">{{ section.settings.average_rating_label }}</span>
-    </div>
   </div>
   <div class="FeaturedReviews__wrapper">
     <div class="swiper-container" id="reviews-swiper-{{ section.id }}">
@@ -170,18 +154,18 @@
                   {% for star_index in (1..5) %}
                     {% if star_index <= block.settings.rating %}
                       <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                       <path d="M7.5 10.2453L10.5417 9.47445L11.8125 13.3911L7.5 10.2453ZM14.5 5.18278H9.14583L7.5 0.141113L5.85417 5.18278H0.5L4.83334 8.30778L3.1875 13.3494L7.52083 10.2244L10.1875 8.30778L14.5 5.18278Z" fill="black"/>
+                       <path d="M7.5 10.2453L10.5417 9.47445L11.8125 13.3911L7.5 10.2453ZM14.5 5.18278H9.14583L7.5 0.141113L5.85417 5.18278H0.5L4.83334 8.30778L3.1875 13.3494L7.52083 10.2244L10.1875 8.30778L14.5 5.18278Z" fill="{{ section.settings.text_color }}"/>
                       </svg>
                     {% else %}
                       <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.30707 9.76234L6.3683 9.99541L6.67243 10.2198L4.13862 12.0471L5.30865 8.46295L5.42197 8.11582L5.1258 7.90224L2.04815 5.68278H5.85417H6.21691L6.32948 5.33795L7.5 1.75231L8.67052 5.33795L8.78309 5.68278H9.14583H12.9579L9.89568 7.90177L9.89411 7.90291L7.30707 9.76234ZM10.2099 10.072L10.8563 12.0642L8.67337 10.4535L10.2099 10.072Z" stroke="black"/>
+                        <path d="M7.30707 9.76234L6.3683 9.99541L6.67243 10.2198L4.13862 12.0471L5.30865 8.46295L5.42197 8.11582L5.1258 7.90224L2.04815 5.68278H5.85417H6.21691L6.32948 5.33795L7.5 1.75231L8.67052 5.33795L8.78309 5.68278H9.14583H12.9579L9.89568 7.90177L9.89411 7.90291L7.30707 9.76234ZM10.2099 10.072L10.8563 12.0642L8.67337 10.4535L10.2099 10.072Z" stroke="{{ section.settings.text_color }}"/>
                       </svg>
                     {% endif %}
                   {% endfor %}
                 </span>
-                <h3 class="FeaturedReviews__review__title">{{ block.settings.title }}</h3>
-                <div class="FeaturedReviews__review__content">{{ block.settings.content }}</div>
-                <p class="FeaturedReviews__review__author">{{ block.settings.author }}</p>
+                <h3 class="FeaturedReviews__review__title" style="color: {{ section.settings.text_color }}">{{ block.settings.title }}</h3>
+                <div class="FeaturedReviews__review__content" style="color: {{ section.settings.text_color }}">{{ block.settings.content }}</div>
+                <p class="FeaturedReviews__review__author" style="color: {{ section.settings.text_color }}">{{ block.settings.author }}</p>
               </div>
             </div>
           {% endfor %}
@@ -262,21 +246,6 @@ document.addEventListener('DOMContentLoaded', function() {
         "type": "text",
         "id": "title",
         "label": "Title"
-      },
-      {
-        "type": "text",
-        "id": "average_rating",
-        "label": "Average Rating"
-      },
-      {
-        "type": "text",
-        "id": "average_rating_label",
-        "label": "Average Rating Label"
-      },
-      {
-        "type": "html",
-        "id": "icon",
-        "label": "Stars Icon"
       },
       {
         "type": "color",

@@ -75,6 +75,36 @@
             "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_ae051454-7262-47af-9319-9ee0a05949d3.png"
           }
         },
+        "lookbook_image_zJqtae": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_ae051454-7262-47af-9319-9ee0a05949d3.png"
+          }
+        },
+        "lookbook_image_gQkjMH": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_ae051454-7262-47af-9319-9ee0a05949d3.png"
+          }
+        },
+        "lookbook_image_pHYP6B": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_ae051454-7262-47af-9319-9ee0a05949d3.png"
+          }
+        },
+        "lookbook_image_tQhQV9": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_ae051454-7262-47af-9319-9ee0a05949d3.png"
+          }
+        },
+        "lookbook_image_NWE3r6": {
+          "type": "lookbook_image",
+          "settings": {
+            "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_ae051454-7262-47af-9319-9ee0a05949d3.png"
+          }
+        },
         "lookbook_image_VPXNkG": {
           "type": "lookbook_image",
           "settings": {
@@ -91,6 +121,11 @@
         "lookbook_image_PWDAc3",
         "lookbook_image_3q8DNz",
         "lookbook_image_HQKDX7",
+        "lookbook_image_zJqtae",
+        "lookbook_image_gQkjMH",
+        "lookbook_image_pHYP6B",
+        "lookbook_image_tQhQV9",
+        "lookbook_image_NWE3r6",
         "lookbook_image_VPXNkG"
       ],
       "disabled": true,
@@ -113,7 +148,6 @@
         "image_8dPErA": {
           "type": "image",
           "settings": {
-            "type": "Summer",
             "title": "LOOK 1",
             "url": "",
             "image": "shopify://shop_images/toyos.xyz_Ebony_male_with_buzzcut_hair__tattoos_Fashion_photosh_b4587645-84ce-4e0a-b49b-61ecd02e7efa.png"
@@ -122,7 +156,6 @@
         "image_Arm9Qt": {
           "type": "image",
           "settings": {
-            "type": "Summer",
             "title": "LOOK 2",
             "url": "",
             "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_ae051454-7262-47af-9319-9ee0a05949d3.png"
@@ -131,7 +164,6 @@
         "image_dwU66W": {
           "type": "image",
           "settings": {
-            "type": "Summer",
             "title": "LOOK 3",
             "url": "",
             "image": "shopify://shop_images/toyos.xyz_White_woman_with_long_straight_hair_Fashion_photoshoo_da6c35ea-2fe9-4470-9041-f4b2aee0b2ad.png"
@@ -140,7 +172,6 @@
         "image_z3BLta": {
           "type": "image",
           "settings": {
-            "type": "Summer",
             "title": "LOOK 4",
             "url": "",
             "image": "shopify://shop_images/toyos.xyz_White_male_with_buzzcut_hair__tattoos_Fashion_photosh_b902b48a-7fac-4755-808c-0ec7b464ff63.png"
@@ -149,7 +180,6 @@
         "image_nmWJzK": {
           "type": "image",
           "settings": {
-            "type": "Winter",
             "title": "LOOK 5",
             "url": "",
             "image": "shopify://shop_images/toyos.xyz_Caucasian_25-year-old_women_Fashion_photoshooting_Wea_07110de2-cb1f-4f0f-93c6-fffed98e3c12.png"
@@ -158,7 +188,6 @@
         "image_98r9K3": {
           "type": "image",
           "settings": {
-            "type": "Winter",
             "title": "LOOK 6",
             "url": "",
             "image": "shopify://shop_images/toyos.xyz_Caucasian_25-year-old_women_Fashion_photoshooting_Wea_6870e868-8266-47a0-80df-a088e11b9f9f.png"
@@ -167,7 +196,62 @@
         "image_pj4HeN": {
           "type": "image",
           "settings": {
-            "type": "Winter",
+            "title": "LOOK 7",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_Blonde_25-year-old_women_Fashion_photoshooting_Wearin_aedb2fad-1275-4c28-89df-280b0a3ded08.png"
+          }
+        },
+        "image_WBa4jG": {
+          "type": "image",
+          "settings": {
+            "title": "LOOK 7",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_Blonde_25-year-old_women_Fashion_photoshooting_Wearin_aedb2fad-1275-4c28-89df-280b0a3ded08.png"
+          }
+        },
+        "image_834MPQ": {
+          "type": "image",
+          "settings": {
+            "title": "LOOK 7",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_Blonde_25-year-old_women_Fashion_photoshooting_Wearin_aedb2fad-1275-4c28-89df-280b0a3ded08.png"
+          }
+        },
+        "image_MReDqK": {
+          "type": "image",
+          "settings": {
+            "title": "LOOK 7",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_Blonde_25-year-old_women_Fashion_photoshooting_Wearin_aedb2fad-1275-4c28-89df-280b0a3ded08.png"
+          }
+        },
+        "image_heJd4m": {
+          "type": "image",
+          "settings": {
+            "title": "LOOK 7",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_Blonde_25-year-old_women_Fashion_photoshooting_Wearin_aedb2fad-1275-4c28-89df-280b0a3ded08.png"
+          }
+        },
+        "image_ACzDfy": {
+          "type": "image",
+          "settings": {
+            "title": "LOOK 7",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_Blonde_25-year-old_women_Fashion_photoshooting_Wearin_aedb2fad-1275-4c28-89df-280b0a3ded08.png"
+          }
+        },
+        "image_HCWAnz": {
+          "type": "image",
+          "settings": {
+            "title": "LOOK 7",
+            "url": "",
+            "image": "shopify://shop_images/toyos.xyz_Blonde_25-year-old_women_Fashion_photoshooting_Wearin_aedb2fad-1275-4c28-89df-280b0a3ded08.png"
+          }
+        },
+        "image_Uzjkk9": {
+          "type": "image",
+          "settings": {
             "title": "LOOK 7",
             "url": "",
             "image": "shopify://shop_images/toyos.xyz_Blonde_25-year-old_women_Fashion_photoshooting_Wearin_aedb2fad-1275-4c28-89df-280b0a3ded08.png"
@@ -181,11 +265,19 @@
         "image_z3BLta",
         "image_nmWJzK",
         "image_98r9K3",
-        "image_pj4HeN"
+        "image_pj4HeN",
+        "image_WBa4jG",
+        "image_834MPQ",
+        "image_MReDqK",
+        "image_heJd4m",
+        "image_ACzDfy",
+        "image_HCWAnz",
+        "image_Uzjkk9"
       ],
       "settings": {
         "title": "Find your look",
-        "description": "<p>Get inspired with the looks from our latest collection</p>"
+        "description": "<p>Get inspired with the looks from our latest collection</p>",
+        "square_togglers": true
       }
     }
   },
